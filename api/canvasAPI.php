@@ -1,11 +1,9 @@
 <?php
-	// This page contains a variety of Canvas API calls, it is not exhaustive as calls have been added by need
-	// Caution: Not all calls have been tested, some were setup but the approach changed before they were fully tested
+	// This page contains a variety of Canvas API calls
 
-
-/********************************************/
-/*********  REQUIRED INFORMATION ************/
-/********************************************/
+	/********************************************/
+	/*********  REQUIRED INFORMATION ************/
+	/********************************************/
 
 	// Root url for all api calls
 	$canvasURL = 'https://<your institution>.instructure.com/api/v1/';
@@ -13,8 +11,8 @@
 		// this token will only need read access to view pages
 	$token = "";
 	
-/********************************************/
-/********************************************/
+	/********************************************/
+	/********************************************/
 
 	$tokenHeader = array("Authorization: Bearer ".$token);
 

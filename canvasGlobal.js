@@ -1,9 +1,20 @@
 /*jslint browser: true, sloppy: false, eqeq: false, vars: false, maxerr: 50, indent: 4, plusplus: true */
 /*global $, jQuery, alert, console */
 
-// This code is was created by the Center of Innovative Design and Instruction at Utah State University. 
-// It is released under the AGPLv3 license. For more information about this license, go to http://www.gnu.org/licenses/agpl.html
+// These tools were designed to facilitate rapid course development in the Canvas LMS
+// Copyright (C) 2014  Kenneth Larsen - Center for Innovative Design and Instruction
+// Utah State University
 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// http://www.gnu.org/licenses/agpl-3.0.html
 
 ///////////////////////////////////
 // Kenneth's Custom Canvas Tools //
