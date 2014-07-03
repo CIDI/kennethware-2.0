@@ -1,18 +1,14 @@
 <?php
 	session_start();
-	if ($_SESSION['allowed']){
-		$courseID = $_SESSION['courseID'];
-    	// echo "courseID: ".$courseID."<hr>";
-	} else {
-		echo "Sorry, you are not authorized to view this content or your session has expired. Please relaunch this tool from Canvas.";
-		return false;
-	}
 	// // Display any php errors (for development purposes)
 	error_reporting(E_ALL);
 	ini_set('display_errors', '1');
 
-	include 'wizardAPI.php';
-	include 'simple_html_dom.php';
+	require_once (__DIR__.'/../../config.php');
+	// Include API Calls
+	require_once 'wizardAPI.php';
+
+	require_once 'simple_html_dom.php';
 	$modules = $_POST['moduleDetails'];
 	// Find a string between two tags
 	function get_string_between($string, $start, $end){
@@ -149,10 +145,9 @@
 <!DOCTYPE html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	<title>USU Template Wizard - Front Page</title>
-	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.min.css">
-	<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+	<title>Template Wizard - Create Modules Confirmation</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
 	<script type="text/javascript" language="javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 	<script type="text/javascript" charset="utf-8">
 	</script>
@@ -161,15 +156,14 @@
 	<div class="navbar navbar-inverse">
 		<div class="navbar-inner">
 			<ul class="nav">
-				<li><a href="wikiPages.php">Wiki Page Templates</a></li>
-				<li class="active"><a href="modules.php">Modules</a></li>
-				<li><a href="imageCrop.php?task=selectImage">Front Page Banner Image</a></li>
+				<li><a href="wizard_pages.php"><i class="fa fa-files-o"></i> Page Templates</a></li>
+				<li class="active"><a href="wizard_modules.php"><i class="fa fa-sitemap"></i> Modules</a></li>
+				<li><a href="wizard_image_crop.php?task=selectImage"><i class="fa fa-picture-o"></i> Front Page Banner Image</a></li>
 			</ul>
 		</div>
 	</div>
 	<div class="container-fluid">
 		<h2>Modules Created!</h2>
-		<p>Close this dialogue to begin working with your course.</p>
 	</div>
 </body>
 </html>

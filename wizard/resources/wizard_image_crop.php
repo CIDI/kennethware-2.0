@@ -4,35 +4,39 @@
 		$courseID = $_SESSION['courseID'];
 	} else {
 		echo "Sorry, you are not authorized to view this content or your session has expired. Please relaunch this tool from Canvas.";
-		return false;
+		exit;
 	}
 	// Display any php errors (for development purposes)
 	error_reporting(E_ALL);
 	ini_set('display_errors', '1');
+
+	require_once (__DIR__.'/../../config.php');
+	// Include API Calls
+	require_once 'wizardAPI.php';
 ?>
 
 
 <!DOCTYPE html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	<title>Image Crop</title>
+	<title>Template Wizard - Image Crop</title>
 	<script type="text/javascript" language="javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 	<script src="js/jquery.Jcrop.min.js"></script>
 	<link rel="stylesheet" href="css/jquery.Jcrop.css" type="text/css" />
 	<link rel="stylesheet" href="css/imageCropStyles.css" type="text/css" />
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
 </head>
 <body>
 	<div class="navbar navbar-inverse">
 		<div class="navbar-inner">
 			<ul class="nav">
-				<li><a href="wikiPages.php">Wiki Page Templates</a></li>
-				<li><a href="modules.php">Modules</a></li>
-				<li class="active"><a href="imageCrop.php?task=selectImage">Front Page Banner Image</a></li>
+				<li><a href="wizard_pages.php"><i class="fa fa-files-o"></i> Page Templates</a></li>
+				<li><a href="wizard_modules.php"><i class="fa fa-sitemap"></i> Modules</a></li>
+				<li class="active"><a href="wizard_image_crop.php?task=selectImage"><i class="fa fa-picture-o"></i> Front Page Banner Image</a></li>
 			</ul>
 		</div>
 	</div>
 	<?php
-		include 'wizardAPI.php';
 		if(isset($_GET['task'])){
 			$task = $_GET['task'];
 		} else if (isset($_POST['task'])) {
@@ -55,14 +59,20 @@
 		function selectImage(){
 			echo '<div style="margin: 0 0 0 20px;">
 				<h3>Select A Banner Image</h3>
-				<form action="imageCrop.php" id="imageForm" method="post" enctype="multipart/form-data">
+				<form action="wizard_image_crop.php" id="imageForm" method="post" enctype="multipart/form-data">
 					<label for="file">Select a file:</label>
 					<input type="file" name="file" id="file"><br>
 					<input type="hidden" name="task" id="task" value="uploadTempImage">
 					<input type="submit" name="submit" class="btn" id="formSubmit" value="Upload Image" style="display:none;">
 				</form>
-				<p style="font-size:14px;"><em><strong>Note:</strong> You can create your front page banner from either a jpg or png image.</em></p>
+				<p style="font-size:14px;"><em><strong>Note:</strong> Image can be either a jpg or png. Minimum size 860x256 px.</em></p>
+				<h3 style="margin-top:50px;">What is This?</h3>
+				<img src="../../images/template_thumbs/kl_fp_horizontal_nav.png">
+				<img src="../../images/template_thumbs/kl_fp_panel_nav.png">
+				<p>The custom tools available when editing Canvas pages have the option to include a banner image for your Front Page.</p>
+				<p>This tool will allow you to crop your selected image to the proper dimensions and then upload it to your Canvas course files.</p>
 				</div>
+
 				<script language="javascript">
 					$(function(){
 						$("#file").on("change", function(){ $("#formSubmit").trigger("click"); });
@@ -98,7 +108,17 @@
 			    	}
 					move_uploaded_file($_FILES["file"]["tmp_name"],
 					"images/" . $courseID.".".$extension);
-			    	echo "<div style=\"margin-left:100px;\">
+					
+					$size = getimagesize("images/".$courseID.".jpg");
+					$imageHeight = $size[0];
+					$imageWidth = $size[1];
+					if ($imageHeight < '256' || $imageWidth < '860') {
+						echo '<div style="margin-left:20px;"><p>Image is too small. The minimum size is 860 x 256px.</p>
+							<a href="wizard_image_crop.php?task=selectImage" class="btn"><i class="fa fa-chevron-circle-left"></i> Pick New Image</a>';
+							exit;
+					}
+			    	
+			    	echo "<div style=\"margin-left:20px;\">
 						<script language=\"Javascript\">
 							$(function(){
 								$('#cropbox').Jcrop({
@@ -128,20 +148,20 @@
 						<img src=\"images/" . $courseID.".jpg\" id=\"cropbox\" />
 
 						<!-- This is the form that our event handler fills -->
-						<form action=\"imageCrop.php\" method=\"post\" onSubmit=\"return checkCoords();\">
+						<form action=\"wizard_image_crop.php\" method=\"post\" onSubmit=\"return checkCoords();\">
 							<input type=\"hidden\" name=\"task\" value=\"cropImage\" />
 							<input type=\"hidden\" name=\"courseID\" value=\"".$courseID."\" />
 							<input type=\"hidden\" id=\"x\" name=\"x\" />
 							<input type=\"hidden\" id=\"y\" name=\"y\" />
 							<input type=\"hidden\" id=\"w\" name=\"w\" />
 							<input type=\"hidden\" id=\"h\" name=\"h\" />
-							<input type=\"submit\" class=\"btn\" value=\"Add Image\" />
-							<a href=\"imageCrop.php?task=selectImage\" class=\"btn\">Pick New Image</a>
+							<button type=\"submit\" class=\"btn\"><i class=\"fa fa-plus-circle\"></i> Add Image</button>
+							<a href=\"wizard_image_crop.php?task=selectImage\" class=\"btn\"><i class=\"fa fa-chevron-circle-left\"></i> Pick New Image</a>
 						</form>
 					</div>";
 			    }
 			} else {
-			  echo '<p style="margin-left:20px">Invalid file</p><p style="margin-left:20px"><a href="imageCrop.php?task=selectImage" class="btn">Go Back</a></p>';
+			  echo '<p style="margin-left:20px">Invalid file</p><p style="margin-left:20px"><a href="wizard_image_crop.php?task=selectImage" class="btn">Go Back</a></p>';
 
 			}
 		};
@@ -163,11 +183,16 @@
 			/*Save Renamed image*/
 			if(imagejpeg($dst_r, $output_filename, $jpeg_quality)){
 				$uploadFile = uploadFrontPageBanner($courseID);
-				echo '<div style="text-align:center">
-					<h2>Image Uploaded!</h2>
-					<img src="'.$output_filename.'" style="width:700px;">
-					<p style="font-weight:bold;">Close this window to continue editing your front page.</p>
-					<p><em>The image will appear when the front page is saved or refreshed.</em></p>
+				echo '<div style="margin-left:20px;">
+						<h2>Image Uploaded!</h2>
+						<img src="'.$output_filename.'" style="width:700px;">
+						<p>To apply this image to a page, choose one of the Front Page themes from the custom tools.</p>
+						<p>If you have already selected one of the Front Page themes for a page	you will need to:</p>
+						<ol>
+							<li>Edit the page</li>
+							<li>Launch the tools</li>
+							<li>Save the page</li>
+						</ol>
 					</div>';
 				unlink("images/".$courseID.".jpg");
 			} else {

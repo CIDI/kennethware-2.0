@@ -4,37 +4,34 @@
 		$courseID = $_SESSION['courseID'];
 	} else {
 		echo "Sorry, you are not authorized to view this content or your session has expired. Please relaunch this tool from Canvas.";
-		return false;
+		exit;
 	}
-	include 'wizardAPI.php';
+	require_once (__DIR__.'/../../config.php');
+	// Include API Calls
+	require_once 'wizardAPI.php';
 ?>
 <!DOCTYPE html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	<title>USU Template Wizard - Front Page</title>
-	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.min.css">
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css">
+	<title>Template Wizard - Modules</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
 	<script type="text/javascript" language="javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		$(function() {
 			<?php
 				// Query to see if Primary/Secondary templates exist otherwise option to create
-				$primaryTemplateExists = getPageFromCourse($courseID, "primary-template");
-				// echo $primaryTemplateExists;
-				$workingList = json_decode($primaryTemplateExists,true);
-				if(isset($workingList['created_at'])){
-					if($workingList['created_at'] !== ''){
+				$primaryTemplate = getPageFromCourse($courseID, "primary-template");
+				if(isset($primaryTemplate->created_at)){
+					if($primaryTemplate->created_at !== ''){
 						$primaryTemplate = 'true';
 					}
 				} else {
 						$primaryTemplate = 'false';
 				}
-				$secondaryTemplateExists = getPageFromCourse($courseID, "secondary-template");
-				// echo $secondaryTemplateExists;
-				$workingList2 = json_decode($secondaryTemplateExists,true);
-				if(isset($workingList2['created_at'])){
-					if($workingList2['created_at'] !== ''){
+				$secondaryTemplate = getPageFromCourse($courseID, "secondary-template");
+				if(isset($secondaryTemplate->created_at)){
+					if($secondaryTemplate->created_at !== ''){
 						$secondaryTemplate = 'true';
 					}
 				} else {
@@ -96,9 +93,9 @@
 				e.preventDefault();
 				$('.helpText').slideToggle(function () {
 					if ($('.helpText').is(':visible')) {
-						$('.showHelp').text('Hide Help');
+						$('.showHelp').html('<i class="fa fa-question-circle"></i> Hide Help');
 					} else {
-						$('.showHelp').text('Show Help');
+						$('.showHelp').html('<i class="fa fa-question-circle"></i> Show Help');
 					}
 				});
 			})
@@ -130,7 +127,7 @@
 			});
 			$(".createModules").click(function (e){
 				e.preventDefault();
-				$('.createModules').after('<a href="' + canvasURL + '/courses/' + courseID + '/wiki/Home" class="btn btn-primary" style="margin-left: 5px;" target="_blank">Create Front Page</a>');
+				$('.createModules').after('<a href="' + canvasURL + '/courses/' + courseID + '/wiki/Home" class="btn btn-primary" style="margin-left: 5px;" target="_blank">Create Front Page <i class="fa fa-external-link"></i></a>');
 				$(".contentModule").each(function(){
 					var modNum = $(this).find(".modNum").text();
 					var moduleTitlePrefix = $(this).find(".moduleTitlePrefix").text();
@@ -148,7 +145,7 @@
 					// Provide visual feedback that something is happening
 
 				});
-				$(this).html('<i class="fa fa-spinner fa fa-spin fa fa-large"></i> Adding Modules').addClass("disabled");
+				$(".createModules").html('<i class="fa fa-spinner fa fa-spin fa fa-large"></i> Adding Modules').addClass("disabled");
 				// in order for the icon above to display, there needs to be a slight delay
 				setTimeout(function(){
 					$("#moduleForm").submit();
@@ -163,7 +160,7 @@
 					$("#moduleCount").focus();
 				} else {
 					$(".createModules").show();
-					$(this).removeClass("btn-primary").text("Re-Generate Module List");
+					$(this).removeClass("btn-primary").html('<i class="fa fa-refresh"></i> Re-Generate Module List');
 					$(".customizeHeader").show();
 					var moduleNum = 1;
 					if ($("#startHereModule").is(":checked")){
@@ -297,15 +294,15 @@
 	<div class="navbar navbar-inverse">
 		<div class="navbar-inner">
 			<ul class="nav">
-				<li><a href="wikiPages.php">Wiki Page Templates</a></li>
-				<li class="active"><a href="modules.php">Modules</a></li>
-				<li><a href="imageCrop.php?task=selectImage">Front Page Banner Image</a></li>
+				<li><a href="wizard_pages.php"><i class="fa fa-files-o"></i> Page Templates</a></li>
+				<li class="active"><a href="wizard_modules.php"><i class="fa fa-sitemap"></i> Modules</a></li>
+				<li><a href="wizard_image_crop.php?task=selectImage"><i class="fa fa-picture-o"></i> Front Page Banner Image</a></li>
 			</ul>
 			<a href="#" class="btn btn-mini fillOut pull-right hide">Fill Out Test</a>
 		</div>
 	</div>
 	<div class="container-fluid">
-		<form action="createModules.php" id="moduleForm" method="post">
+		<form action="wizard_create_modules.php" id="moduleForm" method="post">
 			<div class="row-fluid">
 				<div class="span8">
 					<div class="well">
@@ -368,7 +365,7 @@
 					</div>
 				</div>
 				<div class="span4">
-					<a href="#" class="btn showHelp">Show Help</a>
+					<a href="#" class="btn showHelp"><i class="fa fa-question-circle"></i> Show Help</a>
 					<ul class="helpText" style="display:none;">
 						<li><strong>Number of Modules:</strong> The number of modules that will be created in your course.</li>
 						<li><strong>Module Prefix:</strong> The created modules and primary template pages will include this prefix (i.e. "Module 1: Course Introduction").</li>
@@ -379,8 +376,8 @@
 				</div>
 			</div>
 			<div class="row-fluid">
-				<a href="#" class="btn btn-primary generateModuleList">Generate Module List</a>
-				<a href="#" class="btn btn-primary createModules" style="display:none;">Add Modules to Course</a>
+				<a href="#" class="btn btn-primary generateModuleList"><i class="fa fa-magic"></i> Generate Module List</a>
+				<a href="#" class="btn btn-primary createModules" style="display:none;"><i class="fa fa-plus-circle"></i> Add Modules to Course</a>
 				<h2 class="customizeHeader" style="display:none;">Customize Modules</h2>
 				<div id="startHere" class="well module" style="display:none;">
 					<div class="input-prepend">
@@ -389,23 +386,8 @@
 					</div>
 					<p class="moduleDetails"><strong>Pages:</strong> &ldquo;Start Here&rdquo; &amp; &ldquo;Additional Resources&rdquo;</p>
 				</div>
-				<div id="academicIntegrity" class="well module" style="display:none;">
-					<div class="input-prepend">
-						<span class="add-on"><strong>Module <span class="academicIntegrityModNum">1</span> Title:</strong></span>
-						<input class="moduleTitleInput uneditable-input" disabled id="prependedInput" type="text" value="Academic Integrity">
-					</div>
-					<p class="moduleDetails"><strong>Pages:</strong>
-						&ldquo;Honor Pledge&rdquo;,
-						&ldquo;Academic Dishonesty Defined&rdquo;,
-						&ldquo;Tracking and Reporting Tools&rdquo; &amp;
-						&ldquo;Repercussions of Violations&rdquo;
-					</p>
-					<p class="moduleDetails"><strong>Quizzes:</strong>
-						&ldquo;Check Your Understanding&rdquo; &amp;
-					  	&ldquo;Acknowledgement&rdquo;
-				</div>
 				<div id="moduleList"></div>
-				<a href="#" class="btn btn-primary createModules" style="display:none;">Add Modules to Course</a>
+				<a href="#" class="btn btn-primary createModules" style="display:none;"><i class="fa fa-plus-circle"></i> Add Modules to Course</a>
 				<a href=
 			</div>
 		</form>
