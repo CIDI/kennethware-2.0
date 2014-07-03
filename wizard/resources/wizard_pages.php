@@ -58,7 +58,7 @@
 				}
 				echo '<p>This is a page that you can customize for the primary information page within a module.</p>';
 				$secondaryTemplate = getPageFromCourse($courseID, "secondary-template");
-				if (isset($primaryTemplate->message) && $secondaryTemplate->message == 'page not found') {
+				if (isset($secondaryTemplate->message) && $secondaryTemplate->message == 'page not found') {
 					echo '<a href="'.$_SESSION['canvasURL'].'/courses/'.$courseID.'/wiki/secondary-template" target="_blank" class="btn btn-block btn-large secondary"><i class="fa fa-plus-circle"></i> Add Secondary Template Page</a>';
 				} elseif (isset($secondaryTemplate->created_at)) {
 					echo '<a href="'.$_SESSION['canvasURL'].'/courses/'.$courseID.'/wiki/secondary-template" target="_blank" class="btn btn-primary btn-block btn-large"><i class="fa fa-pencil"></i> Edit Secondary Template Page</a>';
