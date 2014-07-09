@@ -20,7 +20,7 @@
 
 		/* query DB to see if user has token, if yes, go to LTI*/
 		$userCheck = DB::query("SELECT canvas_user_id FROM tokens WHERE canvas_user_id = $canvasUserID AND domain = '$domain'");
-		var_dump($userCheck);
+		
 		if (!$userCheck){
 			$generateToken = true;
 		} else {
