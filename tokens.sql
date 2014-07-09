@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 09, 2014 at 10:06 AM
+-- Generation Time: Jul 09, 2014 at 02:10 PM
 -- Server version: 5.1.73
 -- PHP Version: 5.3.3-7+squeeze20
 
@@ -26,9 +26,10 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 
 CREATE TABLE IF NOT EXISTS `tokens` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `canvas_user_id` int(11) NOT NULL,
   `encrypted_token` longtext NOT NULL,
   `domain` varchar(100) NOT NULL,
-  PRIMARY KEY (`canvas_user_id`),
+  PRIMARY KEY (`id`),
   KEY `domain` (`domain`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
