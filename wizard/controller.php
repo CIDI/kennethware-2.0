@@ -16,9 +16,10 @@
 		$_SESSION['courseID'] = $_POST["custom_canvas_course_id"];
 		$_SESSION['apiDomain'] = $_POST["custom_canvas_api_domain"];
 		$_SESSION['canvasURL'] = 'https://'.$_SESSION['apiDomain'];
+		$domain = $_SESSION['apiDomain'];
 
 		/* query DB to see if user has token, if yes, go to LTI*/
-		$userCheck = DB::query("SELECT canvas_user_id FROM tokens WHERE canvas_user_id = " . $_SESSION['userID']);
+		$userCheck = DB::query("SELECT canvas_user_id FROM tokens WHERE canvas_user_id = $canvasUserID AND domain = '$domain'");
 		var_dump($userCheck);
 		if (!$userCheck){
 			$generateToken = true;
@@ -30,7 +31,7 @@
 			$course = getCourse($_SESSION['courseID']);
 			var_dump($course);
 			if (isset($course->errors[0]->message)){
-				$sql = DB::query("DELETE FROM tokens WHERE canvas_user_id = $canvasUserID");
+				$sql = DB::query("DELETE FROM tokens WHERE canvas_user_id = $canvasUserID AND domain = '$domain'");
 				$generateToken = true;
 			}
 			if (isset($course->name)){

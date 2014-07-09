@@ -22,7 +22,8 @@
 	$userID=$_SESSION['userID'];
 	DB::insert('tokens', array(
 	  'canvas_user_id' => $userID,
-	  'encrypted_token' => $encrypted_token
+	  'encrypted_token' => $encrypted_token,
+	  'domain' => $_SESSION['apiDomain']
 	));
 	$_SESSION['allowed'] = true;
 	/*  redirect to main tool page */
