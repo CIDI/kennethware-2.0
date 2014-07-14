@@ -332,10 +332,10 @@ klToolsArrays */
             initializeColorPicker('#kl_banner_title_text', '#kl_banner_right', 'color');
             initializeColorPicker('#kl_banner_num_background', '.kl_mod_num', 'background');
             initializeColorPicker('#kl_banner_num_text', '.kl_mod_num', 'color');
-            setTimeout(function () {
-                bannerImageCheck();
-            }, 1000);
         }
+        setTimeout(function () {
+            bannerImageCheck();
+        }, 1000);
         addStyletoIframe();
     }
     // Loop through theme array and output thumbs
@@ -944,7 +944,7 @@ klToolsArrays */
             }
             // update the classes to increment panels
             $(iframeID).contents().find('.kl_acc_panel_heading').each(function (i) {
-                var currentClass, regExpMatch, identifyCurrent, nextDivClass, panelTitle;
+                var regExpMatch, identifyCurrent, nextDivClass, panelTitle;
                 // Renumber panels
                 if ($(this).hasClass('kl_current_acc')) {
                     $(this).attr('class', 'kl_acc_panel_heading kl_panel_' + i + ' kl_current_acc');
@@ -959,6 +959,7 @@ klToolsArrays */
                     panelTitle = panelTitle.substring(0, 17) + '...';
                 }
                 nextDivClass = $(this).next('div').attr('class');
+                regExpMatch = /\bkl_panel_\b/g;
                 if (nextDivClass.match(regExpMatch)) {
                     console.log(nextDivClass);
                     $(this).next('div').attr('class', 'kl_panel_' + i);
