@@ -5296,8 +5296,7 @@ klToolsArrays */
         $('.kl_progress_bar_add').show();
         $('#kl_progress_bar_controls').hide();
         identifyProgressBar();
-        // Remove and check quick checks
-        $('.kl_quick_check_remove').trigger('click');
+        // Check quick checks
         identifyQuickChecks();
         if ($(iframeID).contents().find('#kl_social_media').length > 0) {
             socialMediaReady();
@@ -5363,6 +5362,9 @@ klToolsArrays */
         $('.kl_existing_page_links a').click(function (e) {
             e.preventDefault();
             var linkHref, contentUrl;
+            // Clear quick check
+            $('.kl_quick_check_remove').trigger('click');
+            // Gather ne data
             $(this).parents('li').addClass('kl_loading').prepend('<i class="fa fa-spinner fa-spin"></i>');
             linkHref = $(this).attr('href').split('/pages/');
             contentUrl = linkHref[1];
@@ -5407,6 +5409,9 @@ klToolsArrays */
     }
     function importPageContentUrl() {
         var pastedUrl, sourceCourseNum, pageTitleUrl;
+        // Clear quick check
+        $('.kl_quick_check_remove').trigger('click');
+        // Gather ne data
         $('#kl_get_existing i').attr('class', 'fa fa-spinner fa-spin');
         pastedUrl = $('#kl_page_url').val();
         sourceCourseNum = pastedUrl.split('/courses/');
