@@ -23,9 +23,6 @@
 	$pass = '';
 	$salt = '';
 
-	// Include API Calls
-	require_once __DIR__.'/wizard/resources/wizardAPI.php';
-
 	// Your Canvas OAuth2 Developer information. Used for getting OAuth tokens from users
 	$client_id = '#####';
 	$clientSecret = '######';
