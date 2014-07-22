@@ -1,6 +1,6 @@
 /*jslint browser: true, sloppy: false, eqeq: false, vars: false, maxerr: 50, indent: 4, plusplus: true */
 /*global $, jQuery, alert, coursenum, console, klToolsPath, globalCSSPath, tinymce, tinyMCE, klToolsVariables,
-klToolsArrays */
+klToolsArrays, vendor_legacy_normal_contrast, common_legacy_normal_contrast */
 
 // These tools were designed to facilitate rapid course development in the Canvas LMS
 // Copyright (C) 2014  Kenneth Larsen - Center for Innovative Design and Instruction
@@ -100,10 +100,10 @@ klToolsArrays */
         if (!$(iframeID).contents().find('body').hasClass('kl_has_style')) {
             var $head = $(iframeID).contents().find('head'),
                 timestamp =  +(new Date());
-            $head.append($('<link/>', { rel: 'stylesheet', href: '/assets/vendor.css?1380315297', type: 'text/css' }));
+            $head.append($('<link/>', { rel: 'stylesheet', href: vendor_legacy_normal_contrast, type: 'text/css' }));
+            $head.append($('<link/>', { rel: 'stylesheet', href: common_legacy_normal_contrast, type: 'text/css' }));
             $head.append($('<link/>', { rel: 'stylesheet', href: klToolsPath + 'css/canvasMCEEditor.css?' + timestamp, type: 'text/css' }));
             $head.append($('<link/>', { rel: 'stylesheet', href: globalCSSPath + '?' + timestamp, type: 'text/css' }));
-            $head.append($('<link/>', { rel: 'stylesheet', href: '/assets/common.css?1376338847', type: 'text/css' }));
             $head.append($("<link/>", { rel: "stylesheet", href: "//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css"}));
             if ($(iframeID).contents().find('#kl_custom_css').length > 0) {
                 $head.append($('<link/>', { rel: 'stylesheet', href: '/courses/' + coursenum + '/file_contents/course%20files/global/css/style.css?' + timestamp, type: 'text/css' }));
