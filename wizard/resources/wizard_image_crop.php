@@ -110,8 +110,8 @@
 					"images/" . $courseID.".".$extension);
 					
 					$size = getimagesize("images/".$courseID.".jpg");
-					$imageHeight = $size[0];
-					$imageWidth = $size[1];
+					$imageWidth = $size[0];
+					$imageHeight = $size[1];
 					if ($imageHeight < '256' || $imageWidth < '860') {
 						echo '<div style="margin-left:20px;"><p>Image is too small. The minimum size is 860 x 256px.</p>
 							<a href="wizard_image_crop.php?task=selectImage" class="btn"><i class="fa fa-chevron-circle-left"></i> Pick New Image</a>';
