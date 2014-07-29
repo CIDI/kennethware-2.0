@@ -290,7 +290,7 @@ $(function () {
         today = new Date();
         $('.kl_connected_module').each(function () {
             var startDate, endDate;
-            if ($(this).parents('li').contents().find('.kl_modules_active_start').length > 0 && $(this).parents('li').contents().find('.kl_modules_active_stop').length > 0) {
+            if ($(this).parents('li').find('.kl_modules_active_start').length > 0 && $(this).parents('li').find('.kl_modules_active_stop').length > 0) {
                 startDate = $(this).parent('li').find('.kl_modules_active_start').html();
                 startDate = startDate.replace(' (', '').replace(' to ', '');
                 startDate = new Date(startDate);
