@@ -4951,10 +4951,6 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         }, 300);
     }
 
-
-
-
-
 /////////////////////////////////////////////////////////////
 //  CLEANUP FUNCTIONS                                        //
 //  Cleanup content created with previous versons          //
@@ -5069,6 +5065,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
 
         // Update Wrapper
         elementUpdate('#template-wrapper', '#kl_wrapper');
+        elementUpdate('#usu-template-page', '#kl_wrapper');
         // Remove content wrapper from wiki pages
         if ($(iframeID).contents().find('#template-content').length > 0) {
             $(iframeID).contents().find('#template-content').contents().unwrap();
@@ -5091,14 +5088,25 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         elementUpdate('.circle-left-silver', '.kl_circle_left_3');
         elementUpdate('.horiz-nav-template', '.kl_fp_horizontal_nav');
         elementUpdate('.panel-nav-template', '.kl_fp_panel_nav');
+        elementUpdate('.panel-nav-template', '.kl_fp_panel_nav');
+        elementUpdate('.emta', '.kl_emta');
+        clearAttribute('.usu-template-flex');
         // Banner
         elementUpdate('#module-page-banner', '#kl_banner');
-        elementUpdate('#banner-left', '#kl_banner_left', '');
-        elementUpdate('.mod-text', '.kl_mod_text', '');
-        elementUpdate('.mod-num', '.kl_mod_num', '');
-        elementUpdate('.banner-right', '#kl_banner_right', '');
-        elementUpdate('#banner-bottom', '#kl_banner_bottom', '');
-        elementUpdate('#description', '#kl_description', '');
+        elementUpdate('#module-page-banner', '#kl_banner');
+        elementUpdate('#banner-left', '#kl_banner_left');
+        elementUpdate('#page-left', '#kl_banner_left');
+        elementUpdate('.mod-text', '.kl_mod_text');
+        elementUpdate('.mod-num', '.kl_mod_num');
+        elementUpdate('.emta-badge', '.kl_mod_num');
+        if ($(iframeID).contents().find('#usu-template-banner-middle').length > 0) {
+            $(iframeID).contents().find('#usu-template-banner-middle').remove();
+        }
+        elementUpdate('.banner-right', '#kl_banner_right');
+        elementUpdate('#page-right', '#kl_banner_right');
+        elementUpdate('#banner-bottom', '#kl_banner_bottom');
+        elementUpdate('#emta-title', '#kl_banner_bottom');
+        elementUpdate('#description', '#kl_description');
         // Template Sections
         elementUpdate('.introduction', '#kl_introduction');
         elementUpdate('.objectives', '#kl_objectives');
@@ -5108,24 +5116,24 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         elementUpdate('.assignments', '#kl_assignments');
         // Modal
         elementUpdate('.customModalToggler', '.kl_modal_toggler');
-        elementUpdate('#customModal', '#kl_modal', '');
-        elementUpdate('.custom-modal', '.kl_modal', '');
-        elementUpdate('.modalTitle', '.kl_modal_title', '');
+        elementUpdate('#customModal', '#kl_modal');
+        elementUpdate('.custom-modal', '.kl_modal');
+        elementUpdate('.modalTitle', '.kl_modal_title');
         // Tooltip
         elementUpdate('.tooltipTrigger', '.kl_tooltip_trigger');
-        elementUpdate('.tooltipText', '.kl_tooltip_text', '');
+        elementUpdate('.tooltipText', '.kl_tooltip_text');
         $(iframeID).contents().find('.kl_tooltip_text').each(function (index) {
             var tipNum = index + 1;
-            elementUpdate('#tooltip' + tipNum, '#kl_tooltip_' + tipNum, '');
-            elementUpdate('.tooltip' + tipNum, '.kl_tooltip_' + tipNum, '');
+            elementUpdate('#tooltip' + tipNum, '#kl_tooltip_' + tipNum);
+            elementUpdate('.tooltip' + tipNum, '.kl_tooltip_' + tipNum);
         });
         // Popover
         elementUpdate('.popoverTrigger', '.kl_popover_trigger');
-        elementUpdate('.popoverContent', '.kl_popover_content', '');
+        elementUpdate('.popoverContent', '.kl_popover_content');
         $(iframeID).contents().find('.kl_popover_content').each(function (index) {
             var tipNum = index + 1;
-            elementUpdate('#Popover' + tipNum, '#kl_popover_' + tipNum, '');
-            elementUpdate('.Popover' + tipNum, '.kl_popover_' + tipNum, '');
+            elementUpdate('#Popover' + tipNum, '#kl_popover_' + tipNum);
+            elementUpdate('.Popover' + tipNum, '.kl_popover_' + tipNum);
         });
         // Syllabus Sections
         // <div id="template-content" class="syllabus-content" style="margin: 0;">
