@@ -12,14 +12,23 @@
 	$modules = $_POST['moduleDetails'];
 	// Find a string between two tags
 	function get_string_between($string, $start, $end){
-	    $string = " ".$string;
-	     $ini = strpos($string,$start);
-	     if ($ini == 0) return "";
-	     $ini += strlen($start);     
-	     $len = strpos($string,$end,$ini) - $ini;
-	     return substr($string,$ini,$len);
+		$string = " ".$string;
+		$ini = strpos($string,$start);
+		if ($ini == 0) return "";
+		$ini += strlen($start);     
+		$len = strpos($string,$end,$ini) - $ini;
+		return substr($string,$ini,$len);
 	}
 
+	if ($_POST['frontPage']) {
+		$frontPageTitle = 'Home';
+		$frontPageBody = '';
+		$frontPageParams = 'wiki_page[title]='.$frontPageTitle.'&wiki_page[body]='.urlencode($frontPageBody).'&wiki_page[published]=true&wiki_page[front_page]=true';
+		$newPage = createPage($courseID, $frontPageParams);
+		$responseData = json_decode($newPage, true);
+		var_dump($responseData);
+		$page_url = $responseData['url'];
+	}
 	// echo $modules;
 	foreach ($modules as $value) {
 	    $moduleSections = explode(" || ", $value);

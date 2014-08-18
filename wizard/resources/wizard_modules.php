@@ -127,7 +127,9 @@
 			});
 			$(".createModules").click(function (e){
 				e.preventDefault();
-				$('.createModules').after('<a href="' + canvasURL + '/courses/' + courseID + '/wiki/Home" class="btn btn-primary" style="margin-left: 5px;" target="_blank">Create Front Page <i class="fa fa-external-link"></i></a>');
+				if ($('#frontPage').is(":checked")){
+					$('.createModules').after('<a href="' + canvasURL + '/courses/' + courseID + '/wiki/Home" class="btn btn-primary" style="margin-left: 5px;" target="_blank">Edit Front Page <i class="fa fa-external-link"></i></a>');
+				}
 				$(".contentModule").each(function(){
 					var modNum = $(this).find(".modNum").text();
 					var moduleTitlePrefix = $(this).find(".moduleTitlePrefix").text();
@@ -305,6 +307,13 @@
 		<form action="wizard_create_modules.php" id="moduleForm" method="post">
 			<div class="row-fluid">
 				<div class="span8">
+					<div class="well">
+						<label class="frontPage">
+							<input type="checkbox" name="frontPage" id="frontPage" checked>
+							<strong>Create Front Page</strong>
+						</label>
+						<em>This will create a page titled &ldquo;Home&rdquo;, publish it and mark it as the Front Page.<br>You will still need to set your &ldquo;Home&rdquo; link to show your Front Page.</em>
+					</div>
 					<div class="well">
 						<h2>Module Pattern</h2>
 						<label style="float:left;margin-right:30px;"><strong>Number of Modules</strong><br>
