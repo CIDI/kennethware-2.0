@@ -125,10 +125,14 @@ $(function () {
         $(".kl_modal_title").remove();
         setTimeout(function () {
             $('.kl_modal_toggler').click(function (e) {
+                var kl_modal_width = 600;
                 e.preventDefault();
+                if ($('#kl_modal_width').length > 0) {
+                    kl_modal_width = $('#kl_modal_width').text();
+                }
                 $('#kl_modal').dialog({
                     modal: true,
-                    width: 600,
+                    width: kl_modal_width,
                     buttons: {
                         Close: function () {
                             $(this).dialog("close");
