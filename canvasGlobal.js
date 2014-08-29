@@ -44,7 +44,7 @@ if (matches) {
     setTimeout(function () {
         if ($('.new_page').length > 0 || ($('#editor_tabs').length > 0 && $('.edit_link').length === 0)) {
             // Include Font-Awesome icons
-            $("head").append($("<link/>", { rel: "stylesheet", href: "//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css"}));
+            $("head").append($("<link/>", { rel: "stylesheet", href: "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"}));
             // Load tools js
             $.getScript(klToolsPath + "js/tools_variables.js", function () {
                 console.log("KennethWare tools_variables loaded");
@@ -74,12 +74,24 @@ if (matches) {
         if ($("#usu-home-img").length > 0) {
             $('head').prepend('<style>#usu-home-img {background: url(/courses/' + coursenum + '/file_contents/course%20files/global/css/images/homePageBanner.jpg) no-repeat center center; }</style>');
         }
+        // add css for font-awesome if a course is using any of their icons
+        if ($(".fa").length > 0) {
+            $("head").append($("<link/>", { rel: "stylesheet", href: "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css?" + timestamp }));
+        }
+        // load custom course css if set
+        if ($("#kl_custom_css").length > 0) {
+            var customcssurl = "/courses/" + coursenum + "/file_contents/course%20files/global/css/style.css",
+                coursecss = document.createElement('link');
+            coursecss.type = "text/css";
+            coursecss.rel = "stylesheet";
+            coursecss.href = customcssurl;
+
+            if ($("#kl_custom_css").length > 0) {
+                $("head").append(coursecss);
+            }
+        }
     }, 1000);
 
-    // add css for font-awesome if a course is using any of their icons
-    if ($(".fa").length > 0) {
-        $("head").append($("<link/>", { rel: "stylesheet", href: "//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css?" + timestamp }));
-    }
 
     // The following provides the tooltip instructions for updating grade scheme
     function getURLParameter(name) {

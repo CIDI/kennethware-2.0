@@ -104,7 +104,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $head.append($('<link/>', { rel: 'stylesheet', href: klToolsVariables.common_legacy_normal_contrast, type: 'text/css' }));
             $head.append($('<link/>', { rel: 'stylesheet', href: klToolsPath + 'css/canvasMCEEditor.css?' + timestamp, type: 'text/css' }));
             $head.append($('<link/>', { rel: 'stylesheet', href: globalCSSPath + '?' + timestamp, type: 'text/css' }));
-            $head.append($("<link/>", { rel: "stylesheet", href: "//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css"}));
+            $head.append($("<link/>", { rel: "stylesheet", href: "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"}));
             if ($(iframeID).contents().find('#kl_custom_css').length > 0) {
                 $head.append($('<link/>', { rel: 'stylesheet', href: '/courses/' + coursenum + '/file_contents/course%20files/global/css/style.css?' + timestamp, type: 'text/css' }));
             }
@@ -3382,8 +3382,8 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             targetElement = '.kl_syllabus_learning_outcomes ul';
             sectionToScrollTo = '#kl_syllabus_outcomes';
         }
-        bloomsButton = '<a class="btn btn-mini kl_blooms_btn fa fa-book kl_margin_bottom_small" href="#" data-tooltip="top"' +
-            'title="Select action verbs from<br> Bloom\'s &rdquo;Revised&ldquo; Taxonomy">Bloom&rsquo;s Revised</a>';
+        bloomsButton = '<a class="btn btn-mini kl_blooms_btn kl_margin_bottom_small" href="#" data-tooltip="top"' +
+        'title="Select action verbs from<br> Bloom\'s &rdquo;Revised&ldquo; Taxonomy"><i class="fa fa-book"></i> Bloom&rsquo;s Revised</a>';
         bloomsBoxContent = '<div id="kl_blooms_box" style="display:none" title="Bloom\'s Revised">' +
             '<div class="btn-group-label"><span>Insert At:</span>' +
             '    <div class="btn-group">' +
@@ -3553,132 +3553,107 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             '</div>' +
             '</div>',
             faBrandsIconArray = [
-                'fa fa-adn', 'fa fa-android', 'fa fa-apple', 'fa fa-behance', 'fa fa-behance-square', 'fa fa-bitbucket',
-                'fa fa-bitbucket-square', 'fa fa-btc', 'fa fa-codepen', 'fa fa-css3', 'fa fa-delicious', 'fa fa-deviantart',
-                'fa fa-digg', 'fa fa-dribbble', 'fa fa-dropbox', 'fa fa-drupal', 'fa fa-empire', 'fa fa-facebook',
-                'fa fa-facebook-square', 'fa fa-flickr', 'fa fa-foursquare', 'fa fa-git', 'fa fa-git-square', 'fa fa-github',
-                'fa fa-github-alt', 'fa fa-github-square', 'fa fa-gittip', 'fa fa-google', 'fa fa-google-plus',
-                'fa fa-google-plus-square', 'fa fa-hacker-news', 'fa fa-html5', 'fa fa-instagram', 'fa fa-joomla', 'fa fa-jsfiddle',
-                'fa fa-linkedin', 'fa fa-linkedin-square', 'fa fa-linux', 'fa fa-maxcdn', 'fa fa-openid', 'fa fa-pagelines',
-                'fa fa-pied-piper', 'fa fa-pied-piper-alt', 'fa fa-pinterest', 'fa fa-pinterest-square', 'fa fa-qq', 'fa fa-rebel',
-                'fa fa-reddit', 'fa fa-reddit-square', 'fa fa-renren', 'fa fa-skype', 'fa fa-slack', 'fa fa-soundcloud',
-                'fa fa-spotify', 'fa fa-stack-exchange', 'fa fa-stack-overflow', 'fa fa-steam', 'fa fa-steam-square',
-                'fa fa-stumbleupon', 'fa fa-stumbleupon-circle', 'fa fa-tencent-weibo', 'fa fa-trello', 'fa fa-tumblr',
-                'fa fa-tumblr-square', 'fa fa-twitter', 'fa fa-twitter-square', 'fa fa-vimeo-square', 'fa fa-vine', 'fa fa-vk',
-                'fa fa-weibo', 'fa fa-weixin', 'fa fa-windows', 'fa fa-xing', 'fa fa-xing-square', 'fa fa-youtube',
-                'fa fa-youtube-play', 'fa fa-youtube-square'
+                'fa fa-adn', 'fa fa-android', 'fa fa-angellist', 'fa fa-apple', 'fa fa-behance', 'fa fa-behance-square', 'fa fa-bitbucket', 'fa fa-bitbucket-square',
+                'fa fa-btc', 'fa fa-cc-amex', 'fa fa-cc-discover', 'fa fa-cc-mastercard', 'fa fa-cc-paypal', 'fa fa-cc-stripe', 'fa fa-cc-visa', 'fa fa-codepen',
+                'fa fa-css3', 'fa fa-delicious', 'fa fa-deviantart', 'fa fa-digg', 'fa fa-dribbble', 'fa fa-dropbox', 'fa fa-drupal', 'fa fa-flickr',
+                'fa fa-facebook', 'fa fa-facebook-square', 'fa fa-foursquare', 'fa fa-git', 'fa fa-git-square', 'fa fa-github', 'fa fa-github-alt', 'fa fa-github-square',
+                'fa fa-gittip', 'fa fa-google', 'fa fa-google-plus', 'fa fa-google-plus-square', 'fa fa-google-wallet', 'fa fa-hacker-news', 'fa fa-html5', 'fa fa-instagram',
+                'fa fa-ioxhost', 'fa fa-joomla', 'fa fa-jsfiddle', 'fa fa-lastfm', 'fa fa-lastfm-square', 'fa fa-linkedin', 'fa fa-linkedin-square', 'fa fa-linux',
+                'fa fa-maxcdn', 'fa fa-meanpath', 'fa fa-openid', 'fa fa-pagelines', 'fa fa-paypal', 'fa fa-pied-piper', 'fa fa-pied-piper-alt', 'fa fa-qq',
+                'fa fa-pinterest', 'fa fa-pinterest-square', 'fa fa-empire', 'fa fa-rebel', 'fa fa-reddit', 'fa fa-reddit-square', 'fa fa-renren', 'fa fa-skype',
+                'fa fa-slack', 'fa fa-slideshare', 'fa fa-soundcloud', 'fa fa-spotify', 'fa fa-stack-exchange', 'fa fa-stack-overflow', 'fa fa-steam', 'fa fa-steam-square',
+                'fa fa-stumbleupon', 'fa fa-stumbleupon-circle', 'fa fa-tencent-weibo', 'fa fa-trello', 'fa fa-tumblr', 'fa fa-tumblr-square', 'fa fa-twitter', 'fa fa-twitter-square',
+                'fa fa-twitch', 'fa fa-vimeo-square', 'fa fa-vine', 'fa fa-vk', 'fa fa-weibo', 'fa fa-weixin', 'fa fa-windows', 'fa fa-yelp',
+                'fa fa-xing', 'fa fa-xing-square', 'fa fa-youtube-play', 'fa fa-youtube', 'fa fa-youtube-square'
             ],
             canvasIconArray1 =  [
-                'icon-stats', 'icon-paperclip', 'icon-media', 'icon-address-book', 'icon-reset', 'icon-announcement',
-                'icon-analytics', 'icon-student-view', 'icon-calendar-day', 'icon-trash', 'icon-speed-grader',
-                'icon-copy-course', 'icon-export-content', 'icon-import-content', 'icon-discussion',
-                'icon-discussion-reply', 'icon-peer-review', 'icon-discussion-new', 'icon-edit', 'icon-home',
-                'icon-settings', 'icon-compose', 'icon-flag', 'icon-video', 'icon-audio', 'icon-outdent', 'icon-indent',
-                'icon-outdent2', 'icon-indent2', 'icon-forward', 'icon-warning', 'icon-filmstrip', 'icon-rubric',
-                'icon-rubric-dark', 'icon-check-plus', 'icon-rss', 'icon-rss-add', 'icon-quiz', 'icon-question',
-                'icon-drop-down', 'icon-minimize', 'icon-end', 'icon-add', 'icon-info', 'icon-check', 'icon-clock',
-                'icon-calendar-month', 'icon-x', 'icon-refresh', 'icon-off', 'icon-updown', 'icon-user-add',
-                'icon-group', 'icon-star', 'icon-replied', 'icon-hour-glass', 'icon-assignment', 'icon-message',
-                'icon-note-dark', 'icon-note-light', 'icon-tag', 'icon-next-unread', 'icon-search', 'icon-lock',
-                'icon-unlock', 'icon-folder', 'icon-toggle-right', 'icon-toggle-left', 'icon-link', 'icon-lti'
+                'icon-instructure', 'icon-android', 'icon-apple', 'icon-facebook', 'icon-facebook-boxed', 'icon-github', 'icon-like', 'icon-linkedin',
+                'icon-lti', 'icon-mature', 'icon-pinterest', 'icon-skype', 'icon-twitter', 'icon-twitter-boxed', 'icon-windows', 'icon-wordpress',
+                'icon-copy-course', 'icon-export-content', 'icon-import-content', 'icon-next-unread', 'icon-replied', 'icon-reply-all-2', 'icon-reply-2',
+                'icon-forward', 'icon-outdent', 'icon-indent', 'icon-outdent2', 'icon-indent2', 'icon-arrow-open-left', 'icon-arrow-open-right', 'icon-toggle-right', 'icon-toggle-left',
+                'icon-mini-arrow-left', 'icon-mini-arrow-right', 'icon-arrow-left', 'icon-arrow-right', 'icon-mini-arrow-up', 'icon-mini-arrow-down', 'icon-arrow-up', 'icon-arrow-down',
+                'icon-quiz-stats-high', 'icon-quiz-stats-low', 'icon-remove-from-collection', 'icon-collection-save', 'icon-upload', 'icon-download', 'icon-collapse', 'icon-expand',
+                'icon-reset', 'icon-refresh', 'icon-off', 'icon-updown', 'icon-expand-items', 'icon-text-left', 'icon-text-center', 'icon-text-right',
+                'icon-stats', 'icon-analytics', 'icon-rubric', 'icon-rubric-dark', 'icon-text', 'icon-email', 'icon-invitation', 'icon-document',
+                'icon-note-light', 'icon-note-dark', 'icon-gradebook', 'icon-assignment', 'icon-ms-word', 'icon-ms-excel', 'icon-ms-ppt', 'icon-pdf',
+                'icon-zipped', 'icon-folder', 'icon-media', 'icon-video', 'icon-audio', 'icon-filmstrip', 'icon-muted', 'icon-unmuted'
             ],
             canvasIconArray2 = [
-                'icon-text', 'icon-timer', 'icon-pin', 'icon-like', 'icon-collection-save', 'icon-remove-from-collection', 'icon-collection',
-                'icon-group-new', 'icon-group-new-dark', 'icon-user', 'icon-standards', 'icon-search-address-book',
-                'icon-facebook', 'icon-facebook-boxed', 'icon-linkedin', 'icon-twitter', 'icon-twitter-boxed',
-                'icon-github', 'icon-skype', 'icon-wordpress', 'icon-pinterest', 'icon-gradebook', 'icon-document',
-                'icon-module', 'icon-mini-arrow-up', 'icon-mini-arrow-down', 'icon-mini-arrow-left',
-                'icon-mini-arrow-right', 'icon-arrow-up', 'icon-arrow-down', 'icon-arrow-left', 'icon-arrow-right',
-                'icon-email', 'icon-instructure', 'icon-ms-word', 'icon-ms-excel', 'icon-ms-ppt', 'icon-pdf',
-                'icon-apple', 'icon-windows', 'icon-android', 'icon-heart', 'icon-upload', 'icon-download',
-                'icon-text-left', 'icon-text-center', 'icon-text-right', 'icon-mature', 'icon-prerequisite',
-                'icon-educators', 'icon-calendar-days', 'icon-materials-required', 'icon-not-graded', 'icon-peer-graded',
-                'icon-bookmark', 'icon-printer', 'icon-image', 'icon-expand', 'icon-collapse', 'icon-invitation',
-                'icon-muted', 'icon-unmuted', 'icon-plus', 'icon-zipped', 'icon-publish', 'icon-unpublish',
-                'icon-unpublished', 'icon-discussion-check', 'icon-discussion-reply-2', 'icon-discussion-search',
-                'icon-discussion-x', 'icon-mark-as-read', 'icon-more', 'icon-syllabus', 'icon-settings-2', 'icon-reply-2',
-                'icon-reply-all-2', 'icon-drag-handle'
+                'icon-home', 'icon-trash', 'icon-edit', 'icon-compose', 'icon-paperclip', 'icon-pin', 'icon-flag', 'icon-tag',
+                'icon-announcement', 'icon-image', 'icon-search', 'icon-search-address-book', 'icon-lock', 'icon-unlock', 'icon-link', 'icon-collection',
+                'icon-printer', 'icon-rss', 'icon-rss-add', 'icon-star', 'icon-quiz-stats-deviation', 'icon-mark-as-read', 'icon-target', 'icon-settings',
+                'icon-settings-2', 'icon-hamburger', 'icon-syllabus', 'icon-module', 'icon-educators', 'icon-unpublished', 'icon-publish', 'icon-unpublish',
+                'icon-heart', 'icon-discussion', 'icon-discussion-reply', 'icon-discussion-check', 'icon-discussion-reply-2', 'icon-discussion-search', 'icon-discussion-x', 'icon-discussion-new',
+                'icon-bookmark', 'icon-warning', 'icon-check', 'icon-check-plus', 'icon-standards', 'icon-not-graded', 'icon-peer-graded', 'icon-speed-grader',
+                'icon-quiz', 'icon-question', 'icon-drop-down', 'icon-minimize', 'icon-quiz-stats-avg', 'icon-end', 'icon-add', 'icon-info',
+                'icon-x', 'icon-plus', 'icon-more', 'icon-drag-handle', 'icon-calendar-month', 'icon-prerequisite', 'icon-calendar-day', 'icon-calendar-days',
+                'icon-materials-required', 'icon-clock', 'icon-quiz-stats-time', 'icon-timer', 'icon-hour-glass', 'icon-student-view', 'icon-address-book', 'icon-peer-review',
+                'icon-user', 'icon-user-add', 'icon-group', 'icon-group-new', 'icon-group-new-dark'
             ],
             faDirectionIconArray = [
-                'fa fa-angle-double-down', 'fa fa-angle-double-left', 'fa fa-angle-double-right', 'fa fa-angle-double-up',
-                'fa fa-angle-down', 'fa fa-angle-left', 'fa fa-angle-right', 'fa fa-angle-up', 'fa fa-arrow-circle-down',
-                'fa fa-arrow-circle-left', 'fa fa-arrow-circle-right', 'fa fa-arrow-circle-up', 'fa fa-arrow-circle-o-down',
-                'fa fa-arrow-circle-o-left', 'fa fa-arrow-circle-o-right', 'fa fa-arrow-circle-o-up', 'fa fa-chevron-circle-down',
-                'fa fa-chevron-circle-left', 'fa fa-chevron-circle-right', 'fa fa-chevron-circle-up', 'fa fa-chevron-down',
-                'fa fa-chevron-left', 'fa fa-chevron-right', 'fa fa-chevron-up', 'fa fa-arrow-down', 'fa fa-arrow-left',
-                'fa fa-arrow-right', 'fa fa-arrow-up', 'fa fa-long-arrow-down', 'fa fa-long-arrow-left', 'fa fa-long-arrow-right',
-                'fa fa-long-arrow-up', 'fa fa-caret-down', 'fa fa-caret-left', 'fa fa-caret-right', 'fa fa-caret-up',
-                'fa fa-caret-square-o-down', 'fa fa-caret-square-o-left', 'fa fa-caret-square-o-right', 'fa fa-caret-square-o-up',
-                'fa fa-hand-o-down', 'fa fa-hand-o-left', 'fa fa-hand-o-right', 'fa fa-hand-o-up', 'fa fa-thumbs-down',
-                'fa fa-thumbs-o-down', 'fa fa-thumbs-o-up', 'fa fa-thumbs-up', 'fa fa-sign-in', 'fa fa-sign-out',
-                'fa fa-external-link', 'fa fa-external-link-square', 'fa fa-share-square', 'fa fa-share-square-o', 'fa fa-share',
-                'fa fa-reply', 'fa fa-reply-all', 'fa fa-mail-reply-all', 'fa fa-repeat', 'fa fa-undo', 'fa fa-history', 'fa fa-refresh',
-                'fa fa-retweet', 'fa fa-exchange', 'fa fa-random', 'fa fa-arrows', 'fa fa-arrows-alt', 'fa fa-arrows-h',
-                'fa fa-arrows-v', 'fa fa-level-down', 'fa fa-level-up'
+                'fa fa-angle-double-down', 'fa fa-angle-double-left', 'fa fa-angle-double-right', 'fa fa-angle-double-up', 'fa fa-angle-down', 'fa fa-angle-left', 'fa fa-angle-right', 'fa fa-angle-up',
+                'fa fa-arrow-circle-down', 'fa fa-arrow-circle-left', 'fa fa-arrow-circle-right', 'fa fa-arrow-circle-up', 'fa fa-arrow-circle-o-down', 'fa fa-arrow-circle-o-left', 'fa fa-arrow-circle-o-right', 'fa fa-arrow-circle-o-up',
+                'fa fa-chevron-circle-down', 'fa fa-chevron-circle-left', 'fa fa-chevron-circle-right', 'fa fa-chevron-circle-up', 'fa fa-chevron-down', 'fa fa-chevron-left', 'fa fa-chevron-right', 'fa fa-chevron-up',
+                'fa fa-arrow-down', 'fa fa-arrow-left', 'fa fa-arrow-right', 'fa fa-arrow-up', 'fa fa-long-arrow-down', 'fa fa-long-arrow-left', 'fa fa-long-arrow-right', 'fa fa-long-arrow-up',
+                'fa fa-caret-down', 'fa fa-caret-left', 'fa fa-caret-right', 'fa fa-caret-up', 'fa fa-caret-square-o-down', 'fa fa-caret-square-o-left', 'fa fa-caret-square-o-right', 'fa fa-caret-square-o-up',
+                'fa fa-hand-o-down', 'fa fa-hand-o-left', 'fa fa-hand-o-right', 'fa fa-hand-o-up', 'fa fa-thumbs-down', 'fa fa-thumbs-o-down', 'fa fa-thumbs-o-up', 'fa fa-thumbs-up',
+                'fa fa-sign-in', 'fa fa-sign-out', 'fa fa-external-link', 'fa fa-external-link-square', 'fa fa-share-square', 'fa fa-share-square-o', 'fa fa-share', 'fa fa-reply',
+                'fa fa-reply-all', 'fa fa-mail-reply-all', 'fa fa-repeat', 'fa fa-undo', 'fa fa-history', 'fa fa-refresh', 'fa fa-retweet', 'fa fa-exchange',
+                'fa fa-random', 'fa fa-arrows', 'fa fa-arrows-alt', 'fa fa-arrows-h', 'fa fa-arrows-v', 'fa fa-level-down', 'fa fa-level-up'
             ],
             faEditorIconArray = [
-                'fa fa-link', 'fa fa-chain-broken', 'fa fa-align-center', 'fa fa-align-justify', 'fa fa-align-left',
-                'fa fa-align-right', 'fa fa-outdent', 'fa fa-indent', 'fa fa-font', 'fa fa-bold', 'fa fa-header', 'fa fa-italic', 'fa fa-underline',
-                'fa fa-text-height', 'fa fa-text-width', 'fa fa-strikethrough', 'fa fa-superscript', 'fa fa-subscript', 'fa fa-paragraph',
-                'fa fa-columns', 'fa fa-bar-chart-o', 'fa fa-list-alt', 'fa fa-list', 'fa fa-list-ol', 'fa fa-list-ul',
-                'fa fa-table', 'fa fa-th', 'fa fa-th-large', 'fa fa-th-list', 'fa fa-tasks', 'fa fa-filter', 'fa fa-sort-alpha-asc',
-                'fa fa-sort-alpha-desc', 'fa fa-sort-amount-asc', 'fa fa-sort-amount-desc', 'fa fa-sort-numeric-asc',
-                'fa fa-sort-numeric-desc', 'fa fa-sort', 'fa fa-sort-asc', 'fa fa-sort-desc'
+                'fa fa-link', 'fa fa-chain-broken', 'fa fa-align-center', 'fa fa-align-justify', 'fa fa-align-left', 'fa fa-align-right', 'fa fa-outdent', 'fa fa-indent',
+                'fa fa-font', 'fa fa-bold', 'fa fa-header', 'fa fa-italic', 'fa fa-underline', 'fa fa-text-height', 'fa fa-text-width', 'fa fa-strikethrough',
+                'fa fa-superscript', 'fa fa-subscript', 'fa fa-paragraph', 'fa fa-columns', 'fa fa-bar-chart-o', 'fa fa-area-chart', 'fa fa-line-chart', 'fa fa-pie-chart',
+                'fa fa-list-alt', 'fa fa-list', 'fa fa-list-ol', 'fa fa-list-ul', 'fa fa-table', 'fa fa-th', 'fa fa-th-large', 'fa fa-th-list',
+                'fa fa-tasks', 'fa fa-filter', 'fa fa-sort-alpha-asc', 'fa fa-sort-alpha-desc', 'fa fa-sort-amount-asc', 'fa fa-sort-amount-desc', 'fa fa-sort-numeric-asc', 'fa fa-sort-numeric-desc',
+                'fa fa-sort', 'fa fa-sort-asc', 'fa fa-sort-desc'
             ],
             faFilesIconArray = [
-                'fa fa-download', 'fa fa-upload', 'fa fa-cloud-upload', 'fa fa-cloud-download', 'fa fa-folder', 'fa fa-folder-o',
-                'fa fa-folder-open', 'fa fa-folder-open-o', 'fa fa-hdd-o', 'fa fa-file', 'fa fa-clipboard', 'fa fa-files-o',
-                'fa fa-file-o', 'fa fa-file-text', 'fa fa-file-text-o', 'fa fa-floppy-o', 'fa fa-code-fork', 'fa fa-sitemap',
-                'fa fa-code', 'fa fa-terminal', 'fa fa-rss', 'fa fa-rss-square', 'fa fa-file-archive-o', 'fa fa-file-audio-o',
-                'fa fa-file-code-o', 'fa fa-file-excel-o', 'fa fa-file-image-o', 'fa fa-file-pdf-o', 'fa fa-file-powerpoint-o',
-                'fa fa-file-video-o', 'fa fa-file-word-o'
-
+                'fa fa-download', 'fa fa-upload', 'fa fa-cloud-upload', 'fa fa-cloud-download', 'fa fa-folder', 'fa fa-folder-o', 'fa fa-folder-open', 'fa fa-folder-open-o',
+                'fa fa-hdd-o', 'fa fa-file', 'fa fa-clipboard', 'fa fa-files-o', 'fa fa-file-o', 'fa fa-file-text', 'fa fa-file-text-o', 'fa fa-floppy-o',
+                'fa fa-code-fork', 'fa fa-sitemap', 'fa fa-code', 'fa fa-terminal', 'fa fa-rss', 'fa fa-rss-square', 'fa fa-file-archive-o', 'fa fa-file-audio-o',
+                'fa fa-file-code-o', 'fa fa-file-excel-o', 'fa fa-file-image-o', 'fa fa-file-pdf-o', 'fa fa-file-powerpoint-o', 'fa fa-file-video-o', 'fa fa-file-word-o'
             ],
             faMediaIconArray = [
-                'fa fa-arrows-alt', 'fa fa-backward', 'fa fa-compress', 'fa fa-eject', 'fa fa-expand', 'fa fa-fast-backward',
-                'fa fa-fast-forward', 'fa fa-forward', 'fa fa-pause', 'fa fa-play', 'fa fa-play-circle', 'fa fa-play-circle-o',
-                'fa fa-step-backward', 'fa fa-step-forward', 'fa fa-stop', 'fa fa-youtube-play', 'fa fa-video-camera',
-                'fa fa-volume-down', 'fa fa-volume-off', 'fa fa-volume-up', 'fa fa-film', 'fa fa-microphone',
-                'fa fa-microphone-slash', 'fa fa-headphones', 'fa fa-picture-o', 'fa fa-camera', 'fa fa-camera-retro',
-                'fa fa-crop'
+                'fa fa-arrows-alt', 'fa fa-backward', 'fa fa-compress', 'fa fa-eject', 'fa fa-expand', 'fa fa-fast-backward', 'fa fa-fast-forward', 'fa fa-forward',
+                'fa fa-pause', 'fa fa-play', 'fa fa-play-circle', 'fa fa-play-circle-o', 'fa fa-step-backward', 'fa fa-step-forward', 'fa fa-stop', 'fa fa-youtube-play',
+                'fa fa-video-camera', 'fa fa-volume-down', 'fa fa-volume-off', 'fa fa-volume-up', 'fa fa-film', 'fa fa-microphone', 'fa fa-microphone-slash', 'fa fa-headphones',
+                'fa fa-picture-o', 'fa fa-camera', 'fa fa-camera-retro', 'fa fa-crop'
             ],
             faObjectsIconArray = [
-                'fa fa-clock-o', 'fa fa-calendar', 'fa fa-calendar-o', 'fa fa-search', 'fa fa-search-minus', 'fa fa-search-plus',
-                'fa fa-anchor', 'fa fa-building-o',  'fa fa-building', 'fa fa-university', 'fa fa-home', 'fa fa-archive',
-                'fa fa-briefcase', 'fa fa-suitcase', 'fa fa-tag', 'fa fa-tags', 'fa fa-leaf', 'fa fa-tree', 'fa fa-inbox',
-                'fa fa-ticket', 'fa fa-trophy', 'fa fa-beer', 'fa fa-road',  'fa fa-car', 'fa fa-taxi', 'fa fa-truck',
-                'fa fa-paper-plane', 'fa fa-paper-plane-o', 'fa fa-plane', 'fa fa-fighter-jet', 'fa fa-space-shuttle',
-                'fa fa-rocket', 'fa fa-wrench', 'fa fa-tachometer', 'fa fa-trash-o', 'fa fa-graduation-cap', 'fa fa-umbrella',
-                'fa fa-glass', 'fa fa-coffee', 'fa fa-eraser', 'fa fa-magnet', 'fa fa-bell', 'fa fa-bell-o', 'fa fa-book',
-                'fa fa-bug', 'fa fa-bullhorn', 'fa fa-cutlery', 'fa fa-spoon', 'fa fa-fire-extinguisher', 'fa fa-flag',
-                'fa fa-flag-checkered', 'fa fa-flag-o', 'fa fa-bomb', 'fa fa-flask', 'fa fa-gamepad', 'fa fa-gavel', 'fa fa-magic',
-                'fa fa-gift', 'fa fa-key', 'fa fa-lock', 'fa fa-unlock', 'fa fa-unlock-alt', 'fa fa-thumb-tack', 'fa fa-lightbulb-o',
-                'fa fa-paperclip', 'fa fa-scissors', 'fa fa-pencil', 'fa fa-pencil-square', 'fa fa-pencil-square-o', 'fa fa-envelope',
-                'fa fa-envelope-o', 'fa fa-envelope-square', 'fa fa-desktop', 'fa fa-laptop', 'fa fa-tablet', 'fa fa-mobile',
-                'fa fa-keyboard-o', 'fa fa-phone', 'fa fa-phone-square', 'fa fa-fax', 'fa fa-print', 'fa fa-shopping-cart',
-                'fa fa-money', 'fa fa-credit-card', 'fa fa-ambulance', 'fa fa-h-square', 'fa fa-hospital-o', 'fa fa-medkit',
-                'fa fa-plus-square', 'fa fa-stethoscope', 'fa fa-user-md', 'fa fa-wheelchair', 'fa fa-life-ring'
+                'fa fa-clock-o', 'fa fa-calendar-o', 'fa fa-calendar', 'fa fa-search', 'fa fa-search-minus', 'fa fa-search-plus', 'fa fa-building-o', 'fa fa-building',
+                'fa fa-university', 'fa fa-home', 'fa fa-trash', 'fa fa-trash-o', 'fa fa-archive', 'fa fa-briefcase', 'fa fa-suitcase', 'fa fa-futbol-o',
+                'fa fa-birthday-cake', 'fa fa-gift', 'fa fa-tag', 'fa fa-tags', 'fa fa-leaf', 'fa fa-tree', 'fa fa-inbox', 'fa fa-ticket',
+                'fa fa-trophy', 'fa fa-beer', 'fa fa-road', 'fa fa-bicycle', 'fa fa-car', 'fa fa-taxi', 'fa fa-bus', 'fa fa-truck',
+                'fa fa-paper-plane', 'fa fa-paper-plane-o', 'fa fa-plane', 'fa fa-fighter-jet', 'fa fa-space-shuttle', 'fa fa-rocket', 'fa fa-wrench', 'fa fa-tachometer',
+                'fa fa-graduation-cap', 'fa fa-umbrella', 'fa fa-glass', 'fa fa-coffee', 'fa fa-eraser', 'fa fa-magnet', 'fa fa-book', 'fa fa-newspaper-o',
+                'fa fa-bug', 'fa fa-binoculars', 'fa fa-bullhorn', 'fa fa-cutlery', 'fa fa-spoon', 'fa fa-flag', 'fa fa-flag-checkered', 'fa fa-flag-o',
+                'fa fa-fire-extinguisher', 'fa fa-bomb', 'fa fa-flask', 'fa fa-key', 'fa fa-lock', 'fa fa-unlock', 'fa fa-unlock-alt', 'fa fa-anchor',
+                'fa fa-gamepad', 'fa fa-gavel', 'fa fa-magic', 'fa fa-thumb-tack', 'fa fa-paperclip', 'fa fa-scissors', 'fa fa-eyedropper', 'fa fa-paint-brush',
+                'fa fa-pencil', 'fa fa-pencil-square', 'fa fa-pencil-square-o', 'fa fa-envelope', 'fa fa-envelope-o', 'fa fa-envelope-square', 'fa fa-lightbulb-o', 'fa fa-plug',
+                'fa fa-desktop', 'fa fa-laptop', 'fa fa-tablet', 'fa fa-mobile', 'fa fa-calculator', 'fa fa-keyboard-o', 'fa fa-phone', 'fa fa-phone-square',
+                'fa fa-fax', 'fa fa-print', 'fa fa-shopping-cart', 'fa fa-money', 'fa fa-credit-card', 'fa fa-ambulance', 'fa fa-h-square', 'fa fa-hospital-o',
+                'fa fa-medkit', 'fa fa-plus-square', 'fa fa-stethoscope', 'fa fa-user-md', 'fa fa-wheelchair', 'fa fa-life-ring'
             ],
             faShapesIconArray = [
-                'fa fa-cloud', 'fa fa-asterisk', 'fa fa-tint', 'fa fa-fire', 'fa fa-location-arrow', 'fa fa-map-marker',
-                'fa fa-globe', 'fa fa-sun-o', 'fa fa-moon-o', 'fa fa-star', 'fa fa-star-o', 'fa fa-star-half-o', 'fa fa-star-half',
-                'fa fa-bolt', 'fa fa-music', 'fa fa-certificate', 'fa fa-eye', 'fa fa-eye-slash', 'fa fa-heart', 'fa fa-heart-o',
-                'fa fa-square', 'fa fa-square-o', 'fa fa-cube', 'fa fa-cubes', 'fa fa-bookmark', 'fa fa-bookmark-o', 'fa fa-spinner',
-                'fa fa-power-off', 'fa fa-compass', 'fa fa-circle', 'fa fa-adjust', 'fa fa-circle-o', 'fa fa-circle-thin',
-                'fa fa-circle-o-notch', 'fa fa-ban', 'fa fa-dot-circle-o', 'fa fa-bullseye', 'fa fa-smile-o', 'fa fa-meh-o',
-                'fa fa-frown-o', 'fa fa-users', 'fa fa-user', 'fa fa-male', 'fa fa-female', 'fa fa-child', 'fa fa-paw',
-                'fa fa-lemon-o', 'fa fa-shield', 'fa fa-ellipsis-h', 'fa fa-ellipsis-v', 'fa fa-cog', 'fa fa-cogs', 'fa fa-sliders',
-                'fa fa-puzzle-piece', 'fa fa-signal', 'fa fa-bars', 'fa fa-barcode', 'fa fa-qrcode', 'fa fa-crosshairs',
-                'fa fa-comments', 'fa fa-comments-o', 'fa fa-comment', 'fa fa-share-alt', 'fa fa-share-alt-square'
+                'fa fa-cloud', 'fa fa-asterisk', 'fa fa-tint', 'fa fa-fire', 'fa fa-location-arrow', 'fa fa-map-marker', 'fa fa-globe', 'fa fa-sun-o',
+                'fa fa-moon-o', 'fa fa-star', 'fa fa-star-o', 'fa fa-star-half-o', 'fa fa-star-half', 'fa fa-bolt', 'fa fa-music', 'fa fa-certificate',
+                'fa fa-eye', 'fa fa-eye-slash', 'fa fa-bell-o', 'fa fa-bell-slash-o', 'fa fa-bell', 'fa fa-bell-slash', 'fa fa-heart-o', 'fa fa-heart',
+                'fa fa-square-o', 'fa fa-square', 'fa fa-cube', 'fa fa-cubes', 'fa fa-bookmark', 'fa fa-bookmark-o', 'fa fa-spinner', 'fa fa-power-off',
+                'fa fa-toggle-off', 'fa fa-toggle-on', 'fa fa-compass', 'fa fa-circle', 'fa fa-adjust', 'fa fa-circle-o', 'fa fa-circle-thin', 'fa fa-circle-o-notch',
+                'fa fa-ban', 'fa fa-dot-circle-o', 'fa fa-bullseye', 'fa fa-smile-o', 'fa fa-meh-o', 'fa fa-frown-o', 'fa fa-users', 'fa fa-user',
+                'fa fa-male', 'fa fa-female', 'fa fa-child', 'fa fa-paw', 'fa fa-lemon-o', 'fa fa-shield', 'fa fa-ellipsis-h', 'fa fa-ellipsis-v',
+                'fa fa-cog', 'fa fa-cogs', 'fa fa-sliders', 'fa fa-puzzle-piece', 'fa fa-signal', 'fa fa-wifi', 'fa fa-bars', 'fa fa-barcode',
+                'fa fa-qrcode', 'fa fa-crosshairs', 'fa fa-comments', 'fa fa-comments-o', 'fa fa-comment', 'fa fa-share-alt', 'fa fa-share-alt-square'
             ],
             faSymbolsIconArray = [
-                'fa fa-minus', 'fa fa-minus-circle', 'fa fa-minus-square', 'fa fa-minus-square-o', 'fa fa-plus', 'fa fa-plus-circle',
-                'fa fa-plus-square', 'fa fa-plus-square-o', 'fa fa-times', 'fa fa-times-circle', 'fa fa-times-circle-o',
-                'fa fa-exclamation', 'fa fa-exclamation-circle', 'fa fa-exclamation-triangle', 'fa fa-question',
-                'fa fa-question-circle', 'fa fa-info', 'fa fa-info-circle', 'fa fa-quote-left', 'fa fa-quote-right',
-                'fa fa-check-square-o', 'fa fa-check-square', 'fa fa-check-circle-o', 'fa fa-check-circle', 'fa fa-check',
-                'fa fa-btc', 'fa fa-usd', 'fa fa-eur', 'fa fa-gbp', 'fa fa-inr', 'fa fa-jpy', 'fa fa-krw', 'fa fa-rub', 'fa fa-try',
-                'fa fa-recycle', 'fa fa-database', 'fa fa-language'
+                'fa fa-minus', 'fa fa-minus-circle', 'fa fa-minus-square', 'fa fa-minus-square-o', 'fa fa-plus', 'fa fa-plus-circle', 'fa fa-plus-square', 'fa fa-plus-square-o',
+                'fa fa-times', 'fa fa-times-circle', 'fa fa-times-circle-o', 'fa fa-exclamation', 'fa fa-exclamation-circle', 'fa fa-exclamation-triangle', 'fa fa-question', 'fa fa-question-circle',
+                'fa fa-info', 'fa fa-info-circle', 'fa fa-quote-left', 'fa fa-quote-right', 'fa fa-check-square-o', 'fa fa-check-square', 'fa fa-check-circle-o', 'fa fa-check-circle',
+                'fa fa-check', 'fa fa-at', 'fa fa-cc', 'fa fa-copyright', 'fa fa-ils', 'fa fa-tty', 'fa fa-btc', 'fa fa-usd',
+                'fa fa-eur', 'fa fa-gbp', 'fa fa-inr', 'fa fa-jpy', 'fa fa-krw', 'fa fa-rub', 'fa fa-try', 'fa fa-recycle',
+                'fa fa-database', 'fa fa-language'
             ],
             iconSections = {
                 'Brands': faBrandsIconArray,
@@ -3702,6 +3677,11 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $('#kl_icons').html('');
             $.each(arrayName, function () {
                 $('#kl_icons').append('<a class="kl_icon_change" rel="' + this + '" title="' + this + '"><i class="' + this + '"></i></a> ');
+            });
+            $('#kl_icons i').each(function () {
+                if($(this).hasClass('fa')) {
+                    $(this).parent('a').addClass('kl_fa_icon');
+                }
             });
         }
 
@@ -3734,7 +3714,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             }
         });
 
-        $('#kl_tools_accordion').after('<a href="#" class="kl_icons_activate kl_margin_bottom_small btn btn-mini fa fa-tags" style="margin-right: 5px;">Icons</a>');
+        $('#kl_tools_accordion').after('<a href="#" class="kl_icons_activate kl_margin_bottom_small btn btn-mini" style="margin-right: 5px;"><i class="fa fa-tags"></i> Icons</a>');
 
         // Trigger for Icon dialog
         $('.kl_icons_activate').click(function (e) {

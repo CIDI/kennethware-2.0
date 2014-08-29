@@ -62,7 +62,7 @@ if (matches) {
 	    setTimeout(function () {
 	        if ($('.new_page').length > 0 || ($('#editor_tabs').length > 0 && $('.edit_link').length === 0)) {
 	            // Include Font-Awesome icons
-	            $("head").append($("<link/>", { rel: "stylesheet", href: "//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css"}));
+	            $("head").append($("<link/>", { rel: "stylesheet", href: "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"}));
 	            // Load tools js
 	            $.getScript(klToolsPath + "js/tools_variables.js", function () {
 	                console.log("tools_variables loaded");
@@ -97,7 +97,7 @@ if (matches) {
 
     // add css for font-awesome if a course is using any of their icons
     if ($(".fa").length > 0) {
-        $("head").append($("<link/>", { rel: "stylesheet", href: "//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css?" + timestamp }));
+        $("head").append($("<link/>", { rel: "stylesheet", href: "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css?" + timestamp }));
     }
 
     // The following provides the tooltip instructions for updating grade scheme
