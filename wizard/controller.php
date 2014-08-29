@@ -1,4 +1,5 @@
 <?php 
+	ob_start();
 	// Display any php errors (for development purposes)
 	error_reporting(E_ALL);
 	ini_set('display_errors', '1');
@@ -29,7 +30,6 @@
 			require_once 'resources/wizardAPI.php';
 			// test token
 			$course = getCourse($_SESSION['courseID']);
-			var_dump($course);
 			if (isset($course->errors[0]->message)){
 				$sql = DB::query("DELETE FROM tokens WHERE canvas_user_id = $canvasUserID AND domain = '$domain'");
 				$generateToken = true;
