@@ -26,7 +26,6 @@
 		$frontPageParams = 'wiki_page[title]='.$frontPageTitle.'&wiki_page[body]='.urlencode($frontPageBody).'&wiki_page[published]=true&wiki_page[front_page]=true';
 		$newPage = createPage($courseID, $frontPageParams);
 		$responseData = json_decode($newPage, true);
-		var_dump($responseData);
 		$page_url = $responseData['url'];
 	}
 	// echo $modules;
