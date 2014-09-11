@@ -102,8 +102,8 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 timestamp =  +(new Date());
             $head.append($('<link/>', { rel: 'stylesheet', href: klToolsVariables.vendor_legacy_normal_contrast, type: 'text/css' }));
             $head.append($('<link/>', { rel: 'stylesheet', href: klToolsVariables.common_legacy_normal_contrast, type: 'text/css' }));
-            $head.append($('<link/>', { rel: 'stylesheet', href: klToolsPath + 'css/canvasMCEEditor.css?' + timestamp, type: 'text/css' }));
             $head.append($('<link/>', { rel: 'stylesheet', href: globalCSSPath + '?' + timestamp, type: 'text/css' }));
+            $head.append($('<link/>', { rel: 'stylesheet', href: klToolsPath + 'css/canvasMCEEditor.css?' + timestamp, type: 'text/css' }));
             $head.append($("<link/>", { rel: "stylesheet", href: "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"}));
             if ($(iframeID).contents().find('#kl_custom_css').length > 0) {
                 $head.append($('<link/>', { rel: 'stylesheet', href: '/courses/' + coursenum + '/file_contents/course%20files/global/css/style.css?' + timestamp, type: 'text/css' }));
@@ -3383,7 +3383,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             sectionToScrollTo = '#kl_syllabus_outcomes';
         }
         bloomsButton = '<a class="btn btn-mini kl_blooms_btn kl_margin_bottom_small" href="#" data-tooltip="top"' +
-        'title="Select action verbs from<br> Bloom\'s &rdquo;Revised&ldquo; Taxonomy"><i class="fa fa-book"></i> Bloom&rsquo;s Revised</a>';
+            'title="Select action verbs from<br> Bloom\'s &rdquo;Revised&ldquo; Taxonomy"><i class="fa fa-book"></i> Bloom&rsquo;s Revised</a>';
         bloomsBoxContent = '<div id="kl_blooms_box" style="display:none" title="Bloom\'s Revised">' +
             '<div class="btn-group-label"><span>Insert At:</span>' +
             '    <div class="btn-group">' +
@@ -3679,7 +3679,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 $('#kl_icons').append('<a class="kl_icon_change" rel="' + this + '" title="' + this + '"><i class="' + this + '"></i></a> ');
             });
             $('#kl_icons i').each(function () {
-                if($(this).hasClass('fa')) {
+                if ($(this).hasClass('fa')) {
                     $(this).parent('a').addClass('kl_fa_icon');
                 }
             });
