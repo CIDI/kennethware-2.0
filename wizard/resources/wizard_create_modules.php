@@ -66,10 +66,10 @@
 	    	} else {
 	    		$titleText = $moduleTitle;
 	    	}
-	    	$replaceTitle = get_string_between($pageBody, 'id="kl_banner_right">', '</span>');
-	    	// var_dump($replaceTitle);
-			$pageBody = str_replace('id="kl_banner_right">'.$replaceTitle.'</span>', 'id="kl_banner_right">'.$titleText.'</span>', $pageBody);
-	    	// var_dump($pageBody);
+	    	if ($titleText !== " "){
+	    		$replaceTitle = get_string_between($pageBody, 'id="kl_banner_right">', '</span>');
+				$pageBody = str_replace('id="kl_banner_right">'.$replaceTitle.'</span>', 'id="kl_banner_right">'.$titleText.'</span>', $pageBody);
+	    	}
 
 
 			$pageParams = 'wiki_page[title]='.$pageTitle.'&wiki_page[body]='.urlencode($pageBody);
