@@ -5299,7 +5299,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         identifyModuleList();
     }
     function updateContentCheck() {
-        if ($(iframeID).contents().find('#usu-template-banner').length > 0 || $(iframeID).contents().find('#template-wrapper').length > 0) {
+        if ($(iframeID).contents().find('#usu-template-banner').length > 0 || $(iframeID).contents().find('#template-wrapper').length > 0 ||  $(iframeID).contents().find('#usu-template-front').length > 0) {
             var updateHtml = '<div class="kl_update_tools_wrapper"><a href="#" style="width: 216px;" class="btn btn-danger kl_update_tools kl_margin_bottom" data-tooltip="top" ' +
                 'title="Update code created with previous versions of these tools"><i class="fa fa-wrench"></i> Update Code</a>' +
                 '<div class="kl_instructions">This content was created using an older version of these tools. You will need to update the code before using the current version.</div>';
