@@ -483,6 +483,7 @@
 	border: 2px solid #b94a48;
 	color: #b94a48;
 }
+.kl_quick_check_response,   .quickCheck .response {display: block;}
 .kl_mce_visual_sections .kl_quick_check .kl_quick_check_incorrect {
 }
 .kl_mce_visual_sections .kl_quick_check {

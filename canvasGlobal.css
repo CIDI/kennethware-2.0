@@ -194,7 +194,7 @@ font-family: FontAwesome !important;
 .kl_quick_check .kl_quick_check_correct, .kl_quick_check .kl_quick_check_incorrect, .kl_quick_check .kl_quick_check_response, .kl_quick_check_correct_answer .kl_quick_check_response{ background: #fff; -webkit-border-radius: 4px; -moz-border-radius: 4px; -ms-border-radius: 4px; -o-border-radius: 4px; border-radius: 4px; padding: 15px; display: block; }
 .kl_quick_check .kl_quick_check_correct { border: 2px solid #468847 !important; color: #468847 !important; }
 .kl_quick_check h4{ margin-top: 0px; }
-.kl_quick_check .kl_quick_check_response { border: 2px solid #f2f2f2; color: #468847; margin: 0 0 10px 20px; }
+.kl_quick_check .kl_quick_check_response { border: 2px solid #f2f2f2; color: #468847; margin: 0 0 10px 20px; display: none;}
 .kl_quick_check .kl_quick_check_incorrect { border: 2px solid #b94a48; color: #b94a48; }
 .kl_quick_check .next { width: 250px; float: right; margin-top: 15px; }
 .kl_quick_check .next .ellipsis { white-space: inherit; }
