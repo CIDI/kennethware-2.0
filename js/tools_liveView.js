@@ -1,6 +1,5 @@
 /*jslint browser: true, sloppy: false, eqeq: false, vars: false, maxerr: 50, indent: 4, plusplus: true */
-/*global $, jQuery, alert, coursenum, console, klToolsVariables,
-klToolsArrays */
+// global $, jQuery, alert, coursenum, console, klToolsVariables, klToolsPath, klToolsArrays, $context_module_item 
 
 // These tools were designed to facilitate rapid course development in the Canvas LMS
 // Copyright (C) 2014  Kenneth Larsen - Center for Innovative Design and Instruction
@@ -18,6 +17,87 @@ klToolsArrays */
 // http://www.gnu.org/licenses/agpl-3.0.html
 
 // This page contains code for the live view of custom tools
+function kl_update_progress() {
+    'use strict';
+    if ($('.edit-wiki').length === 0) {
+        var current_user_id = $("#identity .user_id").text(),
+            url = '/courses/' + coursenum + '/modules/progressions?user_id=' + current_user_id;
+        $.ajaxJSON(url, 'GET', {}, function (data) {
+            var module_id, item_id, complete_type, workflow_state, idx, indexComplete, requirements_met;
+            // console.log(data);
+            for (idx in data) {
+                if (data.hasOwnProperty(idx)) {
+                    module_id = data[idx].context_module_progression.context_module_id;
+                    workflow_state = data[idx].context_module_progression.workflow_state;
+                    if (workflow_state === 'locked') {
+                        $('#context_module_' + module_id).addClass('locked_module');
+                    }
+                    requirements_met = data[idx].context_module_progression.requirements_met;
+                    for (indexComplete in requirements_met) {
+                        if (requirements_met.hasOwnProperty(indexComplete)) {
+                            item_id = data[idx].context_module_progression.requirements_met[indexComplete].id;
+                            complete_type = data[idx].context_module_progression.requirements_met[indexComplete].type;
+                            $('#context_module_item_' + item_id).addClass('completed_item');
+                        }
+                    }
+                    // console.log(module_id + ': ' + workflow_state);
+                    $('#context_module_' + module_id + ' .progression_state').html(workflow_state);
+                }
+            }
+            $('#kl_gathering_data').remove();
+        });
+    } else {
+        $('#kl_gathering_data').remove();
+    }
+}
+
+// FRONT PAGE MODULE DETAILS
+//// Adaptation of Canvas function to populate due dates and points
+function kl_gatherModuleDetails() {
+    $.ajaxJSON('/courses/' + coursenum + '/modules/items/assignment_info', 'GET', {}, function (data) {
+        $.each(data, function (id, info) {
+            $context_module_item = $("#context_module_item_" + id);
+            var data = {};
+            if (info["points_possible"] != null) {
+                data["points_possible_display"] = info["points_possible"] + ' pts';
+                // data["points_possible_display"] = I18n.t('points_possible_short', '%{points} pts', { 'points': "" + info["points_possible"]});
+            }
+            if (info["due_date"] != null) {
+                data["due_date_display"] = $.dateString(info["due_date"]);
+            } else if (info["vdd_tooltip"] != null) {
+                info['vdd_tooltip']['link_href'] = $context_module_item.find('a.title').attr('href');
+                $context_module_item.find('.due_date_display').html(vddTooltipView(info["vdd_tooltip"]));
+            }
+            $context_module_item.fillTemplateData({data: data, htmlValues: ['points_possible_display']});
+        });
+        vddTooltip();
+    });
+}
+
+// Determine whether black or white text offers best contrast
+function getContrastYIQ(hexcolor) {
+    'use strict';
+    var r = parseInt(hexcolor.substr(0, 2), 16),
+        g = parseInt(hexcolor.substr(2, 2), 16),
+        b = parseInt(hexcolor.substr(4, 2), 16),
+        yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+    return (yiq >= 128) ? 'black' : 'white';
+}
+function getContrast50(hexcolor) {
+    'use strict';
+    return (parseInt(hexcolor, 16) > 0xffffff / 2) ? 'black' : 'white';
+}
+
+// Convert rgb color to hex
+function rgb2hex(rgb) {
+    'use strict';
+    rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    function hex(x) {
+        return ("0" + parseInt(x).toString(16)).slice(-2);
+    }
+    return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+}
+
 $(function () {
     'use strict';
     var anchor, studentName, activePanel, activeTab, icons, modalTitle, today;
@@ -40,7 +120,7 @@ $(function () {
         $("#verificationInstructions").hide();
         $(".submitVerify").click(function (e) {
             e.preventDefault();
-            console.log("Clicked");
+            // console.log("Clicked");
             if ($("#submission_body").length > 0) {
                 $("#submission_body").text($("#kl_student_verification").text());
             } else {
@@ -92,7 +172,7 @@ $(function () {
     }
     // Mobile Friendly Tabs
     if ($('.kl_tabbed_section').length > 0) {
-        console.log('Tabbed Section found');
+        // console.log('Tabbed Section found');
         // turn h4s into li's to create navigation section
         // Make sure the tab h3 titles are wrapped in <a href="#">
 
@@ -110,7 +190,7 @@ $(function () {
         // initialize tabs
         if ($('.kl_tabbed_section .kl_current_tab').length > 0) {
             activeTab = $(".kl_temp_tab_list li.kl_current_tab").index();
-            console.log(activeTab);
+            // console.log(activeTab);
             $('.kl_tabbed_section').tabs({active: activeTab});
         } else {
             $('.kl_tabbed_section').tabs();
@@ -204,7 +284,7 @@ $(function () {
                     selected = $("input[type='radio'][name='kl_quick_check_" + j + "']:checked");
                 if (selected.length > 0) {
                     selectedValue = selected.val();
-                    console.log(selectedValue);
+                    // console.log(selectedValue);
                 }
                 $("#" + quickCheckSection + " .kl_quick_check_response").hide().appendTo("#" + quickCheckSection + " .kl_quick_check");
                 showResponse = $("#" + quickCheckSection + " input[type='radio'][name='kl_quick_check_" + j + "']:checked").attr("rel");
@@ -310,22 +390,98 @@ $(function () {
     if ($('#kl_modules .kl_current').length > 0 && $('.kl_modules_quick_links').length > 0) {
         $("#kl_modules").after('<div id="kl_modules_current_details" />');
         $('#kl_modules .kl_current').each(function () {
-            var moduleID = $(this).find('.kl_connected_module').attr('id');
-            $("#kl_modules_current_details").append('<div id="kl_modules_current_details_' + moduleID + '" class="kl_modules_current_details" />');
-            $('#kl_modules_current_details_' + moduleID).load('/courses/' + coursenum + '/modules #context_module_' + moduleID, function () {
-                var moduleTitle = $('#kl_modules_current_details_' + moduleID + ' .name').first().text();
-                $('#kl_modules_current_details_' + moduleID).prepend('<h3 style="margin:0;">' + moduleTitle + ' <small>(Quick Links)</small></h3>');
-                $('#kl_modules_current_details_' + moduleID + ' .header').remove();
-                $('#kl_modules_current_details_' + moduleID + ' .ig-admin').remove();
-                $('#kl_modules_current_details_' + moduleID + ' .ig-details').remove();
-                $('#kl_modules_current_details_' + moduleID + ' .draggable-handle').remove();
-                $('#kl_modules_current_details_' + moduleID + ' .module_item_icons').remove();
+            var module_id = $(this).find('.kl_connected_module').attr('id');
+            $("#kl_modules_current_details").append('<div id="kl_modules_current_details_' + module_id + '" class="kl_modules_current_details" />');
+            $('#kl_modules_current_details_' + module_id).load('/courses/' + coursenum + '/modules #context_module_' + module_id).ajaxStop(function () {
+                $('.kl_modules_current_details .ig-header-admin').remove();
+                $('.kl_modules_current_details .ig-admin').remove();
+                $('.kl_modules_current_details .sortable-handle').remove();
+                $('.kl_modules_current_details .collapse_module_link i').remove();
+                $('.kl_modules_current_details .draggable-handle').remove();
+                $('.kl_modules_current_details .delete_prerequisite_link').remove();
+                kl_gatherModuleDetails();
+                kl_update_progress();
             });
         });
+
+    }
+    if ($('.kl_modules_tabbed').length > 0) {
+        // console.log('got here too');
+
+        var bgColor = '',
+            bgHex = '0F2439',
+            textColor = 'FFF';
+        $("head").append($("<link/>", { rel: "stylesheet", href: "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"}));
+        $('#kl_modules').before('<div id="kl_gathering_data" class="alert alert-info"><i class="fa fa-spinner fa-spin"></i> Gathering Progress Data</div>');
+        // Check theme color and set tab highlight to match
+        if ($('#kl_banner').length > 0) {
+            bgColor = $('#kl_banner').css('background-color');
+        }
+        if ($('#kl_banner').length === 0 && $('#kl_navigation').length > 0 || $('#kl_navigation').length > 0 && bgColor === 'rgba(0, 0, 0, 0)') {
+            bgColor = $('#kl_navigation').css('background-color');
+        }
+        // console.log(bgColor);
+        if (bgColor !== '' && bgColor !== 'rgba(0, 0, 0, 0)') {
+            bgHex = rgb2hex(bgColor);
+            // console.log(bgHex);
+            bgHex = bgHex.replace('#', '');
+            textColor = getContrastYIQ(bgHex);
+            textColor = getContrast50(bgHex);
+        }
+        // console.log(textColor);
+        var appendStyle = '<style>' +
+            '   #kl_wrapper #kl_modules .ui-tabs-active {background: #' + bgHex + '; }' +
+            '   #kl_wrapper #kl_modules ul li.ui-tabs-active a { color: ' + textColor + '}' +
+            '   #kl_wrapper #kl_modules .ui-tabs-nav li.ui-tabs-active[class*=icon-]:before,' +
+            '   #kl_wrapper #kl_modules .ui-tabs-nav li.ui-tabs-active[class^=icon-]:before,' +
+            '   #kl_wrapper #kl_modules .ui-tabs-nav li.ui-tabs-active[class*=fa-]:before,' +
+            '   #kl_wrapper #kl_modules .ui-tabs-nav li.ui-tabs-active[class^=fa-]:before {color: ' + textColor + ';}' +
+            '</style>';
+        $('head').append(appendStyle);
+
+        $('.kl_connected_module').each(function () {
+            var module_id = $(this).attr('id'),
+                myTitle = $(this).text(),
+                explodedTitle;
+            $(this).attr('href', '#kl_tabs_' + module_id);
+            explodedTitle = myTitle.split(':');
+            if (typeof explodedTitle[0] !== 'undefined') {
+                $(this).text(explodedTitle[0]);
+            }
+
+            $("#kl_modules").append('<div id="kl_tabs_' + module_id + '" />');
+            $('#kl_tabs_' + module_id).load('/courses/' + coursenum + '/modules #context_module_' + module_id, function () {
+                $('#kl_modules .delete_prerequisite_link').remove();
+                $('#kl_modules .ig-header-admin').remove();
+                $('#kl_modules .ig-admin').remove();
+                $('#kl_modules .sortable-handle').remove();
+                $('#kl_modules .collapse_module_link i').remove();
+                $('#kl_modules .draggable-handle').remove();
+            });
+        }).ajaxStop(function () {
+            kl_gatherModuleDetails();
+            kl_update_progress();
+        });
+        if ($('#kl_modules .kl_current').length > 0) {
+            activeTab = $("#kl_modules ul li.kl_current").index();
+            $('#kl_modules').tabs({active: activeTab});
+        } else {
+            $('#kl_modules').tabs();
+        }
+        // Make tabs equal in width
+        var maxWidth = 0;
+        $('#kl_modules .ui-tabs-nav li').each(function(){
+           if ($(this).width() > maxWidth){
+             maxWidth = $(this).width();
+           }
+        });
+        $('#kl_modules .ui-tabs-nav li').each(function(){
+            $(this).width(maxWidth+3);
+        });
+
     }
     // Banner on front page check (needs different css)
     if (($('a:contains("Edit Homepage")').length > 0 || $('a:contains("View Course Stream")').length > 0) && $('#kl_banner_image').length > 0) {
-        console.log('change front page banner');
         $('#kl_banner_image').addClass('kl_banner_image_front');
     }
 })();

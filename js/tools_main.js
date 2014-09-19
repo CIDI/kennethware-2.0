@@ -136,6 +136,31 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $('.kl_wizard_notice').show();
         }
     }
+    // check given element and parents to find target attribute color
+    function kl_getColor(jqueryElement, targetAttribute) {
+        // Is current element's targetAttribute color set?
+        var color = jqueryElement.css(targetAttribute);
+        if ((color !== 'rgba(0, 0, 0, 0)') && (color !== 'transparent')) {
+            // if so then return that color
+            return color;
+        }
+
+        // if not: are you at the body element?
+        if (jqueryElement.is("body")) {
+            // return known 'false' value
+            return false;
+        }
+        // call kl_getColor with parent item
+        return kl_getColor(jqueryElement.parent(), targetAttribute);
+    }
+    // Convert RGB color value to hexidecimal
+    function rgb2hex(rgb) {
+        rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+        function hex(x) {
+            return ("0" + parseInt(x).toString(16)).slice(-2);
+        }
+        return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+    }
     // Move the specified editor content to the top
     function scrollToElement(targetElement) {
         $(iframeID).contents().find(targetElement).get(0).scrollIntoView();
@@ -271,7 +296,9 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     // Initiate Color Pickers
     function initializeColorPicker(inputName, targetElement, attribute) {
         var chosenColor = '',
-            startingColor = $(iframeID).contents().find(targetElement).css(attribute);
+            startingColor = kl_getColor($(iframeID).contents().find(targetElement), attribute),
+            logElement;
+        console.log(targetElement + ': ' + attribute + ': ' + startingColor);
         $(inputName).spectrum({
             color: startingColor,
             showAlpha: true,
@@ -323,27 +350,27 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         // Styles that utilize the bottom banner div
     // Check and mark current theme in toolbar
     function currentPagesThemeCheck() {
-        if ($(iframeID).contents().find('#kl_wrapper').length > 0) {
-            var currentTheme = $(iframeID).contents().find('#kl_wrapper').attr('class');
-            $('#' + currentTheme).addClass('kl_active_theme');
-            $('.kl_theme_color_pickers').show();
-            initializeColorPicker('#kl_banner_background', '#kl_banner', 'background-color');
-            initializeColorPicker('#kl_banner_text', '#kl_banner', 'color');
-            initializeColorPicker('#kl_banner_heading_background', '#kl_banner h2', 'background');
-            initializeColorPicker('#kl_banner_heading_text', '#kl_banner h2', 'color');
-            initializeColorPicker('#kl_banner_left_background', '#kl_banner_left', 'background');
-            initializeColorPicker('#kl_banner_left_text', '#kl_banner_left', 'color');
-            initializeColorPicker('#kl_banner_type_background', '.kl_mod_text', 'background');
-            initializeColorPicker('#kl_banner_type_text', '.kl_mod_text', 'color');
-            initializeColorPicker('#kl_banner_title_background', '#kl_banner_right', 'background');
-            initializeColorPicker('#kl_banner_title_text', '#kl_banner_right', 'color');
-            initializeColorPicker('#kl_banner_num_background', '.kl_mod_num', 'background');
-            initializeColorPicker('#kl_banner_num_text', '.kl_mod_num', 'color');
-        }
+        addStyletoIframe();
         setTimeout(function () {
+            if ($(iframeID).contents().find('#kl_wrapper').length > 0) {
+                var currentTheme = $(iframeID).contents().find('#kl_wrapper').attr('class');
+                $('#' + currentTheme).addClass('kl_active_theme');
+                $('.kl_theme_color_pickers').show();
+                initializeColorPicker('#kl_banner_background', '#kl_banner', 'background-color');
+                initializeColorPicker('#kl_banner_text', '#kl_banner', 'color');
+                initializeColorPicker('#kl_banner_heading_background', '#kl_banner h2', 'background-color');
+                initializeColorPicker('#kl_banner_heading_text', '#kl_banner h2', 'color');
+                initializeColorPicker('#kl_banner_left_background', '#kl_banner_left', 'background-color');
+                initializeColorPicker('#kl_banner_left_text', '#kl_banner_left', 'color');
+                initializeColorPicker('#kl_banner_type_background', '.kl_mod_text', 'background-color');
+                initializeColorPicker('#kl_banner_type_text', '.kl_mod_text', 'color');
+                initializeColorPicker('#kl_banner_title_background', '#kl_banner_right', 'background-color');
+                initializeColorPicker('#kl_banner_title_text', '#kl_banner_right', 'color');
+                initializeColorPicker('#kl_banner_num_background', '.kl_mod_num', 'background-color');
+                initializeColorPicker('#kl_banner_num_text', '.kl_mod_num', 'color');
+            }
             bannerImageCheck();
         }, 1000);
-        addStyletoIframe();
     }
     // Loop through theme array and output thumbs
     function outputThemes(themeArray) {
@@ -448,15 +475,15 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $('.kl_theme_color_pickers').show();
             initializeColorPicker('#kl_banner_background', '#kl_banner', 'background-color');
             initializeColorPicker('#kl_banner_text', '#kl_banner', 'color');
-            initializeColorPicker('#kl_banner_heading_background', '#kl_banner h2', 'background');
+            initializeColorPicker('#kl_banner_heading_background', '#kl_banner h2', 'background-color');
             initializeColorPicker('#kl_banner_heading_text', '#kl_banner h2', 'color');
-            initializeColorPicker('#kl_banner_left_background', '#kl_banner_left', 'background');
+            initializeColorPicker('#kl_banner_left_background', '#kl_banner_left', 'background-color');
             initializeColorPicker('#kl_banner_left_text', '#kl_banner_left', 'color');
-            initializeColorPicker('#kl_banner_type_background', '.kl_mod_text', 'background');
+            initializeColorPicker('#kl_banner_type_background', '.kl_mod_text', 'background-color');
             initializeColorPicker('#kl_banner_type_text', '.kl_mod_text', 'color');
-            initializeColorPicker('#kl_banner_title_background', '#kl_banner_right', 'background');
+            initializeColorPicker('#kl_banner_title_background', '#kl_banner_right', 'background-color');
             initializeColorPicker('#kl_banner_title_text', '#kl_banner_right', 'color');
-            initializeColorPicker('#kl_banner_num_background', '.kl_mod_num', 'background');
+            initializeColorPicker('#kl_banner_num_background', '.kl_mod_num', 'background-color');
             initializeColorPicker('#kl_banner_num_text', '.kl_mod_num', 'color');
             removeTempContent();
         });
@@ -499,6 +526,19 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 $(iframeID).contents().find('#kl_navigation').insertAfter($(iframeID).contents().find('#kl_banner_image'));
             }
         });
+        $('.kl_highlight_element').mouseover(function () {
+            var el = $(this),
+                connectedElement = $(this).attr('rel'),
+                timeoutID = setTimeout(function () {
+                    $(iframeID).contents().find(connectedElement).addClass('kl_section_hover');
+                    scrollToElement('#kl_banner');
+                }, 500);
+            el.mouseout(function () {
+                connectedElement = $(this).attr('rel');
+                $(iframeID).contents().find(connectedElement).removeClass('kl_section_hover');
+                clearTimeout(timeoutID);
+            });
+        });
         customCSSCheck();
         currentPagesThemeCheck();
     }
@@ -539,11 +579,11 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             '       <table class="table table-striped table-condensed kl_theme_color_pickers"><thead><tr><th>Banner Colors</th><th>BG</th><th>Text</th></tr></thead>' +
             '           <tbody>' +
             '               <tr><td>Section</td><td class="pickerWidth"><input type="text" id="kl_banner_background"></td><td class="pickerWidth"><input type="text" id="kl_banner_text"></td></tr>' +
-            '               <tr><td>Heading</td><td class="pickerWidth"><input type="text" id="kl_banner_heading_background"></td><td class="pickerWidth"><input type="text" id="kl_banner_heading_text"></td></tr>' +
-            '               <tr><td>Unit Wrapper</td><td class="pickerWidth"><input type="text" id="kl_banner_left_background"></td><td class="pickerWidth"><input type="text" id="kl_banner_left_text"></td></tr>' +
-            '               <tr><td>Unit Name</td><td class="pickerWidth"><input type="text" id="kl_banner_type_background"></td><td class="pickerWidth"><input type="text" id="kl_banner_type_text"></td></tr>' +
-            '               <tr><td>Unit Number</td><td class="pickerWidth"><input type="text" id="kl_banner_num_background"></td><td class="pickerWidth"><input type="text" id="kl_banner_num_text"></td></tr>' +
-            '               <tr><td>Unit Title</td><td class="pickerWidth"><input type="text" id="kl_banner_title_background"></td><td class="pickerWidth"><input type="text" id="kl_banner_title_text"></td></tr>' +
+            '               <tr><td>Heading <a class="kl_highlight_element" rel="#kl_banner h2" data-tooltip="top" title="Highlight Section"><i class="fa fa-eye"></i></a></td><td class="pickerWidth"><input type="text" id="kl_banner_heading_background"></td><td class="pickerWidth"><input type="text" id="kl_banner_heading_text"></td></tr>' +
+            '               <tr><td>Unit Wrapper <a class="kl_highlight_element" rel="#kl_banner_left" data-tooltip="top" title="Highlight Section"><i class="fa fa-eye"></i></a></td><td class="pickerWidth"><input type="text" id="kl_banner_left_background"></td><td class="pickerWidth"><input type="text" id="kl_banner_left_text"></td></tr>' +
+            '               <tr><td>Unit Name <a class="kl_highlight_element" rel=".kl_mod_text" data-tooltip="top" title="Highlight Section"><i class="fa fa-eye"></i></a></td><td class="pickerWidth"><input type="text" id="kl_banner_type_background"></td><td class="pickerWidth"><input type="text" id="kl_banner_type_text"></td></tr>' +
+            '               <tr><td>Unit Number <a class="kl_highlight_element" rel=".kl_mod_num" data-tooltip="top" title="Highlight Section"><i class="fa fa-eye"></i></a></td><td class="pickerWidth"><input type="text" id="kl_banner_num_background"></td><td class="pickerWidth"><input type="text" id="kl_banner_num_text"></td></tr>' +
+            '               <tr><td>Unit Title <a class="kl_highlight_element" rel="#kl_banner_right" data-tooltip="top" title="Highlight Section"><i class="fa fa-eye"></i></a></td><td class="pickerWidth"><input type="text" id="kl_banner_title_background"></td><td class="pickerWidth"><input type="text" id="kl_banner_title_text"></td></tr>' +
             '           </tbody>' +
             '       </table>' +
             '       <label><input type="checkbox" id="kl_custom_css_add"> Course Level CSS</label> &nbsp;' +
@@ -651,9 +691,9 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             }
             addSectionControls(myTitle, myValue);
             $('.kl_element_color_pickers').show();
-            initializeColorPicker('#kl_h3_background', '#kl_wrapper h3', 'background');
+            initializeColorPicker('#kl_h3_background', '#kl_wrapper h3', 'background-color');
             initializeColorPicker('#kl_h3_text', '#kl_wrapper h3', 'color');
-            initializeColorPicker('#kl_h4_background', '#kl_wrapper h4', 'background');
+            initializeColorPicker('#kl_h4_background', '#kl_wrapper h4', 'background-color');
             initializeColorPicker('#kl_h4_text', '#kl_wrapper h4', 'color');
         });
         bindHover();
@@ -748,9 +788,9 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 // $('.kl_template_sections_list input:checkbox:checked').each(function () {
                 // });
                 $('.kl_element_color_pickers').show();
-                initializeColorPicker('#kl_h3_background', '#kl_wrapper h3', 'background');
+                initializeColorPicker('#kl_h3_background', '#kl_wrapper h3', 'background-color');
                 initializeColorPicker('#kl_h3_text', '#kl_wrapper h3', 'color');
-                initializeColorPicker('#kl_h4_background', '#kl_wrapper h4', 'background');
+                initializeColorPicker('#kl_h4_background', '#kl_wrapper h4', 'background-color');
                 initializeColorPicker('#kl_h4_text', '#kl_wrapper h4', 'color');
                 $('.kl_identify_section_' + this.value).hide();
             } else {
@@ -3886,7 +3926,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             moduleTitle +
             '<a href="#" class="kl_remove pull-right kl_modules_list_remove_item" rel="#' + moduleID + '" data-tooltip="top" title="Remove ' + moduleTitle + '">' +
             '<i class="icon-end"></i><span class="screenreader-only">Remove item</a>' +
-            '<div id="kl_module_dates_' + moduleID + '" rel="#' + moduleID + '"  class="kl_modules_choose_dates">' +
+            '<div id="kl_module_dates_' + moduleID + '" rel="#' + moduleID + '"  class="kl_modules_choose_dates hide">' +
             '    <label for="kl_modules_from' + moduleID + '" style="display:none;">From</label>' +
             '    <input type="text" id="kl_modules_from' + moduleID + '" class="kl_modules_from input-small" name="kl_modules_from" placeholder="Start Date" value="' + moduleStartDate + '">' +
             '    <label for="kl_modules_to' + moduleID + '">to</label>' +
@@ -4030,23 +4070,38 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             modListCheck();
         });
         if ($(iframeID).contents().find('.kl_modules_quick_links').length > 0) {
-            $('.kl_modules_quick_links_yes').addClass('active');
+            $('.kl_modules_quick_links_current').addClass('active');
+            $('.kl_modules_quick_links_tabbed').removeClass('active');
+            $('.kl_modules_quick_links_no').removeClass('active');
+        } else if ($(iframeID).contents().find('.kl_modules_tabbed').length > 0) {
+            $('.kl_modules_quick_links_current').removeClass('active');
+            $('.kl_modules_quick_links_tabbed').addClass('active');
             $('.kl_modules_quick_links_no').removeClass('active');
         } else {
-            $('.kl_modules_quick_links_yes').removeClass('active');
+            $('.kl_modules_quick_links_current').removeClass('active');
+            $('.kl_modules_quick_links_tabbed').removeClass('active');
             $('.kl_modules_quick_links_no').addClass('active');
         }
-        $('.kl_modules_quick_links_yes').click(function (e) {
+        $('.kl_modules_quick_links_current').click(function (e) {
             e.preventDefault();
-            $(iframeID).contents().find('#kl_modules').addClass('kl_modules_quick_links');
+            $(iframeID).contents().find('#kl_modules').addClass('kl_modules_quick_links').removeClass('kl_modules_tabbed');
             $(this).addClass('active');
+            $('.kl_modules_quick_links_no').removeClass('active');
+            $('.kl_modules_quick_links_tabbed').removeClass('active');
+        });
+        $('.kl_modules_quick_links_tabbed').click(function (e) {
+            e.preventDefault();
+            $(iframeID).contents().find('#kl_modules').addClass('kl_modules_tabbed').removeClass('kl_modules_quick_links');
+            $(this).addClass('active');
+            $('.kl_modules_quick_links_current').removeClass('active');
             $('.kl_modules_quick_links_no').removeClass('active');
         });
         $('.kl_modules_quick_links_no').click(function (e) {
             e.preventDefault();
-            $(iframeID).contents().find('#kl_modules').removeClass('kl_modules_quick_links');
+            $(iframeID).contents().find('#kl_modules').removeClass('kl_modules_quick_links kl_modules_tabbed');
             $(this).addClass('active');
-            $('.kl_modules_quick_links_yes').removeClass('active');
+            $('.kl_modules_quick_links_current').removeClass('active');
+            $('.kl_modules_quick_links_tabbed').removeClass('active');
         });
         identifyModuleList();
     }
@@ -4066,9 +4121,9 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             '<div>' +
             '    <div class="btn-group-label" style=>' +
             '        <span><i class="fa fa-calendar"></i> Date Fields: </a></span>' +
-            '        <div class="btn-group pull-right kl_modules_dates" style="display:none;">' +
-            '           <a href="#" class="btn btn-mini kl_modules_expand_dates"><i class="icon-expand"></i> Show</a>' +
-            '           <a href="#" class="btn btn-mini kl_modules_collapse_dates"><i class="icon-collapse"></i> Hide</a>' +
+            '        <div class="btn-group kl_modules_dates" style="display:none;">' +
+            '           <a href="#" class="btn btn-mini kl_modules_expand_dates"><i class="icon-expand"></i> Show Dates</a>' +
+            '           <a href="#" class="btn btn-mini kl_modules_collapse_dates"><i class="icon-collapse"></i> Hide Dates</a>' +
             '       </div>' +
             '    </div>' +
             '    <div class="kl_modules_list_controls_options kl_margin_bottom" style="clear: both;">' +
@@ -4078,8 +4133,9 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             '    <div class="btn-group-label moduleLinkControl">' +
             '        <span>Include Quick Links: </span>' +
             '        <div class="btn-group">' +
-            '            <a href="#" class="btn btn-mini kl_modules_quick_links_yes" data-tooltip="top" title="Will display links to current module items below grid">Yes</a>' +
-            '            <a href="#" class="btn btn-mini kl_modules_quick_links_no">No</a>' +
+            '            <a href="#" class="btn btn-mini kl_modules_quick_links_current" data-tooltip="top" title="Will display links to current module items below grid">Current</a>' +
+            '            <a href="#" class="btn btn-mini kl_modules_quick_links_tabbed" data-tooltip="top" title="Will tabbed list of modules with linked items">All</a>' +
+            '            <a href="#" class="btn btn-mini kl_modules_quick_links_no">None</a>' +
             '        </div>' +
             '    </div>' +
             '    <div class="btn-group-label kl_modules_list_link_controls kl_margin_bottom hide">' +
