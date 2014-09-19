@@ -68,7 +68,6 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             'create': bloomsRevisedCreate
         };
 
-
 /////////////////////////////////////////////////////////////
 //  SUPPORTING FUNCTIONS                                   //
 //  These functions are used throughout the various tools  //
@@ -630,22 +629,25 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         var newSectionName, newSectionID, newSection;
         // Grab name from text field
         newSectionName = $('#kl_new_section_name').val();
-        // Create a new id using the section name
-        newSectionID = newSectionName.replace(/\W/g, '_');
-        // Insert the new section into the TinyMCE editor
-        newSection = '<div id="' + newSectionID + '">' +
-            '    <h3>' + newSectionName + '</h3>' +
-            '    <p>Insert content here.</p>' +
-            '</div>';
-        $(iframeID).contents().find('#kl_wrapper').append(newSection);
-        // Clear the section name field
-        $('#kl_new_section_name').val('');
-        // Create an <li> for this section in the Sections List
-        addSectionControls(newSectionName, newSectionID);
-        // Put focus on new section
-        scrollToElement('#' + newSectionID);
-        highlightNewElement('#' + newSectionID);
-        bindHover();
+        // Check to make sure there is a section name
+        if (newSectionName !== '' && newSectionName !== ' ') {
+            // Create a new id using the section name
+            newSectionID = newSectionName.replace(/\W/g, '_');
+            // Insert the new section into the TinyMCE editor
+            newSection = '<div id="' + newSectionID + '">' +
+                '    <h3>' + newSectionName + '</h3>' +
+                '    <p>Insert content here.</p>' +
+                '</div>';
+            $(iframeID).contents().find('#kl_wrapper').append(newSection);
+            // Clear the section name field
+            $('#kl_new_section_name').val('');
+            // Create an <li> for this section in the Sections List
+            addSectionControls(newSectionName, newSectionID);
+            // Put focus on new section
+            scrollToElement('#' + newSectionID);
+            highlightNewElement('#' + newSectionID);
+            bindHover();
+        }
     }
 
     // This function loops through existing content and then updates section controls
@@ -657,8 +659,10 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 sectionTitle = $(this).find('h3:first').text();
             } else if ($(this).find('h4:first').length > 0) {
                 sectionTitle = $(this).find('h4:first').text();
-            } else {
+            } else if ($(this).text().length > 0 && $(this).text() !== ' ') {
                 sectionTitle = $(this).text();
+            } else {
+                sectionTitle = 'No Name';
             }
             if (sectionTitle.length > 25) {
                 sectionTitle = sectionTitle.substring(0, 23) + '...';
