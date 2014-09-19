@@ -275,7 +275,12 @@ var klToolsVariables = {
     klSyllabusPolicies: '<div id="kl_syllabus_policies">' +
         '   <h3>COURSE POLICIES</h3>' +
         '</div>',
-    // Instructor Feedback/communication
+    // Set notification preferences
+    klSyllabusNotificationPreferences: '<div class="kl_syllabus_notification_preferences" style="margin-left:10px;">' +
+        '   <h4>Canvas Notification Preferences</h4>' +
+        '   <p>Please make sure your Canvas notification preferences are set so that you will receive course announcments <a href="/profile/communication?task=announcements_asap" target="_blank">ASAP</a> or <a href="/profile/communication?task=announcements_daily" target="_blank">Daily</a> <em>(click the appropriate link to set your preference)</em>.</p>' +
+        '</div>',
+   // Instructor Feedback/communication
     klSyllabusCourseInstructorFeedback: '<div class="kl_syllabus_instructor_feedback" style="margin-left:10px;">' +
         '   <h4>Instructor Feedback/Communication</h4>' +
         '   <p>Text</p>' +
@@ -430,6 +435,7 @@ var klToolsArrays = {
         'kl_syllabus_exams': klToolsVariables.klSyllabusCourseExams
     },
     klSyllabusPoliciesSubSections: {
+        'kl_syllabus_notification_preferences': klToolsVariables.klSyllabusNotificationPreferences,
         'kl_syllabus_instructor_feedback': klToolsVariables.klSyllabusCourseInstructorFeedback,
         'kl_syllabus_student_feedback': klToolsVariables.klSyllabusCourseStudentFeedback,
         'kl_syllabus_syllabus_changes': klToolsVariables.klSyllabusCoursesSyllabusChanges,
