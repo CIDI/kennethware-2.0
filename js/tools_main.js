@@ -398,18 +398,27 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         // Look to see if kl_mod_num exists and grab value
         if ($(iframeID).contents().find('.kl_mod_num').length > 0 && $(iframeID).contents().find('.kl_mod_num').text() !== '') {
             modNum = $(iframeID).contents().find('.kl_mod_num').text();
+            if (modNum === ' ') {
+                modNum = '## ';
+            }
         } else {
             modNum = '## ';
         }
         // Look to see if kl_mod_text exists and grab value
         if ($(iframeID).contents().find('.kl_mod_text').length > 0 && $(iframeID).contents().find('.kl_mod_text').text() !== '') {
             modText = $(iframeID).contents().find('.kl_mod_text').text();
+            if (modText === ' ') {
+                modText = 'Text ';
+            }
         } else {
             modText = 'Text ';
         }
         // Look to see if title exists and grab value
         if ($(iframeID).contents().find('#kl_banner_right').length > 0 && $(iframeID).contents().find('#kl_banner_right').text() !== '') {
             modTitle = $(iframeID).contents().find('#kl_banner_right').text();
+            if (modTitle === ' ') {
+                modTitle = 'Title';
+            }
         } else {
             modTitle = 'Title';
         }
