@@ -4103,6 +4103,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $('.kl_modules_quick_links_current').removeClass('active');
             $('.kl_modules_quick_links_tabbed').addClass('active');
             $('.kl_modules_quick_links_no').removeClass('active');
+            $('.kl_module_column_controls').hide();
         } else {
             $('.kl_modules_quick_links_current').removeClass('active');
             $('.kl_modules_quick_links_tabbed').removeClass('active');
@@ -4114,6 +4115,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $(this).addClass('active');
             $('.kl_modules_quick_links_no').removeClass('active');
             $('.kl_modules_quick_links_tabbed').removeClass('active');
+            $('.kl_module_column_controls').show();
         });
         $('.kl_modules_quick_links_tabbed').unbind("click").click(function (e) {
             e.preventDefault();
@@ -4121,6 +4123,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $(this).addClass('active');
             $('.kl_modules_quick_links_current').removeClass('active');
             $('.kl_modules_quick_links_no').removeClass('active');
+            $('.kl_module_column_controls').hide();
         });
         $('.kl_modules_quick_links_no').unbind("click").click(function (e) {
             e.preventDefault();
@@ -4128,6 +4131,14 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $(this).addClass('active');
             $('.kl_modules_quick_links_current').removeClass('active');
             $('.kl_modules_quick_links_tabbed').removeClass('active');
+            $('.kl_module_column_controls').show();
+        });
+        $('.kl_modules_columns').unbind('click').click(function (e) {
+            e.preventDefault();
+            var columnNum = $(this).attr('rel');
+            $('.kl_modules_columns').removeClass('active');
+            $(iframeID).contents().find('#kl_modules').removeClass('kl_modules_columns_4 kl_modules_columns_3 kl_modules_columns_1').addClass(columnNum);
+            $(this).addClass('active');
         });
         identifyModuleList();
     }
@@ -4162,6 +4173,15 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             '            <a href="#" class="btn btn-mini kl_modules_quick_links_current" data-tooltip="top" title="Will display links to current module items below grid">Current</a>' +
             '            <a href="#" class="btn btn-mini kl_modules_quick_links_tabbed" data-tooltip="top" title="Will tabbed list of modules with linked items">All</a>' +
             '            <a href="#" class="btn btn-mini kl_modules_quick_links_no">None</a>' +
+            '        </div>' +
+            '    </div>' +
+            '    <div class="btn-group-label kl_margin_top_small kl_module_column_controls">' +
+            '        <span>Columns: </span>' +
+            '        <div class="btn-group">' +
+            '            <a href="#" class="btn btn-mini kl_modules_columns" rel="kl_modules_columns_1">1</a>' +
+            '            <a href="#" class="btn btn-mini kl_modules_columns" rel="">2</a>' +
+            '            <a href="#" class="btn btn-mini kl_modules_columns" rel="kl_modules_columns_3" data-tooltip="top" title="3 Large Display - 2 Small Display">3</a>' +
+            '            <a href="#" class="btn btn-mini kl_modules_columns" rel="kl_modules_columns_4" data-tooltip="top" title="4 Large Display - 3 Small Display">4</a>' +
             '        </div>' +
             '    </div>' +
             '    <div class="btn-group-label kl_modules_list_link_controls kl_margin_bottom hide">' +

@@ -1,7 +1,9 @@
 /*************************************/
-/* CUSTOM TOOLS Styles           */
+/* CUSTOM TOOLS 2.0 Styles           */
 /*************************************/
 @import url(https://fonts.googleapis.com/css?family=PT+Sans);
+
+#wrapper-container {overflow: visible !important; }
 /*************************************/
 /* ICONS                             */
 /*************************************/
@@ -252,6 +254,7 @@ li[class*=fa-]:before, li[class^=fa-]:before {font-family: FontAwesome !importan
 /* Generic Template */
 #kl_wrapper.generic #kl_banner #kl_banner_left .kl_mod_num{ margin-left: 8px; }
 
+
 /*************************/
 /* Banner Image          */
 /*************************/
@@ -305,6 +308,9 @@ li[class*=fa-]:before, li[class^=fa-]:before {font-family: FontAwesome !importan
 /*************************/
 #kl_wrapper #kl_modules {width: 100%; margin: 20px 0 10px 0; padding: 12px 0; overflow: hidden; text-align: left; border-top: 2px solid #565656; border-bottom: 1px solid #b6babf; }
 #kl_wrapper #kl_modules ul {column-count:2; -moz-column-count:2; /* Firefox */ -webkit-column-count:2; /* Safari and Chrome */ }
+#kl_wrapper #kl_modules.kl_modules_columns_1 ul {column-count:1; -moz-column-count:1; /* Firefox */ -webkit-column-count:1; /* Safari and Chrome */ }
+#kl_wrapper #kl_modules.kl_modules_columns_3 ul {column-count:3; -moz-column-count:3; /* Firefox */ -webkit-column-count:3; /* Safari and Chrome */ }
+#kl_wrapper #kl_modules.kl_modules_columns_4 ul {column-count:4; -moz-column-count:4; /* Firefox */ -webkit-column-count:4; /* Safari and Chrome */ }
 #kl_wrapper #kl_modules ul li {list-style-type: none; font-size: 1.2em; min-height: 30px; margin-bottom: 10px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
 #kl_wrapper #kl_modules ul li,
 #kl_wrapper #kl_modules ul li a, 
@@ -328,9 +334,8 @@ li[class*=fa-]:before, li[class^=fa-]:before {font-family: FontAwesome !importan
 #kl_wrapper .context_module h2 .name {position: relative; left: 0; top: 0; }
 #kl_wrapper .kl_modules_current_details .context_module {border: 1px solid #b6babf; border-radius: 3px;}
 /* Tabbed Modules Pill Nav */
-#kl_wrapper #kl_modules.kl_modules_tabbed ul.ui-tabs-nav li {list-style-type: none; font-size: 14px; min-height: 20px;}
-#kl_wrapper .ui-tabs .ui-tabs-nav li {border: 1px solid #fff; position: static; margin-bottom: 5px; box-shadow: none; line-height: 15px;}
-#kl_wrapper .ui-tabs .ui-tabs-nav li:hover {background: #EBEBEB; border-radius: 5px;}
+#kl_wrapper #kl_modules.kl_modules_tabbed ul.ui-tabs-nav li {list-style-type: none; font-size: 14px; min-height: 20px; border-radius: 5px; border-bottom: 1px solid #ccc !important;}
+#kl_wrapper #kl_modules.kl_modules_tabbed .ui-tabs .ui-tabs-nav li:hover {background: #EBEBEB; border-radius: 5px;}
 #kl_wrapper #kl_modules .ui-tabs-nav li[class*=icon-]:before,
 #kl_wrapper #kl_modules .ui-tabs-nav li[class^=icon-]:before,
 #kl_wrapper #kl_modules .ui-tabs-nav li[class*=fa-]:before,
@@ -602,6 +607,9 @@ li[class*=fa-]:before, li[class^=fa-]:before {font-family: FontAwesome !importan
   #kl_wrapper.kl_fp_panel_nav #kl_navigation {height: 274px; }
   #kl_wrapper.kl_fp_panel_nav #kl_navigation { margin: -274px 0 10px 0; }
   #kl_wrapper.kl_fp_horizontal_nav #kl_banner_image.kl_banner_image_front {height: 190px; }
+  #kl_wrapper #kl_modules.kl_modules_columns_3 ul {column-count:2; -moz-column-count:2; /* Firefox */ -webkit-column-count:2; /* Safari and Chrome */ }
+  #kl_wrapper #kl_modules.kl_modules_columns_4 ul {column-count:3; -moz-column-count:3; /* Firefox */ -webkit-column-count:3; /* Safari and Chrome */ }
+
 }
 @media screen and (max-width: 1124px) {
   #kl_wrapper #kl_banner_image, 
