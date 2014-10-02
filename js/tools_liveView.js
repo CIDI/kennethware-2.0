@@ -109,6 +109,9 @@ $(function () {
             $('h2.page-title').hide();
         }
     }
+    // Full width images
+    $('.kl_image_full_width').css('max-width', '100%');
+
 
     // STUDENT VERIFICATION FORM //
     if ($("#kl_student_verification").length > 0 && $(".student-version").length > 0) {
@@ -484,4 +487,5 @@ $(function () {
     if (($('a:contains("Edit Homepage")').length > 0 || $('a:contains("View Course Stream")').length > 0) && $('#kl_banner_image').length > 0) {
         $('#kl_banner_image').addClass('kl_banner_image_front');
     }
+
 })();

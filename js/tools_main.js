@@ -962,9 +962,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             '       <a class="help pull-right kl_tools_help" data-tooltip=\'{"tooltipClass":"popover right", "position":"right"}\'' +
             '      title="<div class=\'popover-title\'>Accessibility Checking Tools</div>' +
             '        <div class=\'popover-content\'>' +
-            '            <p>This section includes controls for adding in a custom accordion group or tab group.</p>' +
-            '            <p>The accordion or tabbed widget will appear at the cursor position. Panels can be rearranged after they are created.</p>' +
-            '            <p>On the Canvas mobile app, panels and headings will appear as h4 titles with the content following after.</p>' +
+            '            <p>Contains a button to strip all color from the page.</p>' +
             '        </div>">' +
             '           &nbsp;<span class="screenreader-only">Accessibility Checking Tools</span>' +
             '    </a>' +
@@ -2007,6 +2005,84 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             '</div>';
         $('#kl_tools_accordion').append(addAccordionSection);
         customHighlightsReady();
+    }
+
+/////////////////////////////////////////////////////////////
+//  IMAGE LAYOUT TOOLS                                     //
+/////////////////////////////////////////////////////////////
+    // Accessibility Checks
+    function imageToolsReady() {
+        $('.kl_image_left').unbind("click").click(function (e) {
+            e.preventDefault();
+            tinyMCE.DOM.addClass(tinyMCE.activeEditor.selection.getNode(), 'kl_style_image');
+            $(iframeID).contents().find('.kl_style_image').css({
+                'float': 'left',
+                'margin': '0 10px 10px 0'
+            }).removeClass('kl_style_image');
+        });
+        $('.kl_image_right').unbind("click").click(function (e) {
+            e.preventDefault();
+            tinyMCE.DOM.addClass(tinyMCE.activeEditor.selection.getNode(), 'kl_style_image');
+            $(iframeID).contents().find('.kl_style_image').css({
+                'float': 'right',
+                'margin': '0 0 10px 10px'
+            }).removeClass('kl_style_image');
+        });
+         $('.kl_image_width_trigger_fill').unbind("click").click(function (e) {
+            e.preventDefault();
+            tinyMCE.DOM.addClass(tinyMCE.activeEditor.selection.getNode(), 'kl_style_image kl_image_full_width');
+            $(iframeID).contents().find('.kl_style_image').css({
+                'width': '100%',
+                'height': 'auto',
+                'max-width': '100%'
+            }).removeClass('kl_style_image');
+        });
+         $('.kl_image_width_trigger_normal').unbind("click").click(function (e) {
+            e.preventDefault();
+            tinyMCE.DOM.addClass(tinyMCE.activeEditor.selection.getNode(), 'kl_style_image');
+            $(iframeID).contents().find('.kl_style_image').css({
+                'width': '',
+                'height': '',
+                'max-width': ''
+            }).removeClass('kl_style_image kl_image_full_width').removeAttr('data-mce-style');
+        });
+    }
+
+    ////// Custom Tools Accordion tab setup  //////
+    function imageTools() {
+        var addAccordionSection = '<h3 class="kl_wiki">' +
+            '   Image Layout Tools' +
+            '       <a class="help pull-right kl_tools_help" data-tooltip=\'{"tooltipClass":"popover right", "position":"right"}\'' +
+            '      title="<div class=\'popover-title\'>Image Layout Tools</div>' +
+            '        <div class=\'popover-content\'>' +
+            '            <p>This section includes controls for floating images left or right as well as making an image fill the width of the content area.</p>' +
+            '        </div>">' +
+            '           &nbsp;<span class="screenreader-only">Accessibility Checking Tools</span>' +
+            '    </a>' +
+            '</h3>' +
+            '<div>' +
+            '   <div class="btn-group-label kl_margin_bottom_small">' +
+            '      <span>Float:</span>' +
+            '      <div class="btn-group">' +
+            '         <a href="#" class="btn btn-mini kl_image_left"><i class="fa fa-arrow-left"></i> Left</a>' +
+            '         <a href="#" class="btn btn-mini kl_image_right">Right <i class="fa fa-arrow-right"></i></a>' +
+            '      </div>' +
+            '   </div>' +
+            '   <div class="btn-group-label">' +
+            '      <span>Width:</span>' +
+            '      <div class="btn-group">' +
+            '           <a href="#" class="btn btn-mini kl_image_width_trigger_fill">Fill</a>' +
+            '           <a href="#" class="btn btn-mini kl_image_width_trigger_normal">Normal</a>' +
+            '      </div>' +
+            '   </div>' +
+            '   <div class="kl_instructions_wrapper">' +
+            '      <div class="kl_instructions">' +
+            '          <p>Will change the currently selected image</p>' +
+            '      </div>' +
+            '   </div>' +
+            '</div>';
+        $('#kl_tools_accordion').append(addAccordionSection);
+        imageToolsReady();
     }
 
 /////////////////////////////////////////////////////////////
@@ -5587,7 +5663,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $('#kl_tools_wrapper').tabs({active: 1});
         }
         $('#kl_tools').html(visualBlocksButtons + customAccordionDiv + addStyleButton + removeEmptyButton);
-        $('#toolsTrigger').unbind("click").click(function (e) {
+        $('#toolsTrigger').click(function (e) {
             e.preventDefault();
             $('a:contains("HTML Editor")').get(0).scrollIntoView();
         });
@@ -5658,6 +5734,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         bordersAndSpacingTool();
         customButtons();
         customHighlights();
+        imageTools();
         popupContent();
         progressBar();
         quickCheck();
