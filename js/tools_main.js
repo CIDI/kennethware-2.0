@@ -160,6 +160,17 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         }
         return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
     }
+    // Determine whether black or white text offers best contrast
+    function getContrastYIQ(hexcolor) {
+        var r = parseInt(hexcolor.substr(0, 2), 16),
+            g = parseInt(hexcolor.substr(2, 2), 16),
+            b = parseInt(hexcolor.substr(4, 2), 16),
+            yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+        return (yiq >= 128) ? 'black' : 'white';
+    }
+    function getContrast50(hexcolor) {
+        return (parseInt(hexcolor, 16) > 0xffffff / 2) ? 'black' : 'white';
+    }
 
     // Move the specified editor content to the top
     function scrollToElement(targetElement) {
@@ -297,8 +308,8 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     function initializeColorPicker(inputName, targetElement, attribute) {
         var chosenColor = '',
             startingColor = kl_getColor($(iframeID).contents().find(targetElement), attribute),
-            logElement;
-        console.log(targetElement + ': ' + attribute + ': ' + startingColor);
+            bgHex,
+            textColor;
         $(inputName).spectrum({
             color: startingColor,
             showAlpha: true,
@@ -313,6 +324,11 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 $(inputName).val(tinycolor);
                 chosenColor = $(inputName).val();
                 $(iframeID).contents().find(targetElement).css(attribute, chosenColor);
+                if (attribute === 'background-color') {
+                    bgHex = chosenColor.replace('#', '');
+                    textColor = getContrastYIQ(bgHex);
+                    $(iframeID).contents().find(targetElement).css('color', textColor);
+                }
                 $(iframeID).contents().find(targetElement).removeAttr('data-mce-style');
             }
         });
