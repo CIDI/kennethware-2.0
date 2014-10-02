@@ -77,7 +77,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     function showPageTitle() {
         if ($('input#title').length > 0 && $('.kl_show_title').length === 0) {
             $('input#title').after(' <a href="#" class="btn kl_show_title" data-tooltip="top" title="Show this title as a heading above the page content">Show title</a>');
-            $('.kl_show_title').click(function (e) {
+            $('.kl_show_title').unbind("click").click(function (e) {
                 e.preventDefault();
                 if ($(this).hasClass('active')) {
                     $(this).removeClass('active').html('Show Title');
@@ -160,6 +160,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         }
         return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
     }
+
     // Move the specified editor content to the top
     function scrollToElement(targetElement) {
         $(iframeID).contents().find(targetElement).get(0).scrollIntoView();
@@ -232,13 +233,13 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         $('a:contains("HTML Editor")').get(0).scrollIntoView();
     }
     function displayTypes() {
-        $('.kl_mce_section_view, .kl_mce_labels_view').click(function (e) {
+        $('.kl_mce_section_view, .kl_mce_labels_view').unbind("click").click(function (e) {
             e.preventDefault();
             $(this).toggleClass('active');
             $('.kl_mce_preview').removeClass('active');
             setDisplay();
         });
-        $('.kl_mce_preview').click(function (e) {
+        $('.kl_mce_preview').unbind("click").click(function (e) {
             e.preventDefault();
             $(this).addClass('active');
             $('.kl_mce_section_view, .kl_mce_labels_view').removeClass('active');
@@ -247,7 +248,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     }
     // Cleans out all empty elements and elements containing only &nbsp;
     function removeEmpty() {
-        $('.kl_remove_empty').click(function (e) {
+        $('.kl_remove_empty').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('h2, h3, h4, p, h3, li, ol, ul').each(function () {
                 var myContents = $.trim($(this).html());
@@ -329,7 +330,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         } else {
             $(newSectionControls).appendTo('.kl_sections_list');
         }
-        $('.kl_delete_section').click(function (e) {
+        $('.kl_delete_section').unbind("click").click(function (e) {
             e.preventDefault();
             var sectionToRemove = $(this).attr('rel');
             $(this).parent('li').remove();
@@ -376,7 +377,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         $.each(themeArray, function () {
             $('.kl_wiki_themes').append('<li id="' + this + '" class="kl_template_theme kl_wiki_theme" rel="' + this +
                 '" title="' + this +
-                ' theme"><img src="' + klToolsPath + '/images/template_thumbs/' +
+                ' theme"><img src="' + klToolsPath + 'images/template_thumbs/' +
                 this + '.png" width="45" alt="' + this + '"></a></li>');
         });
     }
@@ -385,7 +386,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         $.each(themeArray, function () {
             $('.kl_fp_themes').append('<li><a href="#" id="' + this + '" class="kl_template_theme kl_fp_theme" rel="' + this +
                 '" title="' + this +
-                ' theme"><img src="' + klToolsPath + '/images/template_thumbs/' +
+                ' theme"><img src="' + klToolsPath + 'images/template_thumbs/' +
                 this + '.png" width="90"></a></li>');
         });
     }
@@ -444,7 +445,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     function themesReady() {
         var templateClass;
         // Output theme thumbs
-        $('.kl_template_theme').click(function (e) {
+        $('.kl_template_theme').unbind("click").click(function (e) {
             var previousTheme = '', wrapperClasses;
             e.preventDefault();
             templateCheck();
@@ -486,17 +487,17 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             initializeColorPicker('#kl_banner_num_text', '.kl_mod_num', 'color');
             removeTempContent();
         });
-        $('.kl_remove_banner_left').click(function (e) {
+        $('.kl_remove_banner_left').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('#kl_banner_left').remove();
             $(iframeID).contents().find('#kl_banner h2').attr('style', 'padding-left: 10px;');
         });
-        $('.kl_repair_theme').click(function (e) {
+        $('.kl_repair_theme').unbind("click").click(function (e) {
             e.preventDefault();
             templateClass = $('.kl_active_theme').attr('rel');
             themeElements(templateClass);
         });
-        $('.kl_theme_color_toggle a').click(function (e) {
+        $('.kl_theme_color_toggle a').unbind("click").click(function (e) {
             e.preventDefault();
             $('.kl_theme_color_toggle a').each(function () {
                 $(this).removeClass('active');
@@ -708,7 +709,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             '    title="Place the cursor on the element you want to become the module title and click this button.">' +
             '    <i class="icon-text"></i> Make Title' +
             '</a>').append($('.kl_remove_empty').clone());
-        $('.kl_mark_title').click(function (e) {
+        $('.kl_mark_title').unbind("click").click(function (e) {
             var existingTitle = tinyMCE.DOM.getParent(tinyMCE.activeEditor.selection.getNode()).innerHTML;
             e.preventDefault();
             templateCheck();
@@ -811,12 +812,12 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $('.kl_remove_sections_wrapper').hide();
         });
         // "+" button next to new section field
-        $('#kl_add_section').click(function (e) {
+        $('#kl_add_section').unbind("click").click(function (e) {
             e.preventDefault();
             createSection(sectionArray);
         });
         // Button that turns selected text into a predefined section
-        $('.kl_identify_section').click(function (e) {
+        $('.kl_identify_section').unbind("click").click(function (e) {
             e.preventDefault();
             var sectionName = $(this).attr('rel');
             wrapNamedSection(sectionName);
@@ -829,7 +830,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 return false;
             }
         });
-        $('.kl_sections_btn').click(function (e) {
+        $('.kl_sections_btn').unbind("click").click(function (e) {
             e.preventDefault();
             $('#kl_sections_box').dialog({ position: { my: 'right top', at: 'left top', of: '#kl_tools' }, modal: false, width: 255 });
         });
@@ -838,7 +839,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         });
         // Pull existing Canvas Pages
         // Duplicate Canvas list
-        $('.kl_existing_content_btn').click(function (e) {
+        $('.kl_existing_content_btn').unbind("click").click(function (e) {
             e.preventDefault();
             $('#kl_import_content_box').dialog({ position: { my: 'right top', at: 'left top', of: '#kl_tools' }, modal: false, width: 265 });
         });
@@ -915,7 +916,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
 /////////////////////////////////////////////////////////////
     // Accessibility Checks
     function accessibilityToolsReady() {
-        $('.kl_accessibility_color_check_toggle').click(function (e) {
+        $('.kl_accessibility_color_check_toggle').unbind("click").click(function (e) {
             e.preventDefault();
             if ($('body').hasClass('kl_accessibility_color_check')) {
                 $('body').removeClass('kl_accessibility_color_check');
@@ -956,7 +957,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
 
     //// SUPPORTING FUNCTIONS ////
     function deleteAccordion() {
-        $('.kl_delete_acc_tool').click(function (e) {
+        $('.kl_delete_acc_tool').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('.kl_custom_accordion_wrapper').remove();
             $(iframeID).contents().find('.kl_custom_accordion').remove();
@@ -973,7 +974,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         });
     }
     function markCurrentAcc() {
-        $('.kl_acc_mark_current').click(function (e) {
+        $('.kl_acc_mark_current').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('.kl_current_acc').removeClass('kl_current_acc');
             if ($(this).hasClass('kl_current_acc')) {
@@ -1099,7 +1100,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     }
     // Tabs //
     function deleteTabSection() {
-        $('.kl_delete_tab_tool').click(function (e) {
+        $('.kl_delete_tab_tool').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('.kl_tabbed_section').remove();
             $('#kl_tab_panels').empty();
@@ -1131,7 +1132,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         }
     }
     function markCurrentTab() {
-        $('.kl_tab_mark_current').click(function (e) {
+        $('.kl_tab_mark_current').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('.kl_current_tab').removeClass('kl_current_tab');
             if ($(this).hasClass('kl_current_tab')) {
@@ -1264,7 +1265,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     ////// READY FUNCTION //////
     function accordionTabsToolReady() {
     //// TYPE SELECTOR ////
-        $('.kl_accordion_or_tabs a').click(function (e) {
+        $('.kl_accordion_or_tabs a').unbind("click").click(function (e) {
             e.preventDefault();
             $('.kl_accordion_or_tabs a').each(function () {
                 $(this).removeClass('active');
@@ -1280,12 +1281,12 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         });
     //// ACCORDION ////
         // Add a new panel to bottom of list
-        $('#kl_add_acc_panel').click(function (e) {
+        $('#kl_add_acc_panel').unbind("click").click(function (e) {
             e.preventDefault();
             addAccPanel();
         });
         // Remove accordion section
-        $('.kl_delete_acc_panel').click(function (e) {
+        $('.kl_delete_acc_panel').unbind("click").click(function (e) {
             e.preventDefault();
             var panelToRemove = $(this).attr('rel');
             $(this).parent('li').remove();
@@ -1302,12 +1303,12 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         });
     //// TABS ////
         // Add a new panel to bottom of list
-        $('#kl_add_tab_panel').click(function (e) {
+        $('#kl_add_tab_panel').unbind("click").click(function (e) {
             e.preventDefault();
             addTabPanel();
         });
         // Remove tab section
-        $('.kl_delete_tab_panel').click(function (e) {
+        $('.kl_delete_tab_panel').unbind("click").click(function (e) {
             e.preventDefault();
             var panelToRemove = $(this).attr('rel');
             $(this).parent('li').remove();
@@ -1322,13 +1323,13 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             }
         });
         // Tab style
-        $('.kl_tab_minimal').click(function (e) {
+        $('.kl_tab_minimal').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('.kl_tabbed_section').addClass('ui-tabs-minimal');
             $(this).addClass('active');
             $('.kl_tab_regular').removeClass('active');
         });
-        $('.kl_tab_regular').click(function (e) {
+        $('.kl_tab_regular').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('.kl_tabbed_section').removeClass('ui-tabs-minimal');
             $(this).addClass('active');
@@ -1434,7 +1435,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     ////// On Ready/Click functions  //////
     function advancedListsReady() {
         //// TYPE SELECTOR ////
-        $('.kl_list_type a').click(function (e) {
+        $('.kl_list_type a').unbind("click").click(function (e) {
             var activeSection = $(this).attr('rel');
             e.preventDefault();
             $('.kl_list_type a').each(function () {
@@ -1447,22 +1448,22 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $(activeSection).show();
         });
     // Definition Lists
-        $('.kl_add_definition_list').click(function (e) {
+        $('.kl_add_definition_list').unbind("click").click(function (e) {
             e.preventDefault();
             var insertDefList = '<dl><dt>Term</dt><dd>Definition</dd></dl><p>&nbsp;</p>';
             tinyMCE.execCommand('mceInsertContent', false, insertDefList);
         });
-        $('.kl_add_dl_item').click(function (e) {
+        $('.kl_add_dl_item').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('dl').append('<dt>Term</dt><dd>Definition</dd>');
         });
-        $('.kl_dl_horizontal').click(function (e) {
+        $('.kl_dl_horizontal').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('dl').addClass('dl-horizontal');
             $(this).addClass('active');
             $('.kl_dl_vertical').removeClass('active');
         });
-        $('.kl_dl_vertical').click(function (e) {
+        $('.kl_dl_vertical').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('dl').removeClass('dl-horizontal');
             $(this).addClass('active');
@@ -1485,16 +1486,16 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         });
 
         // Ordered/Unordered Lists
-        $('.kl_list_style_type').click(function (e) {
+        $('.kl_list_style_type').unbind("click").click(function (e) {
             e.preventDefault();
             var selectedStyle = $(this).attr('rel');
             changeListStyle(selectedStyle);
         });
-        $('.kl_indent_list').click(function (e) {
+        $('.kl_indent_list').unbind("click").click(function (e) {
             e.preventDefault();
             tinyMCE.execCommand('Indent');
         });
-        $('.kl_outdent_list').click(function (e) {
+        $('.kl_outdent_list').unbind("click").click(function (e) {
             e.preventDefault();
             tinyMCE.execCommand('Outdent');
         });
@@ -1622,14 +1623,14 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     ////// On Ready/Click functions  //////
     function bordersAndSpacingReady() {
         var myClass, elementType, parentElement;
-        $('.kl_border_apply a').click(function (e) {
+        $('.kl_border_apply a').unbind("click").click(function (e) {
             e.preventDefault();
             $('.kl_border_apply a').each(function () {
                 $(this).removeClass('active');
             });
             $(this).addClass('active');
         });
-        $('.kl_custom_borders').click(function (e) {
+        $('.kl_custom_borders').unbind("click").click(function (e) {
             e.preventDefault();
             myClass = $(this).attr('rel');
             elementType = $('.kl_border_apply a.active').attr('rel');
@@ -1637,7 +1638,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             removeBorders(parentElement);
             tinyMCE.DOM.addClass(parentElement, myClass);
         });
-        $('.kl_custom_border_radius').click(function (e) {
+        $('.kl_custom_border_radius').unbind("click").click(function (e) {
             e.preventDefault();
             myClass = $(this).attr('rel');
             elementType = $('.kl_border_apply a.active').attr('rel');
@@ -1645,7 +1646,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             removeBorderRadius(parentElement);
             tinyMCE.DOM.addClass(parentElement, myClass);
         });
-        $('.kl_custom_padding').click(function (e) {
+        $('.kl_custom_padding').unbind("click").click(function (e) {
             e.preventDefault();
             myClass = $(this).attr('rel');
             elementType = $('.kl_border_apply a.active').attr('rel');
@@ -1653,7 +1654,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             removePadding(parentElement);
             tinyMCE.DOM.addClass(parentElement, myClass);
         });
-        $('.kl_content_box').click(function (e) {
+        $('.kl_content_box').unbind("click").click(function (e) {
             e.preventDefault();
             myClass = $(this).attr('rel');
             elementType = $('.kl_border_apply a.active').attr('rel');
@@ -1764,14 +1765,14 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     ////// On Ready/Click functions  //////
     function customButtonsReady() {
         var myClass, parentElement;
-        $('.kl_custom_button_style').click(function (e) {
+        $('.kl_custom_button_style').unbind("click").click(function (e) {
             e.preventDefault();
             myClass = $(this).attr('rel');
             parentElement = tinyMCE.activeEditor.dom.getParent(tinyMCE.activeEditor.selection.getNode(), 'a');
             removeButtonStyle(parentElement);
             tinyMCE.DOM.addClass(parentElement, myClass);
         });
-        $('.kl_custom_button_size').click(function (e) {
+        $('.kl_custom_button_size').unbind("click").click(function (e) {
             e.preventDefault();
             myClass = $(this).attr('rel');
             parentElement = tinyMCE.activeEditor.dom.getParent(tinyMCE.activeEditor.selection.getNode(), 'a');
@@ -1852,7 +1853,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     function customHighlightsReady() {
         var activeSection;
         //// TYPE SELECTOR ////
-        $('.kl_highlight_sections a').click(function (e) {
+        $('.kl_highlight_sections a').unbind("click").click(function (e) {
             e.preventDefault();
             $('.kl_highlight_sections a').each(function () {
                 $(this).removeClass('active');
@@ -1865,7 +1866,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $(activeSection).show();
         });
         // Block toggle between paragraph and div
-        $('.kl_block_alert_element a').click(function (e) {
+        $('.kl_block_alert_element a').unbind("click").click(function (e) {
             var applyTo;
             e.preventDefault();
             $('.kl_block_alert_element a').each(function () {
@@ -1883,7 +1884,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 $('.kl_wrap_highlight').show();
             }
         });
-        $('.kl_custom_highlight_style').click(function (e) {
+        $('.kl_custom_highlight_style').unbind("click").click(function (e) {
             var elementType, myClass, parentElement;
             e.preventDefault();
             elementType = $('.kl_block_alert_element .active').attr('rel');
@@ -1898,12 +1899,12 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 tinyMCE.DOM.addClass(parentElement, myClass);
             }
         });
-        $('.kl_wrap_highlight').click(function (e) {
+        $('.kl_wrap_highlight').unbind("click").click(function (e) {
             e.preventDefault();
             tinyMCE.activeEditor.focus();
             tinyMCE.activeEditor.selection.setContent('<div class="alert">' + tinyMCE.activeEditor.selection.getContent() + '</div>');
         });
-        $('.kl_custom_span_highlight').click(function (e) {
+        $('.kl_custom_span_highlight').unbind("click").click(function (e) {
             var myClass, parentElement;
             e.preventDefault();
             myClass = $(this).attr('rel');
@@ -2025,7 +2026,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $('.kl_nav_help').hide();
         }
         checkNavCount();
-        $('.kl_nav_remove_list_item').click(function (e) {
+        $('.kl_nav_remove_list_item').unbind("click").click(function (e) {
             e.preventDefault();
             var connectedItem = $(this).attr('rel');
             $(iframeID).contents().find(connectedItem).remove();
@@ -2050,7 +2051,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         } else {
             $('.kl_nav_add_item').html('<i class="icon-add"></i> Add Navigation');
         }
-        $('.kl_nav_add_item').click(function (e) {
+        $('.kl_nav_add_item').unbind("click").click(function (e) {
             e.preventDefault();
             if ($(iframeID).contents().find('#kl_navigation').length > 0) {
                 $(iframeID).contents().find('#kl_navigation ul').append('<li>New Item</li>');
@@ -2061,14 +2062,14 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 $('.kl_nav_add_item').html('<i class="icon-add"></i> Add Item');
             }
         });
-        $('.kl_nav_update_items').click(function (e) {
+        $('.kl_nav_update_items').unbind("click").click(function (e) {
             e.preventDefault();
             updateNavItems();
             checkNavCount();
         });
     }
     function activateNavItemsLink() {
-        $('.kl_nav_activate_items').click(function (e) {
+        $('.kl_nav_activate_items').unbind("click").click(function (e) {
             e.preventDefault();
             $('#kl_tools_accordion').accordion({ active: 7});
         });
@@ -2196,7 +2197,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         }
     }
     function popupDemos() {
-        $('.kl_demo_modal').click(function (e) {
+        $('.kl_demo_modal').unbind("click").click(function (e) {
             e.preventDefault();
             $('#kl_example_modal').dialog({
                 modal: true,
@@ -2213,7 +2214,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     ////// On Ready/Click functions  //////
     function popupReady() {
         //// TYPE SELECTOR ////
-        $('.kl_popup_sections a').click(function (e) {
+        $('.kl_popup_sections a').unbind("click").click(function (e) {
             e.preventDefault();
             $('.kl_popup_sections a').each(function () {
                 $(this).removeClass('active');
@@ -2226,31 +2227,31 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $(activeSection).show();
         });
         // Modals
-        $('.kl_add_modal').click(function (e) {
+        $('.kl_add_modal').unbind("click").click(function (e) {
             e.preventDefault();
             addModal();
         });
-        $('.add_modal_trigger').click(function (e) {
+        $('.add_modal_trigger').unbind("click").click(function (e) {
             e.preventDefault();
             tinyMCE.activeEditor.focus();
             tinyMCE.activeEditor.selection.setContent('<a href="#" class="kl_modal_toggler">' + tinyMCE.activeEditor.selection.getContent() + '</a>');
             // Check to see if modal contents already exist and add section
             addModal();
         });
-        $('.kl_remove_modal').click(function (e) {
+        $('.kl_remove_modal').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('#kl_modal').remove();
             $(iframeID).contents().find('.kl_modal_toggler').contents().unwrap();
             $('input[value=kl_modal]').parents('li').remove();
         });
-        $('.kl_remove_modal_trigger').click(function (e) {
+        $('.kl_remove_modal_trigger').unbind("click").click(function (e) {
             e.preventDefault();
             var parentElement = tinyMCE.activeEditor.dom.getParent(tinyMCE.activeEditor.selection.getNode(), 'a.kl_modal_toggler');
             tinyMCE.DOM.addClass(parentElement, 'kl_remove_trigger');
             $(iframeID).contents().find('.kl_remove_trigger').contents().unwrap();
         });
         // Tooltips
-        $('.kl_add_tooltip').click(function (e) {
+        $('.kl_add_tooltip').unbind("click").click(function (e) {
             var numToolTips = $(iframeID).contents().find('.kl_tooltip_trigger').length,
                 newToolTipNum = numToolTips + 1,
                 toolTipElement = '<div class="kl_tooltip_text kl_tooltip_' + newToolTipNum + '">Tooltip Text</div>',
@@ -2262,7 +2263,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $(iframeID).contents().find('.kl_create_tooltip').prepend(toolTipElement).removeClass('kl_create_tooltip');
             checkTooltips();
         });
-        $('.kl_remove_tooltip').click(function (e) {
+        $('.kl_remove_tooltip').unbind("click").click(function (e) {
             var parentElement, tipContainer;
             e.preventDefault();
             parentElement = tinyMCE.activeEditor.dom.getParent(tinyMCE.activeEditor.selection.getNode(), 'a.kl_tooltip_trigger');
@@ -2272,19 +2273,19 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $(iframeID).contents().find('.kl_remove_tip').contents().unwrap();
             checkTooltips();
         });
-        $('.kl_show_tooltips').click(function (e) {
+        $('.kl_show_tooltips').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('.kl_tooltip_text').show();
             checkTooltips();
         });
-        $('.kl_hide_tooltips').click(function (e) {
+        $('.kl_hide_tooltips').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('.kl_tooltip_text').hide();
             checkTooltips();
         });
 
         // Popovers
-        $('.kl_add_popover').click(function (e) {
+        $('.kl_add_popover').unbind("click").click(function (e) {
             var numPopovers, newPopoverNum, PopoverElement, parentElement;
             e.preventDefault();
             numPopovers = $(iframeID).contents().find('.kl_popover_trigger').length;
@@ -2297,7 +2298,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $(iframeID).contents().find('.kl_create_popover').prepend(PopoverElement).removeClass('kl_create_popover');
             checkPopovers();
         });
-        $('.kl_remove_popover').click(function (e) {
+        $('.kl_remove_popover').unbind("click").click(function (e) {
             var parentElement, popoverContainer;
             e.preventDefault();
             parentElement = tinyMCE.activeEditor.dom.getParent(tinyMCE.activeEditor.selection.getNode(), 'a.kl_popover_trigger');
@@ -2307,23 +2308,23 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $(iframeID).contents().find('.kl_remove_tip').contents().unwrap();
             checkPopovers();
         });
-        $('.kl_show_popovers').click(function (e) {
+        $('.kl_show_popovers').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('.kl_popover_content').show();
             checkPopovers();
         });
-        $('.kl_hide_popovers').click(function (e) {
+        $('.kl_hide_popovers').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('.kl_popover_content').hide();
             checkPopovers();
         });
         // Read More
-        $('.kl_add_read_more').click(function (e) {
+        $('.kl_add_read_more').unbind("click").click(function (e) {
             e.preventDefault();
             tinyMCE.activeEditor.focus();
             tinyMCE.activeEditor.selection.setContent('<div class="expander">' + tinyMCE.activeEditor.selection.getContent() + '</div>');
         });
-        $('.kl_remove_read_more').click(function (e) {
+        $('.kl_remove_read_more').unbind("click").click(function (e) {
             e.preventDefault();
             var parentElement = tinyMCE.activeEditor.dom.getParent(tinyMCE.activeEditor.selection.getNode(), 'div.expander');
             tinyMCE.DOM.addClass(parentElement, 'kl_remove_expander');
@@ -2459,7 +2460,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
 
    ////// Supporting functions  //////
     function deleteProgressBar() {
-        $('.kl_progress_bar_delete').click(function (e) {
+        $('.kl_progress_bar_delete').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('#kl_progress_bar').remove();
             $('input[value=kl_progress_bar]').parents('li').remove();
@@ -2570,7 +2571,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 '</tr>';
         $('#kl_progress_bar_section_controls tbody').append(newSectionControls);
         $(iframeID).contents().find('.kl_progress_bar_wrapper').append(newBarSectionHtml);
-        $('.kl_progress_bar_delete_section').click(function (e) {
+        $('.kl_progress_bar_delete_section').unbind("click").click(function (e) {
             e.preventDefault();
             var connectedSection = $(this).attr('rel');
             $(this).parents('tr').remove();
@@ -2643,16 +2644,16 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     }
    ////// On Ready/Click functions  //////
     function progressBarReady() {
-        $('.kl_progress_bar_add').click(function (e) {
+        $('.kl_progress_bar_add').unbind("click").click(function (e) {
             e.preventDefault();
             addProgressBar();
             $(this).hide();
         });
-        $('.kl_progress_bar_add_section').click(function (e) {
+        $('.kl_progress_bar_add_section').unbind("click").click(function (e) {
             e.preventDefault();
             addProgressBarSection();
         });
-        $('.kl_progress_bar_label_position').click(function (e) {
+        $('.kl_progress_bar_label_position').unbind("click").click(function (e) {
             e.preventDefault();
             addProgressBar();
             var pbPosition = $(this).attr('rel');
@@ -2669,7 +2670,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $('.kl_progress_bar_label_position.active').removeClass('active');
             $(this).addClass('active');
         });
-        $('.kl_progress_bar_height').click(function (e) {
+        $('.kl_progress_bar_height').unbind("click").click(function (e) {
             e.preventDefault();
             addProgressBar();
             var pbHeight = $(this).attr('rel');
@@ -2818,7 +2819,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 identifyQuestions(quickCheckNum);
             });
         }
-        $('.kl_quick_check_mark_correct').click(function (e) {
+        $('.kl_quick_check_mark_correct').unbind("click").click(function (e) {
             e.preventDefault();
             connectedAnswer = $(this).attr('rel');
             connectedSection = $(this).parents('ol').attr('rel');
@@ -2832,13 +2833,13 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 $(this).addClass('kl_quick_check_correct');
             }
         });
-        $('.kl_quick_check_remove_answer').click(function (e) {
+        $('.kl_quick_check_remove_answer').unbind("click").click(function (e) {
             e.preventDefault();
             connectedAnswer = $(this).attr('rel');
             $(iframeID).contents().find(connectedAnswer).remove();
             $(this).parents('li').remove();
         });
-        $('.kl_quick_check_remove').click(function (e) {
+        $('.kl_quick_check_remove').unbind("click").click(function (e) {
             e.preventDefault();
             quickCheckNum = $(this).attr('rel');
             $(iframeID).contents().find('#' + quickCheckNum).remove();
@@ -2856,7 +2857,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
 
     ////// On Ready/Click functions  //////
     function quickCheckReady() {
-        $('.kl_quick_check_add').click(function (e) {
+        $('.kl_quick_check_add').unbind("click").click(function (e) {
             var quickCheckNum, quickCheckNumber, quickCheckTemplate;
             e.preventDefault();
             templateCheck();
@@ -2891,7 +2892,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             bindHover();
             $(this).hide();
         });
-        $('.kl_quick_check_add_answer').click(function (e) {
+        $('.kl_quick_check_add_answer').unbind("click").click(function (e) {
             var quickCheckNum, quickCheckAnswerContent;
             e.preventDefault();
             quickCheckNum = $(this).attr('rel');
@@ -2909,11 +2910,11 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             highlightNewElement('#' + quickCheckNum + ' .kl_quick_check_answer:last');
             identifyQuickChecks();
         });
-        $('.kl_quick_check_update_answers').click(function (e) {
+        $('.kl_quick_check_update_answers').unbind("click").click(function (e) {
             e.preventDefault();
             identifyQuickChecks();
         });
-        $('.kl_quick_check_sections a').click(function (e) {
+        $('.kl_quick_check_sections a').unbind("click").click(function (e) {
             e.preventDefault();
             $('.kl_quick_check_sections a').each(function () {
                 $(this).removeClass('active');
@@ -2975,7 +2976,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
 
     ////// On Ready/Click functions  //////
     function activateSocialMediaLink() {
-        $('.kl_social_media_activate').click(function (e) {
+        $('.kl_social_media_activate').unbind("click").click(function (e) {
             e.preventDefault();
             $('#kl_tools_accordion').accordion({ active: 12});
         });
@@ -3053,7 +3054,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             '    </div>' +
             '</div>';
         $('#kl_tools_accordion').append(addAccordionSection);
-        $('.kl_social_media_update_links').click(function (e) {
+        $('.kl_social_media_update_links').unbind("click").click(function (e) {
             e.preventDefault();
             updateSocialMediaLinks();
         });
@@ -3132,7 +3133,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     ////// On Ready/Click functions  //////
     function tablesReady() {
         // Make the first table row headings
-        $('.kl_table_add_heading').click(function (e) {
+        $('.kl_table_add_heading').unbind("click").click(function (e) {
             var parentTable, topRow;
             e.preventDefault();
             parentTable = tinyMCE.activeEditor.dom.getParent(tinyMCE.activeEditor.selection.getNode(), 'table');
@@ -3152,7 +3153,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             checkTable(parentTable);
         });
         // Make table sortable
-        $('.kl_table_make_sortable').click(function (e) {
+        $('.kl_table_make_sortable').unbind("click").click(function (e) {
             var parentTable, currentClass, regExpMatch;
             e.preventDefault();
             parentTable = tinyMCE.activeEditor.dom.getParent(tinyMCE.activeEditor.selection.getNode(), 'table');
@@ -3167,13 +3168,13 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             }
         });
         // Buttons for manipulating the mce table
-        $('.kl_table_mce_command').click(function (e) {
+        $('.kl_table_mce_command').unbind("click").click(function (e) {
             e.preventDefault();
             var myCommand = $(this).attr('rel');
             tinymce.activeEditor.execCommand(myCommand);
         });
         // Insert a table using the custom tool
-        $('.kl_table_insert').click(function (e) {
+        $('.kl_table_insert').unbind("click").click(function (e) {
             e.preventDefault();
             insertTable();
         });
@@ -3192,7 +3193,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             }
         });
         // applying and removing tr backgrounds
-        $('.kl_table_row_backgrounds').click(function (e) {
+        $('.kl_table_row_backgrounds').unbind("click").click(function (e) {
             var parentTable, parentRow, rowClass;
             e.preventDefault();
             parentTable = tinyMCE.activeEditor.dom.getParent(tinyMCE.activeEditor.selection.getNode(), 'table');
@@ -3203,7 +3204,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             checkTable(parentTable);
         });
         // Toggle between table sections
-        $('.kl_table_options a').click(function (e) {
+        $('.kl_table_options a').unbind("click").click(function (e) {
             var connectedSection, showSection;
             e.preventDefault();
             $('.kl_table_options a').each(function () {
@@ -3216,7 +3217,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $(this).addClass('active');
         });
         // Controls for Default, Bordered, Condensed, and Striped styles
-        $('.kl_table_style').click(function (e) {
+        $('.kl_table_style').unbind("click").click(function (e) {
             e.preventDefault();
             var myClass = $(this).attr('rel'),
                 parentTable = tinyMCE.activeEditor.dom.getParent(tinyMCE.activeEditor.selection.getNode(), 'table');
@@ -3388,7 +3389,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             '    </div>' +
             '</div>';
         $('.kl_add_style_to_iframe').after(tablesDialog);
-        $('.kl_table_dialog_trigger').click(function (e) {
+        $('.kl_table_dialog_trigger').unbind("click").click(function (e) {
             e.preventDefault();
             $('#kl_tables_dialog').dialog({ position: { my: 'right top', at: 'left top', of: '#kl_tools' }, modal: false, width: 255 });
         });
@@ -3405,7 +3406,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         $.each(arrayName, function () {
             $('#kl_blooms').append('<a class="label label-info kl_blooms" rel="' + this + '" title="' + this + '">' + this + '</a> ');
         });
-        $('.kl_blooms').click(function (e) {
+        $('.kl_blooms').unbind("click").click(function (e) {
             e.preventDefault();
             var selectedWord = $(this).attr('rel');
             if ($('.kl_blooms_new_item').hasClass('active')) {
@@ -3450,7 +3451,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         $('#kl_tools_accordion').after(bloomsBoxContent);
         $.each(bloomsRevisedSections, function (key, value) {
             $('#kl_blooms_controls').append('<a class="btn btn-mini ' + key + ' kl_blooms_category">' + key + '</a>');
-            $('.' + key).click(function (e) {
+            $('.' + key).unbind("click").click(function (e) {
                 e.preventDefault();
                 if ($(this).hasClass('active')) {
                     $(this).removeClass('active');
@@ -3473,7 +3474,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             }
         });
         // Trigger for Bloom's dialog
-        $('.kl_blooms_btn').click(function (e) {
+        $('.kl_blooms_btn').unbind("click").click(function (e) {
             e.preventDefault();
             $('#kl_blooms_box').dialog({ position: { my: 'right top', at: 'left top', of: '#kl_tools' }, modal: false, width: 255 });
             if ($(iframeID).contents().find(sectionToScrollTo).length > 0) {
@@ -3485,12 +3486,12 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             });
         });
         // Determine whether word is inserted as a new item or at the cursor position
-        $('.kl_blooms_new_item').click(function (e) {
+        $('.kl_blooms_new_item').unbind("click").click(function (e) {
             e.preventDefault();
             $(this).addClass('active');
             $('.kl_blooms_at_cursor').removeClass('active');
         });
-        $('.kl_blooms_at_cursor').click(function (e) {
+        $('.kl_blooms_at_cursor').unbind("click").click(function (e) {
             e.preventDefault();
             $(this).addClass('active');
             $('.kl_blooms_new_item').removeClass('active');
@@ -3732,7 +3733,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         $.each(iconSections, function (key, value) {
             var displayTitle = key.replace('_', ' ');
             $('#kl_icon_lists').append('<a class="btn btn-mini ' + key + ' kl_icon_category">' + displayTitle + '</a>');
-            $('.' + key).click(function (e) {
+            $('.' + key).unbind("click").click(function (e) {
                 e.preventDefault();
                 $('#kl_icons').show();
                 if ($(this).hasClass('active')) {
@@ -3761,20 +3762,16 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         $('#kl_tools_accordion').after('<a href="#" class="kl_icons_activate kl_margin_bottom_small btn btn-mini" style="margin-right: 5px;"><i class="fa fa-tags"></i> Icons</a>');
 
         // Trigger for Icon dialog
-        $('.kl_icons_activate').click(function (e) {
+        $('.kl_icons_activate').unbind("click").click(function (e) {
             e.preventDefault();
             $('#kl_icon_box').dialog({ position: { my: 'right top', at: 'left top', of: '#kl_tools' }, modal: false, width: 265 });
         });
-        $('.kl_icon_apply_to').click(function (e) {
+        $('.kl_icon_apply_to').unbind("click").click(function (e) {
             e.preventDefault();
             $('.kl_icon_apply_to.active').removeClass('active');
             $(this).addClass('active');
         });
     }
-
-/////////////////////////////////////////////////////////////
-//  EDITING MARKUPS                                        //
-/////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////
 //  FONTS                                                  //
@@ -3786,13 +3783,13 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
 
     ////// Supporting functions  //////
     function activateModuleListLink() {
-        $('.kl_modules_activate').click(function (e) {
+        $('.kl_modules_activate').unbind("click").click(function (e) {
             e.preventDefault();
             $('#kl_tools_accordion').accordion({ active: 4});
         });
     }
     function bindRemove() {
-        $('.kl_modules_list_remove_item').click(function (e) {
+        $('.kl_modules_list_remove_item').unbind("click").click(function (e) {
             e.preventDefault();
             var connectedItem = $(this).attr('rel');
             $(iframeID).contents().find(connectedItem).remove();
@@ -3834,7 +3831,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 return undefined;
             }
         }
-        $('.kl_modules_choose_dates_trigger').click(function (e) {
+        $('.kl_modules_choose_dates_trigger').unbind("click").click(function (e) {
             e.preventDefault();
             var container = $(this).attr('rel');
             $(container).slideToggle();
@@ -3897,11 +3894,11 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                     }
                 }
             });
-            $('.kl_modules_expand_dates').click(function (e) {
+            $('.kl_modules_expand_dates').unbind("click").click(function (e) {
                 e.preventDefault();
                 $('.kl_modules_choose_dates').slideDown();
             });
-            $('.kl_modules_collapse_dates').click(function (e) {
+            $('.kl_modules_collapse_dates').unbind("click").click(function (e) {
                 e.preventDefault();
                 $('.kl_modules_choose_dates').slideUp();
             });
@@ -3951,7 +3948,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 $('.kl_modules_list_link_to_first_item').removeClass('active');
                 $('.kl_modules_list_link_to_module').addClass('active');
             }
-            $('.kl_modules_list_link_to_first_item').click(function (e) {
+            $('.kl_modules_list_link_to_first_item').unbind("click").click(function (e) {
                 e.preventDefault();
                 $(iframeID).contents().find('.kl_connected_module').each(function () {
                     myhref = $(this).attr('href');
@@ -3961,7 +3958,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 });
                 linkToFirstItemCheck();
             });
-            $('.kl_modules_list_link_to_module').click(function (e) {
+            $('.kl_modules_list_link_to_module').unbind("click").click(function (e) {
                 e.preventDefault();
                 $(iframeID).contents().find('.kl_connected_module').each(function () {
                     myhref = $(this).attr('href');
@@ -3977,7 +3974,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         }
     }
     function markCurrent() {
-        $('.kl_modules_list_mark_current').click(function (e) {
+        $('.kl_modules_list_mark_current').unbind("click").click(function (e) {
             e.preventDefault();
             var listItem = $(this).attr('rel');
             $(iframeID).contents().find('#kl_modules .kl_current').removeClass('kl_current');
@@ -4059,7 +4056,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     //// On Ready/Click functions  //////
     function moduleListToolReady() {
         // Module List
-        $('.kl_modules_insert').click(function (e) {
+        $('.kl_modules_insert').unbind("click").click(function (e) {
             e.preventDefault();
             $('.kl_modules_section').prop('checked', true).trigger('change');
         });
@@ -4086,21 +4083,21 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $('.kl_modules_quick_links_tabbed').removeClass('active');
             $('.kl_modules_quick_links_no').addClass('active');
         }
-        $('.kl_modules_quick_links_current').click(function (e) {
+        $('.kl_modules_quick_links_current').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('#kl_modules').addClass('kl_modules_quick_links').removeClass('kl_modules_tabbed');
             $(this).addClass('active');
             $('.kl_modules_quick_links_no').removeClass('active');
             $('.kl_modules_quick_links_tabbed').removeClass('active');
         });
-        $('.kl_modules_quick_links_tabbed').click(function (e) {
+        $('.kl_modules_quick_links_tabbed').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('#kl_modules').addClass('kl_modules_tabbed').removeClass('kl_modules_quick_links');
             $(this).addClass('active');
             $('.kl_modules_quick_links_current').removeClass('active');
             $('.kl_modules_quick_links_no').removeClass('active');
         });
-        $('.kl_modules_quick_links_no').click(function (e) {
+        $('.kl_modules_quick_links_no').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('#kl_modules').removeClass('kl_modules_quick_links kl_modules_tabbed');
             $(this).addClass('active');
@@ -4222,7 +4219,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             }
             insertPolicies();
         }
-        $('#kl_syllabus_policy_notice a').click(function (e) {
+        $('#kl_syllabus_policy_notice a').unbind("click").click(function (e) {
             e.preventDefault();
             $('#kl_syllabus_policy_notice .active').removeClass('active');
             $(this).addClass('active');
@@ -4412,12 +4409,12 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         });
 
         // "+" button next to new section field
-        $('#' + sectionParent + '_add_section').click(function (e) {
+        $('#' + sectionParent + '_add_section').unbind("click").click(function (e) {
             e.preventDefault();
             createSubSection(sectionList, sectionParent);
         });
         // Button that turns selected text into a predefined section
-        $(sectionList + ' .kl_syllabus_identify_subsection').click(function (e) {
+        $(sectionList + ' .kl_syllabus_identify_subsection').unbind("click").click(function (e) {
             e.preventDefault();
             var parentCheckbox, sectionName = $(this).attr('rel');
             templateCheck();
@@ -4541,22 +4538,22 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             }
         }
 
-        $('.kl_syllabus_instructor_add').click(function (e) {
+        $('.kl_syllabus_instructor_add').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('.kl_syllabus_instructors').append(klToolsVariables.klSyllabusAdditionalInstructor);
             checkContacts();
         });
-        $('.kl_syllabus_instructor_remove').click(function (e) {
+        $('.kl_syllabus_instructor_remove').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('.kl_syllabus_additional_instructor:last').remove();
             checkContacts();
         });
-        $('.kl_syllabus_teaching_assistant_add').click(function (e) {
+        $('.kl_syllabus_teaching_assistant_add').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('.kl_syllabus_teaching_assistant').append(klToolsVariables.klSyllabusAdditionalTeachingAssistant);
             checkContacts();
         });
-        $('.kl_syllabus_teaching_assistant_remove').click(function (e) {
+        $('.kl_syllabus_teaching_assistant_remove').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('.kl_syllabus_additional_teaching_assistant:last').remove();
             checkContacts();
@@ -4628,7 +4625,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         $('.kl_syllabus_learning_outcomes_section').change(function () {
             checkOutcomesBox();
         });
-        $('.kl_close_help').click(function (e) {
+        $('.kl_close_help').unbind("click").click(function (e) {
             e.preventDefault();
             $(this).parents('div.well').slideUp();
         });
@@ -4636,7 +4633,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
 
         //// IDEA ////
         // Trigger for IDEA dialog
-        $('.kl_idea_btn').click(function (e) {
+        $('.kl_idea_btn').unbind("click").click(function (e) {
             e.preventDefault();
             scrollToElement('.kl_syllabus_learning_outcomes');
             $('#kl_idea_box').dialog({ position: { my: 'right top', at: 'left top', of: '#kl_tools' }, modal: false, width: 255 });
@@ -4646,7 +4643,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             });
         });
         // Selection Hover
-        $('.kl_idea_objective').click(function (e) {
+        $('.kl_idea_objective').unbind("click").click(function (e) {
             e.preventDefault();
             var selectedObjective = $(this).find('.kl_idea_objective_text').text();
             if ($(this).hasClass('kl_idea_expand')) {
@@ -4663,19 +4660,19 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $(this).addClass('kl_idea_expand');
         });
         // Determine whether word is inserted as a new item or at the cursor position
-        $('.kl_idea_new_item').click(function (e) {
+        $('.kl_idea_new_item').unbind("click").click(function (e) {
             e.preventDefault();
             $(this).addClass('active');
             $('.kl_idea_at_cursor').removeClass('active');
         });
-        $('.kl_idea_at_cursor').click(function (e) {
+        $('.kl_idea_at_cursor').unbind("click").click(function (e) {
             e.preventDefault();
             $(this).addClass('active');
             $('.kl_idea_new_item').removeClass('active');
         });
         // Close IDEA help
         // Check whether to include assessment in list or not
-        $('.kl_syllabus_outcomes_assessments_yes').click(function (e) {
+        $('.kl_syllabus_outcomes_assessments_yes').unbind("click").click(function (e) {
             e.preventDefault();
             $(this).addClass('active');
             $('.kl_syllabus_outcomes_assessments_no').removeClass('active');
@@ -4692,7 +4689,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 $(iframeID).contents().find('.kl_syllabus_learning_outcomes ul li:last').after(assessmentList);
             }
         });
-        $('.kl_syllabus_outcomes_assessments_no').click(function (e) {
+        $('.kl_syllabus_outcomes_assessments_no').unbind("click").click(function (e) {
             e.preventDefault();
             $(this).addClass('active');
             $('.kl_syllabus_outcomes_assessments_yes').removeClass('active');
@@ -4706,7 +4703,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $('.kl_syllabus_outcomes_add').show();
         }
         // Add Outcomes/Assessment button
-        $('.kl_syllabus_outcomes_add').click(function (e) {
+        $('.kl_syllabus_outcomes_add').unbind("click").click(function (e) {
             e.preventDefault();
             scrollToElement('.kl_syllabus_learning_outcomes ul');
             $(iframeID).contents().find('.kl_syllabus_learning_outcomes ul').first().append('<li>Outcome</li>' +
@@ -4761,7 +4758,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                         '<p style="text-align:center;">' +
                         '  <a href="#" class="btn btn-danger kl_grade_scheme_walkthrough"><i class="fa fa-eye"></i> Show Me How</a>' +
                         '</p>');
-                    $('.kl_grade_scheme_walkthrough').click(function (e) {
+                    $('.kl_grade_scheme_walkthrough').unbind("click").click(function (e) {
                         e.preventDefault();
                         var defaulthref = $('.settings').attr('href'),
                             newhref = defaulthref + '?task=setGradeScheme';
@@ -4810,7 +4807,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             '</div>';
         $('#kl_syllabus_grades_syllabus_sections_buttons').append(componentPointsControls);
         // Component Point options
-        $('.kl_grades_component_points_from_canvas').click(function (e) {
+        $('.kl_grades_component_points_from_canvas').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('#kl_syllabus_canvas_assignment_list').remove();
             $(iframeID).contents().find('.kl_syllabus_course_assignments').append('<div id="kl_syllabus_canvas_assignment_list" />');
@@ -4820,7 +4817,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $('.kl_grades_component_points_custom_table').removeClass('active');
             $('.kl_grades_component_points_from_canvas_controls').show();
         });
-        $('.kl_grades_component_points_custom_table').click(function (e) {
+        $('.kl_grades_component_points_custom_table').unbind("click").click(function (e) {
             e.preventDefault();
             $(this).addClass('active');
             $(iframeID).contents().find('#kl_syllabus_canvas_assignment_list').remove();
@@ -5365,7 +5362,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 '<div class="kl_instructions">This content was created using an older version of these tools. You will need to update the code before using the current version.</div>';
             if ($('.kl_update_tools').length === 0) {
                 $('#kl_tools').prepend(updateHtml);
-                $('.kl_update_tools').click(function (e) {
+                $('.kl_update_tools').unbind("click").click(function (e) {
                     e.preventDefault();
                     updateWrapper();
                     updateCustomCss();
@@ -5402,8 +5399,6 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         }
     }
 
-
-
 /////////////////////////////////////////////////////////////
 //  API FUNCTIONS                                          //
 ///////////////////////////////////////////////////////////// 
@@ -5414,7 +5409,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         $('.kl_existing_page_links li').each(function () {
             $(this).attr({'data-tooltip': 'left', 'title': 'Pull content from this page'}).addClass('fa fa-files-o');
         });
-        $('.kl_existing_page_links a').click(function (e) {
+        $('.kl_existing_page_links a').unbind("click").click(function (e) {
             e.preventDefault();
             var linkHref, contentUrl;
             // Clear quick check
@@ -5430,6 +5425,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                     $('.kl_loading').removeClass('kl_loading');
                     sectionsPanelDefault = true;
                     updateContentCheck();
+                    setupMainTools();
                 });
         });
     }
@@ -5438,7 +5434,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         $.post(klToolsVariables.klApiToolsPath + 'checkTemplates.php', { courseID: coursenum })
             .done(function (data) {
                 $('#kl_course_template_pages').html(data);
-                $('.kl_import_primary_template').click(function (e) {
+                $('.kl_import_primary_template').unbind("click").click(function (e) {
                     e.preventDefault();
                     $('.kl_import_primary_template i').attr('class', 'fa fa-spinner fa-spin');
                     $.post(klToolsVariables.klApiToolsPath + 'getPage.php', { courseID: coursenum, pageUrl: 'primary-template' })
@@ -5447,9 +5443,10 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                             $('.kl_import_primary_template i').attr('class', 'fa fa-clipboard');
                             sectionsPanelDefault = true;
                             updateContentCheck();
+                            setupMainTools();
                         });
                 });
-                $('.kl_import_secondary_template').click(function (e) {
+                $('.kl_import_secondary_template').unbind("click").click(function (e) {
                     e.preventDefault();
                     $('.kl_import_secondary_template i').attr('class', 'fa fa-spinner fa-spin');
                     $.post(klToolsVariables.klApiToolsPath + 'getPage.php', { courseID: coursenum, pageUrl: 'secondary-template' })
@@ -5458,6 +5455,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                             $('.kl_import_secondary_template i').attr('class', 'fa fa-clipboard');
                             sectionsPanelDefault = true;
                             updateContentCheck();
+                            setupMainTools();
                         });
                 });
             });
@@ -5490,7 +5488,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 $(iframeID).contents().find('body').html(data);
                 $('#kl_get_existing i').attr('class', 'fa fa-files-o');
                 sectionsPanelDefault = true;
-                // setupMainTools();
+                setupMainTools();
             });
     }
     function bindAPIImportsTriggers() {
@@ -5502,7 +5500,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 return false;
             }
         });
-        $('#kl_get_existing').click(function (e) {
+        $('#kl_get_existing').unbind("click").click(function (e) {
             e.preventDefault();
             importPageContentUrl();
         });
@@ -5544,7 +5542,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $('#kl_tools_wrapper').tabs({active: 1});
         }
         $('#kl_tools').html(visualBlocksButtons + customAccordionDiv + addStyleButton + removeEmptyButton);
-        $('#toolsTrigger').click(function (e) {
+        $('#toolsTrigger').unbind("click").click(function (e) {
             e.preventDefault();
             $('a:contains("HTML Editor")').get(0).scrollIntoView();
         });
@@ -5575,7 +5573,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 $('#accordion').accordion('option', 'icons', icons);
             }
         });
-        $('.kl_buttons_activate').click(function (e) {
+        $('.kl_buttons_activate').unbind("click").click(function (e) {
             e.preventDefault();
             $('#kl_tools_accordion').accordion({ active: 5});
         });
@@ -5715,13 +5713,13 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                         }
                     });
                 }
-                $('.kl_add_tools').click(function (e) {
+                $('.kl_add_tools').unbind("click").click(function (e) {
                     e.preventDefault();
                     editorExistenceCheck(toolsToLoad);
                 });
             }
         }
-        $('.kl_add_style_to_iframe').click(function (e) {
+        $('.kl_add_style_to_iframe').unbind("click").click(function (e) {
             e.preventDefault();
             addStyletoIframe();
             $('a:contains("HTML Editor")').get(0).scrollIntoView();
@@ -5741,7 +5739,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         // If it is the start here page, add button to insert start here content
         if ($('#title').val() === 'Start Here') {
             $('#title').after('&nbsp; &nbsp;<a href="#" class="btn btn-primary kl_import_start_here"><i class="fa fa-cloud-download"></i> Import &ldquo;Start Here&rdquo; Boilerplate</a>');
-            $('.kl_import_start_here').click(function (e) {
+            $('.kl_import_start_here').unbind("click").click(function (e) {
                 e.preventDefault();
                 $(iframeID).contents().find('body').html(klToolsVariables.startHereContent);
                 $('.kl_add_tools').trigger('click');
