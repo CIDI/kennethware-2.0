@@ -113,21 +113,21 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     }
     function bannerImageCheck() {
         // Check to see if a banner image exists it will throw an error either way.
-        if ($('a:contains("Template Wizard")').length > 0) {
-            var wizardurl = $('a:contains("Template Wizard")').attr('href');
-            $.ajax({
-                url: '/courses/' + coursenum + '/file_contents/course%20files/global/css/images/homePageBanner.jpg',
-                type: 'HEAD',
-                error: function (xhr) {
-                    if (xhr.status === 404) {
-                        $(iframeID).contents().find('#kl_banner_image').addClass('kl_banner_placeholder');
-                        $('.kl_wizard_trigger').html('<i class="fa fa-picture-o"></i> Add Custom Banner').attr({'href': wizardurl, 'target': '_blank'});
-                    } else {
-                        $(iframeID).contents().find('#kl_banner_image').removeClass('kl_banner_placeholder');
-                        $('.kl_wizard_trigger').html('<i class="fa fa-picture-o"></i> Change Custom Banner').attr({'href': wizardurl, 'target': '_blank'});
-                    }
+        var wizardurl = $('a:contains("Template Wizard")').attr('href');
+        $.ajax({
+            url: '/courses/' + coursenum + '/file_contents/course%20files/global/css/images/homePageBanner.jpg',
+            type: 'HEAD',
+            error: function (xhr) {
+                if (xhr.status === 404) {
+                    $(iframeID).contents().find('#kl_banner_image').addClass('kl_banner_placeholder');
+                    $('.kl_wizard_trigger').html('<i class="fa fa-picture-o"></i> Add Custom Banner').attr({'href': wizardurl, 'target': '_blank'});
+                } else {
+                    $(iframeID).contents().find('#kl_banner_image').removeClass('kl_banner_placeholder');
+                    $('.kl_wizard_trigger').html('<i class="fa fa-picture-o"></i> Change Custom Banner').attr({'href': wizardurl, 'target': '_blank'});
                 }
-            });
+            }
+        });
+        if ($('a:contains("Template Wizard")').length > 0) {
             $('.kl_wizard_trigger').show();
             $('.kl_wizard_notice').hide();
         } else {
