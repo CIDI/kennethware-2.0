@@ -27,6 +27,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         toolsToLoad,
         sectionsPanelDefault = false,
         assignmentsPage = false,
+        discussionsPage = false,
         // Basic shell to add into template
         templateShell = '<div id="kl_wrapper" class="kl_bookmark"></div>',
         // Bloom's Taxonomy for Objectives Section
@@ -5747,6 +5748,10 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             // Load tools unique to assignments page
             console.log('assignments page');
         }
+        if (discussionsPage === true) {
+            // Load tools unique to discussions page
+            console.log('discussions page');
+        }
         // activate the accordion
 
         initializeToolsAccordion();
@@ -5818,6 +5823,10 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                     // Assignments
                     iframeID = '#assignment_description_ifr';
                     assignmentsPage = true;
+                } else if ($('#discussion-topic-message11_ifr').length > 0) {
+                    // Discussions
+                    iframeID = '#discussion-topic-message11_ifr';
+                    discussionsPage = true;
                 } else if ($('.edit_syllabus_link').length > 0) {
                     // Syllabus
                     iframeID = '#course_syllabus_body_ifr';
