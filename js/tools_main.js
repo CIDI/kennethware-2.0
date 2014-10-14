@@ -109,31 +109,26 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 $head.append($('<link/>', { rel: 'stylesheet', href: '/courses/' + coursenum + '/file_contents/course%20files/global/css/style.css?' + timestamp, type: 'text/css' }));
             }
             $(iframeID).contents().find('body').css('background-image', 'none').addClass('kl_has_style');
-            $(iframeID).contents().find('head').append('<style>#kl_banner_image {background: url(/courses/' + coursenum + '/file_contents/course%20files/global/css/images/homePageBanner.jpg) no-repeat center center; }</style>');
+            // if ($(iframeID).contents().find('.kl_fp_panel_nav, .kl_fp_horizontal_nav').length > 0) {
+            //     $(iframeID).contents().find('head').append('<style>#kl_banner_image {background: url(/courses/' + coursenum + '/file_contents/course%20files/global/css/images/homePageBanner.jpg) no-repeat center center; }</style>');
+            // }
         }
     }
     function bannerImageCheck() {
         // Check to see if a banner image exists it will throw an error either way.
-        var wizardurl = $('a:contains("Template Wizard")').attr('href');
-        $.ajax({
-            url: '/courses/' + coursenum + '/file_contents/course%20files/global/css/images/homePageBanner.jpg',
-            type: 'HEAD',
-            error: function (xhr) {
-                if (xhr.status === 404) {
-                    $(iframeID).contents().find('#kl_banner_image').addClass('kl_banner_placeholder');
-                    $('.kl_wizard_trigger').html('<i class="fa fa-picture-o"></i> Add Custom Banner').attr({'href': wizardurl, 'target': '_blank'});
-                } else {
-                    $(iframeID).contents().find('#kl_banner_image').removeClass('kl_banner_placeholder');
-                    $('.kl_wizard_trigger').html('<i class="fa fa-picture-o"></i> Change Custom Banner').attr({'href': wizardurl, 'target': '_blank'});
+        if ($(iframeID).contents().find('.kl_fp_panel_nav').length > 0 || $(iframeID).contents().find('.kl_fp_horizontal_nav').length > 0) {
+            var wizardurl = $('a:contains("Template Wizard")').attr('href');
+            $.ajax({
+                url: '/courses/' + coursenum + '/file_contents/course%20files/global/css/images/homePageBanner.jpg',
+                type: 'HEAD',
+                error: function (xhr) {
+                    if (xhr.status === 404) {
+                        $(iframeID).contents().find('#kl_banner_image').addClass('kl_banner_placeholder');
+                    } else {
+                        $(iframeID).contents().find('#kl_banner_image').removeClass('kl_banner_placeholder');
+                    }
                 }
-            }
-        });
-        if ($('a:contains("Template Wizard")').length > 0) {
-            $('.kl_wizard_trigger').show();
-            $('.kl_wizard_notice').hide();
-        } else {
-            $('.kl_wizard_trigger').hide();
-            $('.kl_wizard_notice').show();
+            });
         }
     }
     // check given element and parents to find target attribute color
@@ -393,8 +388,8 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     function outputThemes(themeArray) {
         $.each(themeArray, function () {
             $('.kl_wiki_themes').append('<li id="' + this + '" class="kl_template_theme kl_wiki_theme" rel="' + this +
-                '" title="' + this +
-                ' theme"><img src="' + klToolsPath + 'images/template_thumbs/' +
+                '" data-tooltip="top" title="' + this +
+                '"><img src="' + klToolsPath + 'images/template_thumbs/' +
                 this + '.png" width="45" alt="' + this + '"></a></li>');
         });
     }
@@ -402,8 +397,8 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     function outputFrontPageThemes(themeArray) {
         $.each(themeArray, function () {
             $('.kl_fp_themes').append('<li><a href="#" id="' + this + '" class="kl_template_theme kl_fp_theme" rel="' + this +
-                '" title="' + this +
-                ' theme"><img src="' + klToolsPath + 'images/template_thumbs/' +
+                '" data-tooltip="top" title="' + this +
+                '"><img src="' + klToolsPath + 'images/template_thumbs/' +
                 this + '.png" width="90"></a></li>');
         });
     }
@@ -551,6 +546,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 $('.kl_navigation_section').prop('checked', true).trigger('change');
                 $(iframeID).contents().find('#kl_navigation').insertAfter($(iframeID).contents().find('#kl_banner_image'));
             }
+            $(iframeID).contents().find('#kl_banner_image').html('<img src="' + klToolsPath + 'images/banners/' + templateClass + '.jpg">');
         });
         $('.kl_highlight_element').mouseover(function () {
             var el = $(this),
@@ -565,6 +561,13 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 clearTimeout(timeoutID);
             });
         });
+        if ($('a:contains("Template Wizard")').length > 0) {
+            $('.kl_wizard_notice').html('For help creating banner images, Use the <strong>Template Wizard</strong> link.');
+            
+        } else {
+            $('.kl_wizard_notice').html('For help creating banner images, add the Template Wizard App from <a href="/courses/' + coursenum + '/settings" target="_blank">Settings</a> > Navigation.');
+        }
+
         customCSSCheck();
         currentPagesThemeCheck();
     }
@@ -586,12 +589,13 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             '       <a href="#" class="btn btn-small active" rel="kl_wiki_theme">Pages</a>' +
             '       <a href="#" class="btn btn-small" rel="kl_custom_theme">Customize</a>' +
             '    </div>' +
-            '    <div class="kl_fp_theme_options kl_margin_bottom" style="display:none">' +
+            '    <div class="kl_fp_theme_options" style="display:none">' +
             '       <h4>Front Page Themes</h4>' +
             '       <ul class="unstyled kl_fp_themes">' +
             '       </ul>' +
-            '       <a href="#" class="kl_wizard_trigger btn btn-mini btn-primary kl_margin_bottom kl_margin_top" data-tooltip="top" title="Opens Template Wizard in a new tab.">Add Custom Banner</a>' +
-            '       <div class="kl_instructions_wrapper kl_wizard_notice"><p class="kl_instructions">To change the banner image, add the Template Wizard to the course navigation.</p></div>' +
+            '       <div class="kl_instructions_wrapper kl_margin_top_small" style="clear:both;">' +
+            '           <div class="kl_instructions kl_wizard_notice">For help creating banner images, <a href="#" class="addTemplateWizard">add the Template Wizard App</a>.</div>' +
+            '       </div>' +
             '    </div>' +
             '    <div class="kl_wiki_theme_options kl_margin_bottom">' +
             '       <h4>Pages Themes</h4>' +
@@ -2029,7 +2033,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 'margin': '0 0 10px 10px'
             }).removeClass('kl_style_image');
         });
-         $('.kl_image_width_trigger_fill').unbind("click").click(function (e) {
+        $('.kl_image_width_trigger_fill').unbind("click").click(function (e) {
             e.preventDefault();
             tinyMCE.DOM.addClass(tinyMCE.activeEditor.selection.getNode(), 'kl_style_image kl_image_full_width');
             $(iframeID).contents().find('.kl_style_image').css({
@@ -2038,7 +2042,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 'max-width': '100%'
             }).removeClass('kl_style_image');
         });
-         $('.kl_image_width_trigger_normal').unbind("click").click(function (e) {
+        $('.kl_image_width_trigger_normal').unbind("click").click(function (e) {
             e.preventDefault();
             tinyMCE.DOM.addClass(tinyMCE.activeEditor.selection.getNode(), 'kl_style_image');
             $(iframeID).contents().find('.kl_style_image').css({
@@ -3094,7 +3098,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         }
     }
     function socialMediaReady() {
-        $('iframe').contents().find('#kl_social_media').find('a').each(function () {
+        $(iframeID).contents().find('#kl_social_media').find('a').each(function () {
             var smIcon = $(this).attr('class'),
                 smLink = $(this).attr('href'),
                 cleanedhref = smLink.replace('http://', '').replace('https://', '').replace('/courses/', ''),

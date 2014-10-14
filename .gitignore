@@ -4,3 +4,7 @@ config.php
 js/tools_variables.js
 
 wizard/ltiCode.xml
+
+css/development.css
+
+wizard/devWizardLTI.xml

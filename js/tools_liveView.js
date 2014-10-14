@@ -111,6 +111,7 @@ $(function () {
     }
     // Full width images
     $('.kl_image_full_width').css('max-width', '100%');
+    $('#kl_banner_image img').css('max-width', '100%');
 
 
     // STUDENT VERIFICATION FORM //

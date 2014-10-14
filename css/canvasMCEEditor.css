@@ -1,6 +1,9 @@
 /**************************/
 /*    LABELS VIEW         */
 /**************************/
+	#kl_wrapper {width: 100% !important;}
+	img { padding: 0;}
+
 	/* Highlight different elements and label them */
 	.kl_mce_visual_blocks p {
 		padding-top: 10px;
