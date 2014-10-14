@@ -106,6 +106,19 @@
             curl_close($ch);
             return $response;
         }
+        function curlPut($url, $data){
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $_SESSION['canvasURL'].'/api/v1/'.$url);
+            curl_setopt ($ch, CURLOPT_HTTPHEADER, $GLOBALS['tokenHeader']);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // ask for results to be returned
+
+            // Send to remote and return data to caller.
+            $response = curl_exec($ch);
+            curl_close($ch);
+            return $response;
+        }
 
     // Canvas API Calls
         function createGenericAssignment($courseID, $assignmentParams){
@@ -141,6 +154,11 @@
             // Returns new module ID
             return $moduleID;
         }
+        function updateModule($courseID, $moduleID, $moduleParams){
+            $updateModuleUrl = "courses/".$courseID."/modules/".$moduleID;
+            $response = curlPut($updateModuleUrl, $moduleParams);
+            return $response;
+        }
         function createModuleItem($courseID, $moduleID, $itemParams){
             $createModuleUrl = "courses/".$courseID."/modules/".$moduleID."/items";
             $response = curlPost($createModuleUrl, $itemParams);
@@ -168,9 +186,14 @@
             $response = curlGet($apiUrl);
             return $response;
         }
-        function uploadFrontPageBanner($courseID){
+        function listModules($courseID){
+            $apiUrl = "courses/".$courseID."/modules/";
+            $response = curlGet($apiUrl);
+            return $response;
+        }
+        function uploadFrontPageBanner($courseID, $fileName){
             $apiUrl = "courses/".$courseID."/files";
-            $apiParams = "name=homePageBanner.jpg&content_type=image/jpeg&parent_folder_path=/global/css/images&url=".$_SESSION['template_wizard_url']."/resources/images/".$courseID."_cropped.jpg&on_duplicate=overwrite";
+            $apiParams = "name=".$fileName.".jpg&content_type=image/jpeg&parent_folder_path=/images&url=".$_SESSION['template_wizard_url']."/resources/images/".$courseID."_".$fileName.".jpg&on_duplicate=overwrite";
             $response = curlPost($apiUrl, $apiParams);
             return $response;
         }

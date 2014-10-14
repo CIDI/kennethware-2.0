@@ -33,6 +33,24 @@
 	// Message to display if the OAuth token request fails
 	$oauth_error_message = 'There is a problem, contact someone to fix it';
 
+	// TEMPLATE ARRAY (templateName, minWidth,minHeight, ratioX,ratioY) 
+	// This array is for customizing banner images for template themes
+	$templates = array (
+		array('kl_fp_horizontal_nav_2', 1050,312, 215,64),
+		array('kl_fp_panel_nav_2', 	1050,312,  215,64),
+		array('kl_fp_squares_1x1', 320,320,  1,1),
+		array('kl_fp_circles_1x1', 320,320,  1,1)
+	);
+	// RATIO ARRAY (ratioX, ratioY)
+	$ratios = array (
+		array (1,1),
+		array(4,3),
+		array(5,4),
+		array(7,5),
+		array(3,2),
+		array(16,9)
+	);
+
 	/***************************/
 	/* TOOLS API CONFIG  */
 	/***************************/
