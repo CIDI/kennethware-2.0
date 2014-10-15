@@ -3,6 +3,7 @@
 /**************************/
 	#kl_wrapper {width: 100% !important;}
 	img { padding: 0;}
+	body {background-color: #fff;}
 
 	/* Highlight different elements and label them */
 	.kl_mce_visual_blocks p {
