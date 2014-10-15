@@ -23,13 +23,12 @@ require_once 'wizardAPI.php';
 	<script type="text/javascript" charset="utf-8">
 		<?php
 		// See if "Home" page exists and check the front page box accordingly
-		$homePage = getPageFromCourse($courseID, "primary-template");
+		$hasHomePage = false;
+		$homePage = getPageFromCourse($courseID, "home");
 		if(isset($homePage->created_at)){
 			if($homePage->created_at !== ''){
-				$hasHomePage = 'true';
+				$hasHomePage = true;
 			}
-		} else {
-			$hasHomePage = 'false';
 		}
 		// Query to see if Primary/Secondary templates exist otherwise option to create
 		$primaryTemplate = getPageFromCourse($courseID, "primary-template");
@@ -67,16 +66,13 @@ require_once 'wizardAPI.php';
 	<h2><i class="fa fa-sitemap"></i> Modules</h2>
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<form id="moduleForm" method="post">
+			<form id="moduleForm">
 				<?php
 					if($hasHomePage == false) {
 						echo '<div class="row-fluid">
 							<div class="well">
 								<h3>Front Page</h3>
-								<label class="frontPage">
-									<input type="checkbox" name="frontPage" id="frontPage" checked>
-									<strong>Create Front Page</strong>
-								</label>
+								<a href="#" class="btn btn-default addFrontPage"><i class="fa fa-plus"></i> Create Front Page</a><br>
 								<em>This will create a page titled &ldquo;Home&rdquo;, publish it and mark it as the Front Page.<br>You will still need to set your &ldquo;Home&rdquo; link to show your Front Page.</em>
 							</div>
 						</div>';

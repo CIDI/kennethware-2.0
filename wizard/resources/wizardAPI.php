@@ -149,6 +149,8 @@
         function createModule($courseID, $moduleParams){
             $createModuleUrl = "courses/".$courseID."/modules";
             $response = curlPost($createModuleUrl, $moduleParams);
+            var_dump($response);
+            echo '<hr>';
             $responseData = json_decode($response, true);
             $moduleID = $responseData['id'];
             // Returns new module ID
