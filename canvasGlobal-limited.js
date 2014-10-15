@@ -21,7 +21,9 @@
 ///////////////////////////////////
 // Path to where the canvasCustomTools folder is located
 var klToolsPath = "https://<url>/kennethware-2.0/",
-    globalCSSPath = "https://<url>/canvasGlobal.css";
+    globalCSSPath = "https://<url>/canvasGlobal.css",
+    klFontAwesomePath = "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css";
+
 
 	console.log('canvasGlobal.js loading');
     //Parse Course Number - It is stored in the variable "coursenum"//
@@ -62,7 +64,7 @@ if (matches) {
 	    setTimeout(function () {
 	        if ($('.new_page').length > 0 || ($('#editor_tabs').length > 0 && $('.edit_link').length === 0)) {
 	            // Include Font-Awesome icons
-	            $("head").append($("<link/>", { rel: "stylesheet", href: "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"}));
+	            $("head").append($("<link/>", { rel: "stylesheet", href: klFontAwesomePath, type: 'text/css'}));
 	            // Load tools js
 	            $.getScript(klToolsPath + "js/tools_variables.js", function () {
 	                console.log("tools_variables loaded");
@@ -97,7 +99,7 @@ if (matches) {
 
     // add css for font-awesome if a course is using any of their icons
     if ($(".fa").length > 0) {
-        $("head").append($("<link/>", { rel: "stylesheet", href: "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css?" + timestamp }));
+        $("head").append($("<link/>", { rel: "stylesheet", href: klFontAwesomePath, type: 'text/css' }));
     }
 
     // The following provides the tooltip instructions for updating grade scheme

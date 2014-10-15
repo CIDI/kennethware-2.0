@@ -415,7 +415,7 @@ $(function () {
         var bgColor = '',
             bgHex = '0F2439',
             textColor = 'FFF';
-        $("head").append($("<link/>", { rel: "stylesheet", href: "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"}));
+        $("head").append($("<link/>", { rel: "stylesheet", href: klFontAwesomePath, type: 'text/css'}));
         $('#kl_modules').before('<div id="kl_gathering_data" class="alert alert-info"><i class="fa fa-spinner fa-spin"></i> Gathering Progress Data</div>');
         // Check theme color and set tab highlight to match
         if ($('#kl_banner').length > 0) {

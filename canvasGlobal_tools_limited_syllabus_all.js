@@ -22,6 +22,8 @@
 // Path to where the canvasCustomTools folder is located
 var klToolsPath = "https://<url to folder containing tools code>/",
     globalCSSPath = "https://<url to branding css>/css/canvasGlobal.css",
+    klFontAwesomePath = "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css",
+
 
     //Parse Course Number - It is stored in the variable "coursenum"//
     coursenum,
@@ -52,7 +54,7 @@ function iframeStyleOnly(editorFrameID) {
             $head.append($('<link/>', { rel: 'stylesheet', href: klToolsVariables.common_legacy_normal_contrast, type: 'text/css' }));
             $head.append($('<link/>', { rel: 'stylesheet', href: klToolsPath + 'css/canvasMCEEditor.css?' + timestamp, type: 'text/css' }));
             $head.append($('<link/>', { rel: 'stylesheet', href: globalCSSPath + '?' + timestamp, type: 'text/css' }));
-            $head.append($("<link/>", { rel: "stylesheet", href: "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"}));
+            $head.append($("<link/>", { rel: "stylesheet", href: klFontAwesomePath, type: 'text/css'}));
             if ($(editorFrameID).contents().find('#kl_custom_css').length > 0) {
                 $head.append($('<link/>', { rel: 'stylesheet', href: '/courses/' + coursenum + '/file_contents/course%20files/global/css/style.css?' + timestamp, type: 'text/css' }));
             }
@@ -86,7 +88,7 @@ function iframeStyleOnly(editorFrameID) {
         setTimeout(function () {
             if ($('.new_page').length > 0 || ($('#editor_tabs').length > 0 && $('.edit_link').length === 0)) {
                 // Include Font-Awesome icons
-                $("head").append($("<link/>", { rel: "stylesheet", href: "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"}));
+                $("head").append($("<link/>", { rel: "stylesheet", href: klFontAwesomePath, type: 'text/css'}));
                 // Load tools js
                 $.getScript(klToolsPath + "js/tools_variables.js", function () {
                     console.log("tools_variables loaded");
@@ -123,7 +125,7 @@ function iframeStyleOnly(editorFrameID) {
             setTimeout(function () {
                 if ($('.new_page').length > 0 || ($('#editor_tabs').length > 0 && $('.edit_link').length === 0)) {
                     // Include Font-Awesome icons
-                    $("head").append($("<link/>", { rel: "stylesheet", href: "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"}));
+                    $("head").append($("<link/>", { rel: "stylesheet", href: klFontAwesomePath, type: 'text/css'}));
                     // Load tools js
                     $.getScript(klToolsPath + "js/tools_variables.js", function () {
                         console.log("tools_variables loaded");

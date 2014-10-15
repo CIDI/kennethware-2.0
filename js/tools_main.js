@@ -1,5 +1,5 @@
 /*jslint browser: true, sloppy: false, eqeq: false, vars: false, maxerr: 50, indent: 4, plusplus: true */
-/*global $, jQuery, alert, coursenum, console, klToolsPath, globalCSSPath, tinymce, tinyMCE, klToolsVariables,
+/*global $, jQuery, alert, coursenum, console, klToolsPath, globalCSSPath, klFontAwesomePath, tinymce, tinyMCE, klToolsVariables,
 klToolsArrays, vendor_legacy_normal_contrast,  */
 
 // These tools were designed to facilitate rapid course development in the Canvas LMS
@@ -104,7 +104,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $head.append($('<link/>', { rel: 'stylesheet', href: klToolsVariables.common_legacy_normal_contrast, type: 'text/css' }));
             $head.append($('<link/>', { rel: 'stylesheet', href: globalCSSPath + '?' + timestamp, type: 'text/css' }));
             $head.append($('<link/>', { rel: 'stylesheet', href: klToolsPath + 'css/canvasMCEEditor.css?' + timestamp, type: 'text/css' }));
-            $head.append($("<link/>", { rel: "stylesheet", href: "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"}));
+            $head.append($("<link/>", { rel: "stylesheet", href: klFontAwesomePath, type: 'text/css'}));
             if ($(iframeID).contents().find('#kl_custom_css').length > 0) {
                 $head.append($('<link/>', { rel: 'stylesheet', href: '/courses/' + coursenum + '/file_contents/course%20files/global/css/style.css?' + timestamp, type: 'text/css' }));
             }
@@ -117,7 +117,6 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     function bannerImageCheck() {
         // Check to see if a banner image exists it will throw an error either way.
         if ($(iframeID).contents().find('.kl_fp_panel_nav').length > 0 || $(iframeID).contents().find('.kl_fp_horizontal_nav').length > 0) {
-            var wizardurl = $('a:contains("Template Wizard")').attr('href');
             $.ajax({
                 url: '/courses/' + coursenum + '/file_contents/course%20files/global/css/images/homePageBanner.jpg',
                 type: 'HEAD',
@@ -563,7 +562,6 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         });
         if ($('a:contains("Template Wizard")').length > 0) {
             $('.kl_wizard_notice').html('For help creating banner images, Use the <strong>Template Wizard</strong> link.');
-            
         } else {
             $('.kl_wizard_notice').html('For help creating banner images, add the Template Wizard App from <a href="/courses/' + coursenum + '/settings" target="_blank">Settings</a> > Navigation.');
         }
