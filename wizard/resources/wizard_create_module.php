@@ -28,6 +28,7 @@
 	$moduleParams = 'module[name]='.$moduleTitle.'&module[position]='.$moduleNumber;
 	$newModuleID = createModule($courseID, $moduleParams);
 
+	echo $_POST['modDetailsDivID'].'|'.$newModuleID.', ';
 	// Add Primary Template
 	$primaryTemplate = $moduleSections[3];
 	if ($primaryTemplate == "true"){

@@ -149,8 +149,6 @@
         function createModule($courseID, $moduleParams){
             $createModuleUrl = "courses/".$courseID."/modules";
             $response = curlPost($createModuleUrl, $moduleParams);
-            var_dump($response);
-            echo '<hr>';
             $responseData = json_decode($response, true);
             $moduleID = $responseData['id'];
             // Returns new module ID
@@ -197,6 +195,12 @@
             $apiUrl = "courses/".$courseID."/files";
             $apiParams = "name=".$fileName.".jpg&content_type=image/jpeg&parent_folder_path=/images&url=".$_SESSION['template_wizard_url']."/resources/images/".$courseID."_".$fileName.".jpg&on_duplicate=overwrite";
             $response = curlPost($apiUrl, $apiParams);
+            return $response;
+        }
+        function updateModuleOrder($courseID, $moduleID, $modulePosition){
+            $apiUrl = "courses/".$courseID."/modules/".$moduleID;
+            $apiParams = "module[position]=".$modulePosition;
+            $response = curlPut($apiUrl, $apiParams);
             return $response;
         }
 ?>

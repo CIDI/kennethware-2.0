@@ -173,7 +173,8 @@ $(function () {
         }
         // Loop through new modules and compile the data to be processed
         $(".contentModule").each(function () {
-            var modNum = $(this).find(".modNum").text(),
+            var modDetailsDivID = $(this).attr('id'),
+                modNum = $(this).find(".modNum").text(),
                 moduleTitlePrefix = $(this).find(".moduleTitlePrefix").text(),
                 moduleTitle = $(this).find(".moduleTitleInput").val(),
                 primaryPage = false,
@@ -187,11 +188,31 @@ $(function () {
             }
             modString = modNum +  " || " + moduleTitlePrefix + " || " +  moduleTitle +  " || " + primaryPage +  " || " + secondaryPageCount +  " || " + assignmentCount +  " || " + discussionCount +  " || " + quizCount;
             console.log(modString);
-            $.post('wizard_create_module.php', {moduleDetails: modString}).done(function (data) {
+            $.post('wizard_create_module.php', {moduleDetails: modString, modDetailsDivID: modDetailsDivID}).done(function (data) {
+                var newModuleID,
+                    splitData,
+                    orderDetails = '';
                 if (data.indexOf('Module Created') !== -1) {
+                    // We are going to pull the position and new moduleID out of the data
+                    splitData = data.split(',');
+                    // divide the position and the new module ID
+                    splitData = splitData[0].split('|');
+                    modDetailsDivID = splitData[0];
+                    newModuleID = splitData[1];
+                    console.log("original: " + splitData);
+                    console.log("exploded: " + modDetailsDivID + '|' + newModuleID);
+                    $('#' + modDetailsDivID).attr('rel', newModuleID);
                     completedCount++;
                     if (completedCount === totalNewModules) {
-                        $('.createModules').html('<i class="fa fa-check"></i> ' + completedCount + ' of ' + totalNewModules + ' Modules Created');
+                        $('.createModules').html('<i class="fa fa-spinner fa-spin fa-large"></i> Ordering Modules');
+                        $(".contentModule").each(function () {
+                            var moduleCanvasID = $(this).attr('rel'),
+                                modulePosition = $(this).find(".modNum").text();
+                            orderDetails += moduleCanvasID + "|" + modulePosition + ",";
+                        });
+                        $.post('wizard_update_module_order.php', {orderDetails: orderDetails}).done(function () {
+                            $('.createModules').html('<i class="fa fa-check"></i> ' + completedCount + ' of ' + totalNewModules + ' Modules Created');
+                        });
                     } else {
                         $('.createModules').html('<i class="fa fa-spinner fa-spin fa-large"></i> ' + completedCount + ' of ' + totalNewModules + ' Modules Created');
                     }
