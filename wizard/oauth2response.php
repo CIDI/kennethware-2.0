@@ -10,7 +10,17 @@
 	$opts = array('http' => array( 'method'  => 'POST', ));
 	$context  = stream_context_create($opts);
 	$url = $_SESSION['canvasURL'].'/login/oauth2/token?client_id='.$client_id.'&client_secret='.$clientSecret.'&code='.$_GET['code'];
+	// OPTION 1
 	$userTokenJSON = file_get_contents($url, false, $context, -1, 40000); //ASK CANVAS,	USING DEVELOPER TOKEN, TO RETURN STUDENT TOKEN
+
+	// OPTION 2
+    // $runfile = $url;
+    // $ch = curl_init();
+    // curl_setopt($ch, CURLOPT_URL, $runfile);
+    // curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+    // $userTokenJSON = curl_exec ($ch);
+    // curl_close ($ch); 
+
 	$userToken = json_decode($userTokenJSON);
 
 	//encrypt token
