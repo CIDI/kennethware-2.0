@@ -56,6 +56,7 @@ require_once 'wizardAPI.php';
 	</script>
 </head>
 <body>
+	<h2><i class="fa fa-sitemap"></i> Modules <small><i class="fa fa-magic"></i> Wizard Tools</small></h2>
 	<nav class="navbar navbar-default">
 		<ul class="nav navbar-nav">
 			<li><a href="wizard_pages.php"><i class="fa fa-files-o"></i> Page Templates</a></li>
@@ -63,7 +64,6 @@ require_once 'wizardAPI.php';
 			<li><a href="wizard_image_crop.php?task=selectImage"><i class="fa fa-picture-o"></i> Images</a></li>
 		</ul>
 	</nav>
-	<h2><i class="fa fa-sitemap"></i> Modules</h2>
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<form id="moduleForm">

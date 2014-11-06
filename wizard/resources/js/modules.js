@@ -212,6 +212,7 @@ $(function () {
                         });
                         $.post('wizard_update_module_order.php', {orderDetails: orderDetails}).done(function () {
                             $('.createModules').html('<i class="fa fa-check"></i> ' + completedCount + ' of ' + totalNewModules + ' Modules Created');
+                            document.location.href = 'wizard_modules.php';
                         });
                     } else {
                         $('.createModules').html('<i class="fa fa-spinner fa-spin fa-large"></i> ' + completedCount + ' of ' + totalNewModules + ' Modules Created');

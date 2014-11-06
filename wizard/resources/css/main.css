@@ -1,19 +1,68 @@
 h2 {
-	background: #3879B1;
+	background: #2A587F;
 	color: #fff;
 	padding: 20px;
-	margin-top: 0;
-	text-align: center;
+	margin: 0;
+	box-shadow: inset 0px 0px 52px #1C4569h2 {
+	background: #2A587F;
+	color: #fff;
+	padding: 20px;
+	margin: 0;
+	box-shadow: inset 0px 0px 52px #1C4569;
+}h2 {
+	background: #2A587F;
+	color: #fff;
+	padding: 20px;
+	margin: 0;
+	box-shadow: inset 0px 0px 52px #1C4569;
+}h2 {
+	background: #2A587F;
+	color: #fff;
+	padding: 20px;
+	margin: 0;
+	box-shadow: inset 0px 0px 52px #1C4569;
+} 0 20px 				h2 {
+					background: #2A587F;
+					color: #fff;
+					padding: 20px;
+					margin: 0 0 20px 0;
+					box-shadow: inset 0px 0px 52px #1C4569;
+				}				h2 {
+					background: #2A587F;
+					color: #fff;
+					padding: 20px;
+					margin: 0 0 20px 0;
+					box-shadow: inset 0px 0px 52px #1C4569;
+				}				h2 {
+					background: #2A587F;
+					color: #fff;
+					padding: 20px;
+					margin: 0 0 20px 0;
+					box-shadow: inset 0px 0px 52px #1C4569;
+				}				h2 {
+					background: #2A587F;
+					color: #fff;
+					padding: 20px;
+					margin: 0 0 20px 0;
+					box-shadow: inset 0px 0px 52px #1C4569;
+				};
+}
+h2 small {
+	color: #DDDDDD;
+	text-transform: uppercase;
+	float: right;
+}
+h2 a {
+	color: #fff;
+}
+h2 a:hover {
+	color: #fff;
 }
 h3 {
 	margin-top: 0;
 }
 .navbar {
-	margin-bottom: 0;
 	border-radius: 0;
-}
-.navbar-nav>li>a {
-	line-height: 15px;
 }
 .input-small {
 	width: 20px;
@@ -48,6 +97,45 @@ label {
 	padding: 2px;
 	width: 136px;
 	line-height: 64px;
+	position: relative;
+}
+#themeList a.template img{
+	position: relative;
+}
+#themeList .dimensions {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	left: 0;
+	line-height: 20px;
+	background: rgba(255, 255, 255, 0.8);
+}
+#themeList .btn-default .dimensions{
+	display: none;
+}
+#themeList .btn-default:hover .dimensions{
+	display: block;
+}
+#themeList .btn-danger {
+	background: #D2B0AF;
+	border-color: #D2B0AF;
+}
+#themeList .btn-danger .dimensions{
+	display: block;
+	background: #D2B0AF;
+	color: #000;
+	font-weight: bold;
+}
+#themeList .fa-ban {
+	position: absolute;
+	left: 0;
+	top: 8px;
+	font-size: 40px;
+	width: 100%;
+	color: #a94442;
 }
 #themeList a.ratio {
 	width: 67px;

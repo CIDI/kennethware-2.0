@@ -34,6 +34,7 @@
 	</script>
 </head>
 <body>
+	<h2><i class="fa fa-files-o"></i> Page Templates <small><i class="fa fa-magic"></i> Wizard Tools</small></h2>
 	<nav class="navbar navbar-default">
 		<ul class="nav navbar-nav">
 			<li class="active"><a href="wizard_pages.php"><i class="fa fa-files-o"></i> Page Templates</a></li>
@@ -41,7 +42,6 @@
 			<li><a href="wizard_image_crop.php?task=selectImage"><i class="fa fa-picture-o"></i> Images</a></li>
 		</ul>
 	</nav>
-	<h2><i class="fa fa-files-o"></i> Page Templates</h2>
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">

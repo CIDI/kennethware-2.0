@@ -56,7 +56,7 @@
 
 
     // Primary Page
-    if ($primaryPage){
+    if ($primaryPage == 'true'){
         // Name the new template page
         $pageTitle = $modulePrefix." Overview";
 

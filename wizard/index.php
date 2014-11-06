@@ -30,15 +30,8 @@ http://www.gnu.org/licenses/agpl-3.0.html -->
 	<script type="text/javascript" language="javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 </head>
 <body>
-	<nav class="navbar navbar-default">
-		<ul class="nav navbar-nav">
-			<li><a href="resources/wizard_pages.php"><i class="fa fa-files-o"></i> Page Templates</a></li>
-			<li><a href="resources/wizard_modules.php"><i class="fa fa-sitemap"></i> Modules</a></li>
-			<li><a href="resources/wizard_image_crop.php?task=selectImage"><i class="fa fa-picture-o"></i> Images</a></li>
-		</ul>
-	</nav>
-	<h2 class="text-center">
-		<i class="fa fa-magic"></i> Wizard Tools: 
+	<h2>
+		<i class="fa fa-magic"></i> Wizard Tools <small>
 		<?php 
 			$course = getCourse($_SESSION['courseID']);
 			if (isset($course->name)){
@@ -49,7 +42,15 @@ http://www.gnu.org/licenses/agpl-3.0.html -->
 				echo $_SESSION['courseName']; 
 			} 
 		?>
+		</small>
 	</h2>
+	<nav class="navbar navbar-default">
+		<ul class="nav navbar-nav">
+			<li><a href="resources/wizard_pages.php"><i class="fa fa-files-o"></i> Page Templates</a></li>
+			<li><a href="resources/wizard_modules.php"><i class="fa fa-sitemap"></i> Modules</a></li>
+			<li><a href="resources/wizard_image_crop.php?task=selectImage"><i class="fa fa-picture-o"></i> Images</a></li>
+		</ul>
+	</nav>
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">

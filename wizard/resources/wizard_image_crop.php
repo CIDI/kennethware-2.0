@@ -32,6 +32,7 @@
 	<link rel="stylesheet" href="css/main.css" type="text/css" />
 </head>
 <body>
+	<h2><i class="fa fa-picture-o"></i> Image Tools <small><i class="fa fa-magic"></i> Wizard Tools</small></h2>
 	<nav class="navbar navbar-default">
 		<ul class="nav navbar-nav">
 			<li><a href="wizard_pages.php"><i class="fa fa-files-o"></i> Page Templates</a></li>
@@ -64,7 +65,7 @@
 			// TEMPLATE ARRAY (templateName, minWidth,minHeight, ratioWidth,ratioHeight)
 			$templates = $GLOBALS['templates'];
 			echo '<div>
-				<h2><i class="fa fa-picture-o"></i> Select An Image</h2>
+				<h3>Step 1: Select An Image</h3>
 				<div class="row-fluid">
 				<div class="well well-sm">
 					<form action="wizard_image_crop.php" id="imageForm" class="form-horizontal" method="post" enctype="multipart/form-data">
@@ -189,6 +190,12 @@
 						            $('#targetHeight').val(Math.round(c.h));
 						        }
 						    }
+						    function checkCoords()
+							{
+								if (parseInt($('#w').val())) return true;
+								alert('Please select a crop region then press submit.');
+								return false;
+							};
 						    function checkSizes(ratioString) {
 						        var ratio = ratioString.split('|'),
 						            themeWidth = parseInt(ratio[0], 10),
@@ -264,6 +271,7 @@
 							';
 						} else {
 							echo '$(".'.$templateName.'").addClass("disabled btn-danger").removeClass("btn-default");
+							$(".'.$templateName.'").append("<i class=\"fa fa-ban\"></i>");
 							';
 							$showAlert = true;
 						}
@@ -290,13 +298,14 @@
 					  echo '});
 					</script>';
 					echo '
-						<h2><i class="fa fa-picture-o"></i> Crop your Image</h2>
+						<h3>Step 2: Crop your Image</h3>
 						<div class="row-fluid">';
 						if ($showAlert) {
 							echo '
 								<div class="alert alert-danger" style="margin-top: 20px;">
 									<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-									<p><strong>Warning!</strong> Some themes have been disabled because image is too small.</p>
+									<p><strong><i class="fa fa-ban"></i> Warning!</strong> Some themes have been disabled because your image is too small.</p>
+									<p>The image you uploaded is <strong>' . $imageWidth . 'x' . $imageHeight . '</strong></p>
 								</div>
 							';
 						}
@@ -304,11 +313,13 @@
 								<img src="images/' . $courseID . '.jpg" id="cropbox"  />
 							</div>
 						<div id="themeSelect">
-							<p><em>Themes/Ratios:</em></p>
+							<p><em>Choose a Theme or a Ratio:</em></p>
 							<ul id="themeList" class="list-unstyled">';
 							for ($row=0; $row < count($templates); $row++) { 
 			  					$templateName = $templates[$row][0];
-			  					echo '<li><a href="#" class="'.$templateName.' btn btn-default btn-block template" ><img src="../../images/template_thumbs/'.$templateName.'.png"></a></li>';
+								$minWidth = $templates[$row][1];
+								$minHeight = $templates[$row][2];
+		  						echo '<li><a href="#" class="'.$templateName.' btn btn-default btn-block template" ><img src="../../images/template_thumbs/'.$templateName.'.png"><span class="dimensions">'.$minWidth.'x'.$minHeight.'</span></a></li>';
 			  				}
 			  				for ($ratioRow=0; $ratioRow < count($ratios); $ratioRow++) { 
 			  					$ratioX = $ratios[$ratioRow][0];
@@ -401,7 +412,7 @@
 			if(imagejpeg($dst_r, $output_filename, $jpeg_quality)){
 				$uploadFile = uploadFrontPageBanner($courseID, $imageName);
 				echo '<div>
-						<h2><i class="fa fa-picture-o"></i> Image Uploaded!</h2>
+						<h3><i class="fa fa-picture-o"></i> Image Uploaded!</h3>
 						<div class="container-fluid">
 							<div class="row-fluid">
 								<div class="col-md-8 thumbnail">
