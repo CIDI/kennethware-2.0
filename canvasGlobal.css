@@ -511,6 +511,7 @@
 /**********************************************************************/
 
   #kl_wrapper {position: relative;} /* allow positioning of sub elements */
+  #kl_wrapper .kl_image_full_width {width: 100%; height: auto; }
 
   /******************************/
   /*** KEY: FP = Front Page   ***/
