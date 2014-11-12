@@ -111,7 +111,7 @@ $(function () {
     }
     // Full width images
     $('.kl_image_full_width').css('max-width', '100%');
-    $('#kl_banner_image img').css('max-width', '100%');
+    $('#kl_banner_image img').css('max-width', '100%').addClass('kl_image_full_width');
 
 
     // STUDENT VERIFICATION FORM //
@@ -410,8 +410,6 @@ $(function () {
 
     }
     if ($('.kl_modules_tabbed').length > 0) {
-        // console.log('got here too');
-
         var bgColor = '',
             bgHex = '0F2439',
             textColor = 'FFF';
@@ -424,15 +422,13 @@ $(function () {
         if ($('#kl_banner').length === 0 && $('#kl_navigation').length > 0 || $('#kl_navigation').length > 0 && bgColor === 'rgba(0, 0, 0, 0)') {
             bgColor = $('#kl_navigation').css('background-color');
         }
-        // console.log(bgColor);
         if (bgColor !== '' && bgColor !== 'rgba(0, 0, 0, 0)') {
             bgHex = rgb2hex(bgColor);
-            // console.log(bgHex);
             bgHex = bgHex.replace('#', '');
             textColor = getContrastYIQ(bgHex);
             textColor = getContrast50(bgHex);
         }
-        // console.log(textColor);
+        // Write styles to match template to the page head
         var appendStyle = '<style>' +
             '   #kl_wrapper #kl_modules .ui-tabs-active {background: #' + bgHex + '; }' +
             '   #kl_wrapper #kl_modules ul li.ui-tabs-active a { color: ' + textColor + '}' +
@@ -443,6 +439,7 @@ $(function () {
             '</style>';
         $('head').append(appendStyle);
 
+        // Loop through modules to gather details
         $('.kl_connected_module').each(function () {
             var module_id = $(this).attr('id'),
                 myTitle = $(this).text(),
@@ -452,7 +449,7 @@ $(function () {
             if (typeof explodedTitle[0] !== 'undefined') {
                 $(this).text(explodedTitle[0]);
             }
-
+            // Create tab sections and populate with module items
             $("#kl_modules").append('<div id="kl_tabs_' + module_id + '" />');
             $('#kl_tabs_' + module_id).load('/courses/' + coursenum + '/modules #context_module_' + module_id, function () {
                 $('#kl_modules .delete_prerequisite_link').remove();
@@ -480,7 +477,7 @@ $(function () {
            }
         });
         $('#kl_modules .ui-tabs-nav li').each(function(){
-            $(this).width(maxWidth+3);
+            $(this).width(maxWidth+5);
         });
 
     }
