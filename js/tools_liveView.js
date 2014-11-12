@@ -471,13 +471,13 @@ $(function () {
         }
         // Make tabs equal in width
         var maxWidth = 0;
-        $('#kl_modules .ui-tabs-nav li').each(function(){
+        $('#kl_modules .ui-tabs-nav li a').each(function(){
            if ($(this).width() > maxWidth){
              maxWidth = $(this).width();
            }
         });
-        $('#kl_modules .ui-tabs-nav li').each(function(){
-            $(this).width(maxWidth+5);
+        $('#kl_modules .ui-tabs-nav li a').each(function(){
+            $(this).width(maxWidth+3);
         });
 
     }
