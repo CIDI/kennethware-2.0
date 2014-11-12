@@ -244,14 +244,14 @@
 						        displayWidth = 0;
 						    });
 					";
-					// Output template functions		    	
+					// Output template functions
 					for ($row=0; $row < count($templates); $row++) { 
 						$templateName = $templates[$row][0];
 						$minWidth = $templates[$row][1];
 						$minHeight = $templates[$row][2];
 						$ratioX = $templates[$row][3];
 						$ratioY = $templates[$row][4];
-						if ($imageWidth > $minWidth && $imageHeight > $minHeight) {
+						if ($imageWidth >= $minWidth && $imageHeight >= $minHeight) {
 							echo '
 							    $(".'.$templateName.'").click(function (e) {
 						        e.preventDefault();
@@ -412,7 +412,7 @@
 			if(imagejpeg($dst_r, $output_filename, $jpeg_quality)){
 				$uploadFile = uploadFrontPageBanner($courseID, $imageName);
 				echo '<div>
-						<h3><i class="fa fa-picture-o"></i> Image Uploaded!</h3>
+						<h3 class="alert alert-success text-center">Image Uploaded!</h3>
 						<div class="container-fluid">
 							<div class="row-fluid">
 								<div class="col-md-8 thumbnail">
