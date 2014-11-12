@@ -194,16 +194,18 @@ require_once 'wizardAPI.php';
 						<div class="form-group">
 							<label for="modulePrefix" class="patternLabel">Module Prefix </label>
 							<select name="modulePrefix" id="modulePrefix" class="form-control" required="required" style="width: 115px; text-align: center;">
-								<option value="Module">Module #:</option>
-								<option value="Unit">Unit #:</option>
-								<option value="Week">Week #:</option>
-								<option value="Section">Section #:</option>
 								<option value="Chapter">Chapter #:</option>
 								<option value="Part">Part #:</option>
 								<option value="Day">Day #:</option>
-								<option value="Topic">Topic #:</option>
+								<option value="Level">Level #:</option>
+								<option value="Module" selected="selected">Module #:</option>
 								<option value="Objective">Objective #:</option>
 								<option value="Outcome">Outcome #:</option>
+								<option value="Part">Part #:</option>
+								<option value="Section">Section #:</option>
+								<option value="Topic">Topic #:</option>
+								<option value="Unit">Unit #:</option>
+								<option value="Week">Week #:</option>
 							</select>
 						</div>
 						<div class="checkbox">
