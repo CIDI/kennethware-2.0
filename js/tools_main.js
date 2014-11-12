@@ -2659,6 +2659,17 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         }
         scrollToElement('#kl_progress_bar');
     }
+    function bindProgressBarDelete() {
+
+        $('.kl_progress_bar_delete_section').unbind("click").click(function (e) {
+            e.preventDefault();
+            var connectedSection = $(this).attr('rel');
+            $(this).parents('tr').remove();
+            $(iframeID).contents().find('.' + connectedSection + '_value').remove();
+            $(iframeID).contents().find('.' + connectedSection + '_label').remove();
+            $('.kl_progress_bar_delete_section').last().show();
+        });
+    }
     function addProgressBarSection() {
         var newBarSectionNum = $(iframeID).contents().find('.kl_progress_bar_wrapper .kl_progress_bar_value').length,
             newBarSectionHtml = '<div class="kl_progress_bar_value kl_progress_bar_' + newBarSectionNum + '_value" style="width: 20%; background: #003366; text-align: right; height:5px; float:left;">' +
@@ -2674,14 +2685,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 '</tr>';
         $('#kl_progress_bar_section_controls tbody').append(newSectionControls);
         $(iframeID).contents().find('.kl_progress_bar_wrapper').append(newBarSectionHtml);
-        $('.kl_progress_bar_delete_section').unbind("click").click(function (e) {
-            e.preventDefault();
-            var connectedSection = $(this).attr('rel');
-            $(this).parents('tr').remove();
-            $(iframeID).contents().find('#' + connectedSection + '_value').remove();
-            $(iframeID).contents().find('#' + connectedSection + '_label').remove();
-            $('.kl_progress_bar_delete_section').last().show();
-        });
+        bindProgressBarDelete();
         if ($(iframeID).contents().find('.kl_progress_bar_wrapper_outside_labels').length > 0) {
             pbLabelsInside();
             pbLabelsOutside();
@@ -2743,6 +2747,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $('.kl_progress_bar_height[rel="' + pbHeight + '"]').addClass('active');
             $('.kl_progress_bar_delete_section').last().show();
             bindWidthUpdate();
+            bindProgressBarDelete();
         }
     }
    ////// On Ready/Click functions  //////
