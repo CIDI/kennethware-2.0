@@ -79,10 +79,10 @@ var klToolsVariables = {
     klPagesBannerImage: '<div id="kl_banner_image">&nbsp;</div>',
     klPagesNavSection: '<div id="kl_navigation">' +
         '<ul>' +
-        '    <li><a class="icon-forward" title="start here" href="/courses/' + coursenum + '/wiki/start-here">Start Here</a></li>' +
+        '    <li><a class="icon-forward" title="start here" href="/courses/' + coursenum + '/pages/start-here">Start Here</a></li>' +
         '    <li><a class="icon-syllabus" title="syllabus" href="/courses/' + coursenum + '/assignments/syllabus">Syllabus</a></li>' +
         '    <li><a class="icon-module" title="modules" href="/courses/' + coursenum + '/modules">Modules</a></li>' +
-        '    <li><a class="icon-add" title="more resources" href="/courses/' + coursenum + '/wiki/more-resources">More Resources</a></li>' +
+        '    <li><a class="icon-add" title="more resources" href="/courses/' + coursenum + '/pages/more-resources">More Resources</a></li>' +
         '</ul>' +
         '</div>',
     klPagesIntroductionSection: '<div id="kl_introduction">' +
@@ -374,9 +374,9 @@ var klToolsVariables = {
         '   <div id="Step_5">' +
         '       <h3 class="icon-info">Step 5: Read about academic integrity and netiquette</h3>' +
         '       <p>All students at Utah State University agree on admission to abide by the university <em>Honor Code</em>.' +
-        '       Please review this <a title="Honor Pledge" href="/courses/' + coursenum + '/wiki/honor-pledge">Academic Integrity</a> tutorial to familiarize yourself with USU policies and procedures pertaining to the USU honor code.' +
+        '       Please review this <a title="Honor Pledge" href="/courses/' + coursenum + '/pages/honor-pledge">Academic Integrity</a> tutorial to familiarize yourself with USU policies and procedures pertaining to the USU honor code.' +
         '       This tutorial links to an additional, in-depth review on how to' +
-        '       <a title="Academic Dishonesty Defined" href="/courses/' + coursenum + '/wiki/academic-dishonesty-defined">avoid plagiarism and cite sources</a>, which you are strongly encouraged to review.' +
+        '       <a title="Academic Dishonesty Defined" href="/courses/' + coursenum + '/pages/academic-dishonesty-defined">avoid plagiarism and cite sources</a>, which you are strongly encouraged to review.' +
         '       Also, please review the <a href="http://www.albion.com/netiquette/corerules.html" target="_blank">core rules of netiquette</a> for some guidelines and expectations on how to behave in an online learning environment.</p>' +
         '   </div>' +
         '   <div id="Next_Steps">' +
