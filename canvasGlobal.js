@@ -160,9 +160,10 @@ function triggerToolsCheck() {
 // Look for "+ Page" button to appear
 function newPageCheck() {
     'use strict';
-    if ($('.new_page').length > 0) {
+    // Need to make sure the button is there and that the list of pages has finished otherwise it doesn't work
+    if ($('.new_page').length > 0 && $('.collectionViewItems tr').length > 0) {
         $('.new_page').click(function () {
-            loadToolsDependencies();
+            triggerToolsCheck();
         });
     } else {
         setTimeout(function () {
