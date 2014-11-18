@@ -54,6 +54,7 @@ function kl_update_progress() {
 // FRONT PAGE MODULE DETAILS
 //// Adaptation of Canvas function to populate due dates and points
 function kl_gatherModuleDetails() {
+    'use strict';
     $.ajaxJSON('/courses/' + coursenum + '/modules/items/assignment_info', 'GET', {}, function (data) {
         $.each(data, function (id, info) {
             $context_module_item = $("#context_module_item_" + id);

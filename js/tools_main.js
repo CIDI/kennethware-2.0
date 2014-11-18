@@ -1079,7 +1079,6 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             deleteAccordion();
             // Insert the new section into the TinyMCE editor at cursor
             tinyMCE.execCommand('mceInsertContent', false, '<div class="kl_custom_accordion"></div><p>&nbsp;</p>');
-            // Bind a change function to bring up the remove button when unchecked
             $('#kl_new_acc_panel').focus();
         }
     }
@@ -1118,7 +1117,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             scrollToElement('.' + newPanelClass);
             highlightNewElement('.' + newPanelClass);
             deleteAccPanel();
-            $('#kl_accordion_panels').html('');
+            $('#kl_accordion_panels').focus().html('');
             getAccPanels();
             bindHover();
         }
@@ -2114,7 +2113,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 tooltipText = 'Text Linked';
                 linkIcon = 'fa fa-link';
             }
-            linkID = displayText.replace(' ', '_');
+            linkID = displayText.replace(/ /g, '_');
             $('#kl_nav_list_items').append('<li rel="#kl_nav_' + linkID +
                 '"><span title="Drag to reorder" class="move_item_link" data-tooltip="top" title="' + tooltipText + '"><img alt="Move" src="/images/move.png?1366214258"></span>&nbsp;' +
                 displayText +
@@ -4036,9 +4035,9 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             '<a href="#" class="kl_remove pull-right kl_modules_list_remove_item" rel="#' + moduleID + '" data-tooltip="top" title="Remove ' + moduleTitle + '">' +
             '<i class="icon-end"></i><span class="screenreader-only">Remove item</a>' +
             '<div id="kl_module_dates_' + moduleID + '" rel="#' + moduleID + '"  class="kl_modules_choose_dates hide">' +
-            '    <label for="kl_modules_from' + moduleID + '" style="display:none;">From</label>' +
+            '    <label for="kl_modules_from' + moduleID + '" class="screenreader-only">From</label>' +
             '    <input type="text" id="kl_modules_from' + moduleID + '" class="kl_modules_from input-small" name="kl_modules_from" placeholder="Start Date" value="' + moduleStartDate + '">' +
-            '    <label for="kl_modules_to' + moduleID + '">to</label>' +
+            '    <label for="kl_modules_to' + moduleID + '" class="screenreader-only">to</label>' +
             '    <input type="text" id="kl_modules_to' + moduleID + '" class="kl_modules_to input-small" name="kl_modules_to" placeholder="End Date" value="' + moduleStopDate + '">' +
             '</div>' +
             '</li>');
