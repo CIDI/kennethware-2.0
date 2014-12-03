@@ -37,22 +37,41 @@ var klToolsPath = "https://<url>/kennethware-2.0/",
     globalCSSPath = "https://<url>/canvasGlobal.css",
     klFontAwesomePath = "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css",
 
+    // OPTIONAL: Limit tools loading by users roll
+    //      Change klLimitByRole to "true" to limit to rolls in the klRoleArray array, add additional roles as needed
+    klLimitByRole = false, 
+    klRoleArray = [
+        'student',
+        'teacher',
+        'admin'
+    ],
+    klLimitByUser = false,
+    // OPTIONAL: Limit tools to an array of Canvas user IDs
+    //      Change klLimitByUser to "true" to limit to users in the klUserArray array
+    //      klUserArray is the Canvas user ID not the SIS user ID
+    klUserArray = [
+        '123456',
+        '987654'
+    ],
     // The templates in this list will match the Canvas background color
     matchCanvasBackgroundTemplates = [
-        'kl_colored_headings'
+        'kl_colored_headings',
+        'kl_fp_colored_headings'
     ],
+
     // If any of these elements exist, we will watch for page content in them to load
     contentWrappersArray = [
         '#course_home_content', // Course Front Page
         '#wiki_page_show', // Content page
         '#discussion_topic', // Discussions page
-        '#wiki_page_show', // Syllabus page
-        '#assignment_show' // Assignments page
+        '#course_syllabus', // Syllabus page
+        '#assignment_show', // Assignments page
+        '#wiki_page_revisions'
     ],
     // Look in the url for this text and /edit and then make sure the tinyMCE editor has loaded
     urlsWithEdit = [
-        '/pages/',
-        '/assignments/',
+        '/pages/', 
+        '/assignments/', 
         '/discussion_topics/'
     ],
     iframeID;
@@ -90,12 +109,13 @@ function afterContentLoaded() {
     }
 }
 
+
 // Check to see if the page content has loaded yet
 function pageContentCheck(contentWrapperElement) {
     'use strict';
     var contentLoaded = false;
     // Content Pages
-    if ($('.show-content').length > 0 && $('.show-content').text().length > 0) {
+    if ($('.show-content').length > 0 && $('.show-content').text().length > 300) {
         contentLoaded = true;
     // Discussions
     } else if ($('#discussion_topic').length > 0 && $('.user_content').text().length > 0) {
@@ -104,6 +124,8 @@ function pageContentCheck(contentWrapperElement) {
     } else if ($('#assignment_show .teacher-version').length > 0) {
         contentLoaded = true;
     } else if ($('#assignment_show .student-version').length > 0) {
+        contentLoaded = true;
+    } else if ($('#course_syllabus').length > 0) {
         contentLoaded = true;
     }
 
@@ -140,20 +162,48 @@ function loadToolsDependencies() {
 // Check to see if the editor is available yet
 function triggerToolsCheck() {
     'use strict';
+    var klLoadTools = false,
+        userID = ENV['current_user_id'];
     console.log('triggerToolsCheck()');
-    // First condition is for syllabus
-    if ($('.kl_add_tools').length > 0) {
-        $('.kl_add_tools').show();
-    // If it is not the syllabus check for editor
-    } else if ($('iframe').contents().find('#tinymce').length > 0) {
-        console.log(tinyMCE.activeEditor.id);
-        iframeID = '#' + tinyMCE.activeEditor.id + '_ifr';
-        loadToolsDependencies();
-    } else {
-        // console.log('Check Again');
-        setTimeout(function () {
-            triggerToolsCheck();
-        }, 500);
+    // Only proceed if this passes the limits on the tools
+    if (klLimitByRole === false && klLimitByUser === false) {
+        klLoadTools = true;
+    } else if (klLimitByRole === true && klLimitByUser === false) {
+        $.each(klRoleArray, function(index, val) {
+             if($.inArray(val, ENV['current_user_roles']) === -1 ) {
+                klLoadTools = true;
+                // return false;
+             }
+        });
+    } else if (klLimitByRole === false && klLimitByUser === true) {
+        console.log(userID);
+        // If the user's Canvas ID is in the klUserArray
+        if ($.inArray(userID, klUserArray) !== -1) {
+            klLoadTools = true;
+        }
+    } else if (klLimitByRole === true && klLimitByUser === true) {
+        $.each(klRoleArray, function(index, val) {
+             if($.inArray(val, ENV['current_user_roles']) === -1 && $.inArray(userID, klUserArray) !== -1) {
+                klLoadTools = true;
+                // return false;
+             }
+        });
+    }
+    if (klLoadTools) {
+        // First condition is for syllabus
+        if ($('.kl_add_tools').length > 0) {
+            $('.kl_add_tools').show();
+        // If it is not the syllabus check for editor
+        } else if ($('iframe').contents().find('#tinymce').length > 0) {
+            console.log(tinyMCE.activeEditor.id);
+            iframeID = '#' +tinyMCE.activeEditor.id + '_ifr';
+            loadToolsDependencies();
+        } else {
+            // console.log('Check Again');
+            setTimeout(function () {
+                triggerToolsCheck();
+            }, 500);
+        }
     }
 }
 
@@ -172,11 +222,12 @@ function newPageCheck() {
     }
 }
 
-
+// SET UP TOOLS
 (function () {
     'use strict';
     // Get Current UserID
-    var task,
+    var userID = ENV['current_user_id'],
+        task,
         i;
     // Identify which page we are on and when the content has loaded
     for (i = 0; i <= contentWrappersArray.length; i++) {
@@ -202,8 +253,7 @@ function newPageCheck() {
 
     // Handle Syllabus
     if ($('.edit_syllabus_link').length > 0) {
-        console.log('syllabus link is there');
-        $('.edit_syllabus_link').click(function () {
+        $('.edit_syllabus_link').click(function(event) {
             if ($('#kl_tools_wrapper').length > 0) {
                 $('#kl_tools_wrapper').show();
                 // setupSyllabusTools();
