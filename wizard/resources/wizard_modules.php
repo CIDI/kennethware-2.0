@@ -187,7 +187,14 @@ require_once 'wizardAPI.php';
 							<label for="moduleCount" class="patternLabel">Number of Modules </label>
 							<input type="text" class="form-control" id="moduleCount" placeholder="##" style="width: 45px; text-align: center; margin-right:20px;">
 						</div>
-						<div class="form-group">
+						<?php 
+							// Only show start number if there are existing modules
+							if($existingModules) {
+								echo '<div class="form-group">';
+							} else {
+								echo '<div class="form-group hide">';
+							}
+						?>
 							<label for="startNumbering" class="patternLabel">Start Numbering at </label>
 							<input type="text" class="form-control" id="startNumbering" value="1" style="width: 45px; text-align: center; margin-right:20px;">
 						</div>
