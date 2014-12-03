@@ -207,7 +207,7 @@
 	line-height: 15px;
 }
 #kl_custom_css:after {
-	content: "\e015  Custom CSS";
+	content: "\f1bc  Custom CSS";
 }
 .kl_mce_visual_sections #kl_introduction {
 	border: 1px dashed #aa00ff;
@@ -251,29 +251,21 @@
 		background: #05a6eb;
 		margin-bottom: 5px;
 	}
-	.kl_mce_visual_sections .kl_custom_accordion .kl_mce_visual_sections .accordionContent {
-		padding: 5px;
+	.kl_custom_accordion > div {
+		padding: 10px;
 		border: 1px solid #cccccc;
+		margin-bottom: 10px;
 	}
-	.kl_mce_visual_sections .kl_custom_accordion h4 {
-		border: 1px solid #cccccc;
-		color: #333333;
+	.kl_custom_accordion h4.kl_acc_panel_heading {
+		border: 1px solid #dbdbdb;
+		color: #333;
 		font-weight: normal;
-		background-color: #f2f2f2;
-		background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e6e6e6));
-		background-image: -webkit-linear-gradient(top, #fff, #e6e6e6);
-		background-image: -moz-linear-gradient(top, #fff, #e6e6e6);
-		background-image: -ms-linear-gradient(top, #fff, #e6e6e6);
-		background-image: -o-linear-gradient(top, #fff, #e6e6e6);
-		background-image: linear-gradient(top, #fff, #e6e6e6);
-		-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='white',EndColorStr='#e6e6e6')";
-		zoom: 1;
-		text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+		background-image: none;
+		background: #efefef;
+		text-shadow: none;
 		border-bottom-color: #bbb;
-		box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
-		font-size: 15px;
-		padding: 0 10px;
-		line-height: 25px;
+		box-shadow: none;
+		padding: 5px;
 	}
 
 /* Custom Tabs Styling */
@@ -296,37 +288,25 @@
 		overflow: hidden;
 		margin: 0;
 	}
-	.kl_mce_visual_sections .tab-list li, .kl_mce_visual_sections .kl_tabbed_section h4 {
-		list-style: none;
-		float: left;
-		position: relative;
-		top: 1px;
-		margin: 0 .2em 1px 0;
-		border-bottom: 0 !important;
-		padding: 0;
-		white-space: nowrap;
+	.kl_tabbed_section > h4 {
+		border: 1px solid #dbdbdb;
+		color: #333;
+		font-weight: normal;
+		background-image: none;
+		background: #efefef;
+		text-shadow: none;
+		border-bottom-color: #bbb;
+		box-shadow: none; 
 		border-top-right-radius: 4px;
 		border-top-left-radius: 4px;
-		border: 1px solid #cccccc;
-		color: #333333;
-		background-color: #f2f2f2;
-		background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e6e6e6));
-		background-image: -webkit-linear-gradient(top, #fff, #e6e6e6);
-		background-image: -moz-linear-gradient(top, #fff, #e6e6e6);
-		background-image: -ms-linear-gradient(top, #fff, #e6e6e6);
-		background-image: -o-linear-gradient(top, #fff, #e6e6e6);
-		background-image: linear-gradient(top, #fff, #e6e6e6);
-		-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='white',EndColorStr='#e6e6e6')";
-		zoom: 1;
-		text-shadow: 0 1px 1px rgba(255,255,255,0.75);
-		border-bottom-color: #bbb;
-		box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
-		list-style: none;
-		white-space: nowrap;
-		padding: .5em .9em;
-		text-shadow: 0 1px 0 rgba(255,255,255,0.5);
-		font-weight: bold;
-		font-size: 12px;
+		margin: 10px 0 0 !important;
+		padding: 5px 10px;
+		border-bottom: none !important;
+		display: inline-block;
+	}
+	.kl_tabbed_section > .kl_tab_content {
+		border: 1px solid #dbdbdb;
+		padding: 10px;
 	}
 	.kl_mce_visual_sections .kl_tabbed_section h4 {
 		float: none;
@@ -457,7 +437,7 @@
 	.kl_mce_visual_sections div#kl_progress_bar, .kl_mce_visual_sections div.kl_progress_bar_wrapper, .kl_mce_visual_sections div.kl_progress_bar_value, .kl_mce_visual_sections div.kl_progress_bar_label { margin: 0 !important;} 
 /* Add icons to special instances */
 .kl_mce_visual_sections .kl_quick_check .kl_quick_check_correct_answer:before, #kl_student_verification:before, #kl_verification_success, #kl_custom_css {
-	font-family: 'canvasregular';
+	font-family: 'canvas-icons';
 	display: inline-block;
 	vertical-align: middle;
 	position: relative;
@@ -508,7 +488,7 @@
 	font-size: 25px;
 	top: 20px;
 	left: -20px;
-	content: "\e015";
+	content: "\f1bc";
 	color: #468847;
 	text-shadow: 1px 1px 2px #000000;
 	width: 0px;
@@ -626,8 +606,8 @@
 		padding-left: 15px;
 	}
 	.kl_mce_visual_sections .kl_tabbed_section h4.kl_current_tab:before, .kl_mce_visual_sections .kl_custom_accordion h4.kl_current_acc:before {
-		font-family: 'canvasregular';
-		content: '\e015';
+		font-family: 'canvas-icons';
+		content: '\f1bc';
 		background: #468847;
 		margin: -6px 0 0 -16px;
 		display: inline-block;
