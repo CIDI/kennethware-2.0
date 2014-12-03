@@ -19,7 +19,7 @@
 // This page contains code for the live view of custom tools
 function kl_update_progress() {
     'use strict';
-    if ($('.edit-wiki').length === 0) {
+    if ($('.edit-wiki').length === 0 && $('#wiki_page_revisions').length === 0) {
         var current_user_id = $("#identity .user_id").text(),
             url = '/courses/' + coursenum + '/modules/progressions?user_id=' + current_user_id;
         $.ajaxJSON(url, 'GET', {}, function (data) {
@@ -99,7 +99,8 @@ function rgb2hex(rgb) {
     return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
 }
 
-$(function () {
+$(document).ready(function() {
+    
     'use strict';
     var anchor, studentName, activePanel, activeTab, icons, modalTitle, today;
     // SHOW PAGES TITLE
@@ -309,65 +310,63 @@ $(function () {
 
 
     // SYLLABUS NAVIGATION //
-    if ($("#course_syllabus #template-wrapper").length > 0 || $("#course_syllabus #kl_wrapper").length > 0 || $(".universityPolicies").length > 0 || $("#kl_university_policies").length > 0) {
-        if ($("#course_syllabus").length > 0 && $('#syllabus_nav').length === 0) {
-            $("#sidebar_content").append('<div id="kl_syllabus_nav"><h2>Syllabus Navigation</h2><ul id="kl_syllabus_nav_list" style="list-style-type:none;" /></div>');
-            $("#kl_syllabus_nav_list").html('');
-            $("#course_syllabus h3").each(function (index, value) {
-                var title = $(value).text(),
-                    anchorName = title.replace("&", "");
-                anchorName = anchorName.replace(/ /g, "_");
-                $(value).prepend('<a name="' + anchorName + '"></a>');
-                $("#kl_syllabus_nav_list").append('<li class="kl_' + anchorName + '_link"><a href="#' +
-                    anchorName + '" class="kl_syllabus_nav_link" rel="#kl_' + anchorName + '_sub">' + title +
-                    '</a></li><ul style="display:none;" id="kl_' + anchorName + '_sub" class="kl_sub_nav_list"></ul>');
-                $(value).parent('div').contents().find("h4").each(function (index, secondValue) {
-                    var subtitle = $(secondValue).text(),
-                        subAnchorName = subtitle.replace("&", "");
-                    subAnchorName = subAnchorName.replace(/ /g, "_");
-                    $(secondValue).prepend('<a name="kl_' + subAnchorName + '"></a>');
-                    $('#kl_' + anchorName + '_sub').append('<li class="kl_' + subAnchorName + 'Link"><a href="#kl_' + subAnchorName + '">' + subtitle + '</a></li>');
-                });
-            });
-            $(".universityPolicies h4").each(function () {
-                var subtitle = $(this).text(),
+    if (($("#kl_institutional_policies").length > 0 || $("#kl_wrapper").length > 0) && ($("#course_syllabus").length > 0 && $('#syllabus_nav').length === 0)) {
+        $("#sidebar_content").append('<div id="kl_syllabus_nav"><h2>Syllabus Navigation</h2><ul id="kl_syllabus_nav_list" style="list-style-type:none;" /></div>');
+        $("#kl_syllabus_nav_list").html('');
+        $("#course_syllabus h3").each(function (index, value) {
+            var title = $(value).text(),
+                anchorName = title.replace("&", "");
+            anchorName = anchorName.replace(/ /g, "_");
+            $(value).prepend('<a name="' + anchorName + '"></a>');
+            $("#kl_syllabus_nav_list").append('<li class="kl_' + anchorName + '_link"><a href="#' +
+                anchorName + '" class="kl_syllabus_nav_link" rel="#kl_' + anchorName + '_sub">' + title +
+                '</a></li><ul style="display:none;" id="kl_' + anchorName + '_sub" class="kl_sub_nav_list"></ul>');
+            $(value).parent('div').contents().find("h4").each(function (index, secondValue) {
+                var subtitle = $(secondValue).text(),
                     subAnchorName = subtitle.replace("&", "");
-                subAnchorName = subAnchorName.replace(/ /g, "");
-                $(this).prepend('<a name="' + subAnchorName + '"></a>');
-                $('#UNIVERSITYPOLICIESPROCEDURESSub').append('<li class="' + subAnchorName + 'Link"><a href="#' + subAnchorName + '">' + subtitle + '</a></li>');
+                subAnchorName = subAnchorName.replace(/ /g, "_");
+                $(secondValue).prepend('<a name="kl_' + subAnchorName + '"></a>');
+                $('#kl_' + anchorName + '_sub').append('<li class="kl_' + subAnchorName + 'Link"><a href="#kl_' + subAnchorName + '">' + subtitle + '</a></li>');
             });
-            $(".kl_syllabus_nav_link").each(function () {
-                var subNav = $(this).attr("rel");
-                if ($(subNav + " li").length > 0) {
-                    $(this).parent('li').addClass('icon-arrow-right');
-                } else {
-                    $(this).parent('li').addClass('no-icon');
-                }
-            });
-            $(".kl_syllabus_nav_link").click(function () {
-                $(".kl_sub_nav_list").slideUp();
-                $(".icon-arrow-down").addClass('icon-arrow-right').removeClass('icon-arrow-down');
-                var subNav = $(this).attr("rel");
-                if ($(subNav + " li").length > 0) {
-                    $(subNav).slideDown();
-                    $(this).parent('li').removeClass('icon-arrow-right').addClass('icon-arrow-down');
-                }
-            });
-            $(".kl_syllabus_nav_link").hover(
-                function () {
-                    var anchorName = $(this).attr("href");
-                    anchor = anchorName.replace("#", "");
-                    $('a[name=' + anchor + ']').parent('div').css('background', '#D5E2FF');
-                },
-                function () {
-                    ('a[name=' + anchor + ']').parent('div').css('background', '');
-                }
-            );
-            $("#kl_syllabus_nav_list a").click(function () {
-                $("#kl_syllabus_nav_list .active").removeClass("active");
-                $(this).addClass("active");
-            });
-        }
+        });
+        // $(".universityPolicies h4").each(function () {
+        //     var subtitle = $(this).text(),
+        //         subAnchorName = subtitle.replace("&", "");
+        //     subAnchorName = subAnchorName.replace(/ /g, "");
+        //     $(this).prepend('<a name="' + subAnchorName + '"></a>');
+        //     $('#UNIVERSITYPOLICIESPROCEDURESSub').append('<li class="' + subAnchorName + 'Link"><a href="#' + subAnchorName + '">' + subtitle + '</a></li>');
+        // });
+        $(".kl_syllabus_nav_link").each(function () {
+            var subNav = $(this).attr("rel");
+            if ($(subNav + " li").length > 0) {
+                $(this).parent('li').addClass('icon-mini-arrow-right');
+            } else {
+                $(this).parent('li').addClass('no-icon');
+            }
+        });
+        $(".kl_syllabus_nav_link").click(function () {
+            $(".kl_sub_nav_list").slideUp();
+            $(".icon-arrow-down").addClass('icon-mini-arrow-right').removeClass('icon-mini-arrow-down');
+            var subNav = $(this).attr("rel");
+            if ($(subNav + " li").length > 0) {
+                $(subNav).slideDown();
+                $(this).parent('li').removeClass('icon-mini-arrow-right').addClass('icon-mini-arrow-down');
+            }
+        });
+        $(".kl_syllabus_nav_link").hover(
+            function () {
+                var anchorName = $(this).attr("href");
+                anchor = anchorName.replace("#", "");
+                $('a[name=' + anchor + ']').parent('div').css('background', '#D5E2FF');
+            },
+            function () {
+                ('a[name=' + anchor + ']').parent('div').css('background', '');
+            }
+        );
+        $("#kl_syllabus_nav_list a").click(function () {
+            $("#kl_syllabus_nav_list .active").removeClass("active");
+            $(this).addClass("active");
+        });
     }
     // Moving syllabus assignment list up into syllabus
     if ($("#kl_syllabus_canvas_assignment_list #syllabus").length > 0) {
@@ -392,7 +391,7 @@ $(function () {
             }
         });
     }
-    if ($('#kl_modules .kl_current').length > 0 && $('.kl_modules_quick_links').length > 0) {
+    if ($('#kl_modules .kl_current').length > 0 && $('.kl_modules_quick_links').length > 0 && $('#wiki_page_revisions').length === 0) {
         $("#kl_modules").after('<div id="kl_modules_current_details" />');
         $('#kl_modules .kl_current').each(function () {
             var module_id = $(this).find('.kl_connected_module').attr('id');
@@ -410,7 +409,7 @@ $(function () {
         });
 
     }
-    if ($('.kl_modules_tabbed').length > 0) {
+    if ($('.kl_modules_tabbed').length > 0 && $('#wiki_page_revisions').length === 0) {
         var bgColor = '',
             bgHex = '0F2439',
             textColor = 'FFF';
@@ -431,8 +430,8 @@ $(function () {
         }
         // Write styles to match template to the page head
         var appendStyle = '<style>' +
-            '   #kl_wrapper #kl_modules .ui-tabs-active {background: #' + bgHex + '; }' +
-            '   #kl_wrapper #kl_modules ul li.ui-tabs-active a { color: ' + textColor + '}' +
+            '   #kl_wrapper #kl_modules .ui-tabs-active {background: #' + bgHex + ' !important; }' +
+            '   #kl_wrapper #kl_modules ul li.ui-tabs-active a { color: ' + textColor + ' !important}' +
             '   #kl_wrapper #kl_modules .ui-tabs-nav li.ui-tabs-active[class*=icon-]:before,' +
             '   #kl_wrapper #kl_modules .ui-tabs-nav li.ui-tabs-active[class^=icon-]:before,' +
             '   #kl_wrapper #kl_modules .ui-tabs-nav li.ui-tabs-active[class*=fa-]:before,' +
@@ -487,4 +486,4 @@ $(function () {
         $('#kl_banner_image').addClass('kl_banner_image_front');
     }
 
-})();
+});
