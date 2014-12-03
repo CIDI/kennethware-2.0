@@ -58,7 +58,7 @@ var klToolsVariables = {
     vendor_legacy_normal_contrast: '/assets/vendor_legacy_normal_contrast.css?1405955204',
     common_legacy_normal_contrast: '/assets/common_legacy_normal_contrast.css?1405955210',
 
-    // University policies and procedures need to be included in a Canvas course with a page named "University Policies and Procedures" include the Canvas course ID here
+    // Institutional policies and procedures need to be included in a Canvas course with a page named "Policies and Procedures" include the Canvas course ID here
     klToolTemplatesCourseID: '343656',
 
     // The following is the default template code for the template sections you can change icons or other aspects but do not change div ID's

@@ -4315,16 +4315,16 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     // Control whether or not to add policies on save
     function insertPolicies() {
         var policies = 'Policies need to be updated in the tools template course.';
-        $.post(klToolsVariables.klApiToolsPath + 'getPage.php', { courseID: klToolsVariables.klToolTemplatesCourseID, pageUrl: 'university-policies-and-procedures' })
+        $.post(klToolsVariables.klApiToolsPath + 'getPage.php', { courseID: klToolsVariables.klToolTemplatesCourseID, pageUrl: 'policies-and-procedures' })
             .done(function (data) {
                 policies = data;
             });
         $('#edit_course_syllabus_form .btn-primary').click(function () {
             if ($('.kl_syllabus_policies_yes').hasClass('active')) {
                 $(iframeID).contents().find('.universityPolicies').remove();
-                $(iframeID).contents().find('#kl_university_policies').remove();
-                $(iframeID).contents().find('body').append('<div id="kl_university_policies" />');
-                $(iframeID).contents().find('#kl_university_policies').html(policies);
+                $(iframeID).contents().find('#kl_institutional_policies').remove();
+                $(iframeID).contents().find('body').append('<div id="kl_institutional_policies" />');
+                $(iframeID).contents().find('#kl_institutional_policies').html(policies);
             }
         });
     }
@@ -4337,9 +4337,9 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 '       <a href="#" class="btn btn-small kl_syllabus_policies_yes">Yes<span class="screenreader-only">, include policies and procedures</span></a>' +
                 '       <a href="#" class="btn btn-small kl_syllabus_policies_no">No<span class="screenreader-only">, do not include policies and procedures</span></a>' +
                 '   </div>' +
-                '   <strong> <em>Automatically include University Policies and Procedures when the syllabus is updated.</strong></em>' +
+                '   <strong> <em>Automatically include institutional policies and procedures when the syllabus is updated.</strong></em>' +
                 '</div>');
-            if ($(iframeID).contents().find('#kl_university_policies').length > 0) {
+            if ($(iframeID).contents().find('#kl_institutional_policies').length > 0) {
                 $('.kl_syllabus_policies_yes').addClass('active');
             } else {
                 $('.kl_syllabus_policies_no').addClass('active');
@@ -4352,13 +4352,13 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $(this).addClass('active');
         });
 
-        // Remove old policies from content area and add styling
+        // Remove old policies from content area
         if ($(iframeID).contents().find('.universityPolicies').length > 0) {
             $(iframeID).contents().find('.universityPolicies').remove();
         }
-        // Remove policies from content area and add styling
-        if ($(iframeID).contents().find('#kl_university_policies').length > 0) {
-            $(iframeID).contents().find('#kl_university_policies').remove();
+        // Remove policies from content area
+        if ($(iframeID).contents().find('#kl_institutional_policies').length > 0) {
+            $(iframeID).contents().find('#kl_institutional_policies').remove();
         }
 
         // Because the syllabus behaves different from other sections, we have to monitor the cancel and update buttons
@@ -5411,8 +5411,8 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         elementUpdate('.course_assignments', '.kl_syllabus_course_assignments');
         elementUpdate('.grade_scheme', '.kl_syllabus_grade_scheme');
         elementUpdate('#canvas_grade_scheme', '#kl_syllabus_canvas_grade_scheme');
-        // UNIVERSITY POLICIES
-        elementUpdate('.universityPolicies', '#kl_university_policies');
+        // INSTITUTIONAL POLICIES
+        elementUpdate('.universityPolicies', '#kl_institutional_policies');
     }
     function updateProgressBar() {
         var labelValue = '',
