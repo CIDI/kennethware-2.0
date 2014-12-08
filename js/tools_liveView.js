@@ -106,9 +106,7 @@ $(document).ready(function() {
     // SHOW PAGES TITLE
     if ($('.kl_show_title').length === 0) {
         if ($('#kl_banner h2').length > 0) {
-            $('h2.page-title').remove();
-        } else {
-            $('h2.page-title').hide();
+            $('h1.page-title').addClass('screenreader-only');
         }
     }
     // Full width images
