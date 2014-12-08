@@ -97,14 +97,14 @@ var klToolsVariables = {
         '   </ol>' +
         '</div>',
     klPagesReadingsSection: '<div id="kl_readings">' +
-        '   <h3 class="icon-document">Module Readings</h3>' +
+        '   <h3 class="icon-document">Readings</h3>' +
         '   <ol>' +
         '       <li>Reading 1</li>' +
         '       <li>Reading 2</li>' +
         '   </ol>' +
         '</div>',
     klPagesLectureSection: '<div id="kl_lectures">' +
-        '   <h3 class="icon-video">Lecture(s)</h3>' +
+        '   <h3 class="icon-video">Lectures</h3>' +
         '   <p>[Insert video(s) here]</p>' +
         '</div>',
     klPagesActivitySection: '<div id="kl_activities">' +
@@ -116,7 +116,7 @@ var klToolsVariables = {
         '   </ul>' +
         '</div>',
     klPagesAssignmentSection: '<div id="kl_assignments">' +
-        '   <h3 class="icon-assignment">Assignment Title</h3>' +
+        '   <h3 class="icon-assignment">Assignments</h3>' +
         '   <p>Assignment Description</p>' +
         '</div>',
     klPagesAttributionSection: '<div id="kl_image_attribution">Image attribution here.</div>',
