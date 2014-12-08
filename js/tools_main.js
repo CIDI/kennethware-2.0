@@ -308,10 +308,13 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             color: startingColor,
             showAlpha: true,
             preferredFormat: 'hex',
-            showPalette: true,
+            showPaletteOnly: true,
+            togglePaletteOnly: true,
             showInput: true,
             palette: klToolsVariables.klThemeColors,
             allowEmpty: true,
+            replacerClassName: 'spectrum_trigger',
+            containerClassName: 'spectrum_picker',
             cancelText: 'Close',
             localStorageKey: 'spectrum.wiki',
             move: function (tinycolor) {
@@ -1765,8 +1768,118 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     }
 
 /////////////////////////////////////////////////////////////
-//  BUTTONS                                                //
+//  COLORS                                                 //
 ///////////////////////////////////////////////////////////// 
+
+    ////// Supporting functions  //////
+    function initializeElementColorPicker(inputName, attribute) {
+        var chosenColor = '',
+            // startingColor = kl_getColor($(iframeID).contents().find(targetElement), attribute),
+            bgHex,
+            textColor;
+        $(inputName).spectrum({
+            // // color: startingColor,
+            showAlpha: true,
+            preferredFormat: 'hex',
+            showPaletteOnly: true,
+            togglePaletteOnly: true,
+            showInput: true,
+            palette: klToolsVariables.klThemeColors,
+            allowEmpty: true,
+            replacerClassName: 'spectrum_trigger',
+            containerClassName: 'spectrum_picker',
+            cancelText: 'Close',
+            localStorageKey: 'spectrum.wiki',
+            move: function (tinycolor) {
+                $(inputName).val(tinycolor);
+                chosenColor = $(inputName).val();
+                // $(iframeID).contents().find(targetElement).css(attribute, chosenColor);
+                tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), attribute, chosenColor);
+                if (attribute === 'background-color') {
+                    bgHex = chosenColor.replace('#', '');
+                    textColor = getContrastYIQ(bgHex);
+                    // $(iframeID).contents().find(targetElement).css('color', textColor);
+                    tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'color', textColor);
+                }
+                // $(iframeID).contents().find(targetElement).removeAttr('data-mce-style');
+            }
+        });
+    }
+
+    ////// On Ready/Click functions  //////
+    function colorsReady() {
+        $('.defaultSkin table.mceLayout .mceStatusbar div').show();
+        $('.defaultSkin table.mceLayout .mceStatusbar div').closest('tr').addClass('kl_mce_path_wrapper');
+        $('#' + tinyMCE.activeEditor.id + '_path_voice').hide();
+        $('#' + tinyMCE.activeEditor.id + '_path_row span:nth-of-type(2)').hide();
+        initializeElementColorPicker('#kl_selected_element_text_color', 'color');
+        initializeElementColorPicker('#kl_selected_element_bg_color', 'background-color');
+        initializeElementColorPicker('#kl_selected_element_border_color', 'border-color');
+        $('.kl_remove_color').click(function (e) {
+            e.preventDefault();
+            tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'background-color', '');
+            tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'color', '');
+            tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'border-color', '');
+        });
+    }
+
+    // function getSelectedElement() {
+    //     var selectedElement = tinymce.activeEditor.selection.getNode().nodeName;
+    //     tinyMCE.DOM.addClass(selectedElement, 'kl_edit_color');
+    //         // Initiate Color Pickers
+    // }
+
+    ////// Custom Tools Accordion tab setup  //////
+    function colors() {
+        var addAccordionSection = '<h3 class="kl_wiki">' +
+            'Colors' +
+            '    <a class="help pull-right kl_tools_help" data-tooltip=\'{"tooltipClass":"popover right", "position":"right"}\'' +
+            '      title="<div class=\'popover-title\'>Colors</div>' +
+            '        <div class=\'popover-content\'>' +
+            '            <p>Change the background or text color of page elements.</p>' +
+            '            <p>To change a color:<p>' +
+            '            <ol>' +
+            '                <li>Select an existing link that you would like turned into a button.</li>' +
+            '                <li>Click on the button style of your choice.</li>' +
+            '            </ol>' +
+            '        </div>">' +
+            '      &nbsp;<span class="screenreader-only">About Colors.</span>' +
+            '    </a>' +
+            '</h3>' +
+            '<div id="kl_custom_buttons">' +
+            '   <div class="btn-group-label kl_btn_examples kl_margin_bottom">' +
+            '       <span>Style:</span><br>' +
+            '       <table class="table table-striped table-condensed">' +
+            '       <thead><tr><th>Aspect</th><th>Color</th></tr></thead>' +
+            '           <tbody>' +
+            '               <tr>' +
+            '               </tr>' +
+            '                   <td><label for="kl_selected_element_bg_color">Background:</label></td>' +
+            '                   <td><input type="text" id="kl_selected_element_bg_color"></td>' +
+            '               <tr>' +
+            '                   <td><label for="kl_selected_element_text_color">Text:</label></td>' +
+            '                   <td><input type="text" id="kl_selected_element_text_color"></td>' +
+            '               </tr>' +
+            '               <tr>' +
+            '                   <td><label for="kl_selected_element_border_color">Border:</label></td>' +
+            '                   <td><input type="text" id="kl_selected_element_border_color"></td>' +
+            '               </tr>' +
+            '           </tbody>' +
+            '       </table>' +
+            '   </div>' +
+            '   <a href="#" class="btn btn-mini kl_remove icon-end kl_remove_color" rel="" data-tooltip="top" ' +
+            '       title="Click this to remove color for selected element."> Remove Colors</a>' +
+            '   <div class="kl_instructions_wrapper">' +
+            '       <p class="kl_instructions">Place the cursor in the element you want to change and then use the breadcrumb below the editor to select which level to apply changes.</p>' +
+            '   </div>' +
+            '</div>';
+        $('#kl_tools_accordion').append(addAccordionSection);
+        colorsReady();
+    }
+
+/////////////////////////////////////////////////////////////
+//  FONTS                                                  //
+/////////////////////////////////////////////////////////////
 
     ////// Supporting functions  //////
     function removeButtonStyle(parentElement) {
@@ -1852,7 +1965,6 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         $('#kl_tools_accordion').append(addAccordionSection);
         customButtonsReady();
     }
-
 /////////////////////////////////////////////////////////////
 //  HIGHLIGHTS                                             //
 ///////////////////////////////////////////////////////////// 
@@ -5802,6 +5914,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         advancedListsTool();
         bordersAndSpacingTool();
         customButtons();
+        colors();
         customHighlights();
         imageTools();
         popupContent();
