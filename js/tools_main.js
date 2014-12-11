@@ -169,7 +169,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     // Move the specified editor content to the top
     function scrollToElement(targetElement) {
         $(iframeID).contents().find(targetElement).get(0).scrollIntoView();
-        $('a:contains("HTML Editor");').get(0).scrollIntoView();
+        $('a:contains("HTML Editor")').get(0).scrollIntoView();
     }
     // Adds class to connected section when mouse hovers over sortable lists
     function bindHover() {
@@ -1642,9 +1642,49 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         tinyMCE.DOM.removeClass(parentElement, 'pad-box-mini');
         tinyMCE.DOM.removeClass(parentElement, 'pad-box-micro');
     }
-    function removeContentBox(parentElement) {
-        tinyMCE.DOM.removeClass(parentElement, 'content-box');
-        tinyMCE.DOM.removeClass(parentElement, 'content-box-mini');
+    function changeSpacing(type, direction) {
+        var kl_spacing_val = $('#kl_' + type + '_input_' + direction).val();
+        if ($('#kl_' + type + '_input_' + direction).val() !== '') {
+            kl_spacing_val = kl_spacing_val + 'px';
+        } else if ($('#kl_' + type + '_input_all').val() !== '') {
+            kl_spacing_val = $('#kl_' + type + '_input_all').val() + 'px';
+        } 
+        tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type + '-' + direction, kl_spacing_val);
+    }
+    function changeAllSpacing(type) {
+        changeSpacing(type, 'top');
+        changeSpacing(type, 'right');
+        changeSpacing(type, 'bottom');
+        changeSpacing(type, 'left');
+    }
+    function clearSpacingInput(type) {
+        $('#kl_' + type + '_input_all').attr('placeholder', '#').val('');
+        $('#kl_' + type + '_input_top').attr('placeholder', '#').val('');
+        $('#kl_' + type + '_input_bottom').attr('placeholder', '#').val('');
+        $('#kl_' + type + '_input_left').attr('placeholder', '#').val('');
+        $('#kl_' + type + '_input_right').attr('placeholder', '#').val('');
+    }
+    function currentSpacing(type) {
+        var kl_spacing_top = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), type + '-top', true),
+            kl_spacing_bottom = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), type + '-bottom', true),
+            kl_spacing_left = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), type + '-left', true),
+            kl_spacing_right = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), type + '-right', true),
+            kl_spacing_display_top = kl_spacing_top.replace('px', ''),
+            kl_spacing_display_bottom = kl_spacing_bottom.replace('px', ''),
+            kl_spacing_display_left = kl_spacing_left.replace('px', ''),
+            kl_spacing_display_right = kl_spacing_right.replace('px', '');
+            $('#kl_' + type + '_input_all').attr('placeholder', '#').val('');
+            $('#kl_' + type + '_input_top').attr('placeholder', kl_spacing_display_top).val('');
+            $('#kl_' + type + '_input_bottom').attr('placeholder', kl_spacing_display_bottom).val('');
+            $('#kl_' + type + '_input_left').attr('placeholder', kl_spacing_display_left).val('');
+            $('#kl_' + type + '_input_right').attr('placeholder', kl_spacing_display_right).val('');
+    }
+    function defaultSpacing(type) {
+        tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type, '');
+        tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type + '-top', '');
+        tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type + '-bottom', '');
+        tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type + '-left', '');
+        tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type + '-right', '');
     }
 
     ////// On Ready/Click functions  //////
@@ -1681,13 +1721,101 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             removePadding(parentElement);
             tinyMCE.DOM.addClass(parentElement, myClass);
         });
-        $('.kl_content_box').unbind("click").click(function (e) {
+        $('#kl_margins_apply').click(function (e) {
             e.preventDefault();
-            myClass = $(this).attr('rel');
-            elementType = $('.kl_border_apply a.active').attr('rel');
-            parentElement = tinyMCE.activeEditor.dom.getParent(tinyMCE.activeEditor.selection.getNode(), elementType);
-            removeContentBox(parentElement);
-            tinyMCE.DOM.addClass(parentElement, myClass);
+            changeAllSpacing('margin');
+        });
+        // $('#kl_margins_current').click(function (e) {
+        //     e.preventDefault();
+        //     currentSpacing('margin');
+        // });
+        $('#kl_margins_clear').click(function (e) {
+            e.preventDefault();
+            clearSpacingInput('margin');
+        });
+        $('#kl_margins_default').click(function (e) {
+            e.preventDefault();
+            defaultSpacing('margin');
+        });
+        $('.kl_margins').each(function () {
+            var direction = $(this).attr('rel');
+            $('#kl_add_margin_' + direction).unbind("click").click(function (e) {
+                e.preventDefault();
+                changeSpacing('margin', direction);
+            });
+            $('#kl_margin_input_' + direction).keydown(function (event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    changeSpacing('margin', direction);
+                    return false;
+                }
+            });
+        });
+        $('#kl_add_margin_all').unbind("click").click(function (e) {
+            e.preventDefault();
+            changeAllSpacing('margin');
+        });
+        $('#kl_margin_input_all').keydown(function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                changeAllSpacing('margin');
+                return false;
+            }
+        });
+        $('#kl_padding_apply').click(function (e) {
+            e.preventDefault();
+            changeAllSpacing('padding');
+        });
+        // $('#kl_padding_current').click(function (e) {
+        //     e.preventDefault();
+        //     currentSpacing('padding');
+        // });
+        $('#kl_padding_clear').click(function (e) {
+            e.preventDefault();
+            clearSpacingInput('padding');
+        });
+        $('#kl_padding_default').click(function (e) {
+            e.preventDefault();
+            defaultSpacing('padding');
+        });
+        $('.kl_padding').each(function () {
+            var direction = $(this).attr('rel');
+            $('#kl_add_padding_' + direction).unbind("click").click(function (e) {
+                e.preventDefault();
+                changeSpacing('padding', direction);
+            });
+            $('#kl_padding_input_' + direction).keydown(function (event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    changeSpacing('padding', direction);
+                    return false;
+                }
+            });
+        });
+        $('#kl_add_padding_all').unbind("click").click(function (e) {
+            e.preventDefault();
+            changeAllSpacing('padding');
+        });
+        $('#kl_padding_input_all').keydown(function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                changeAllSpacing('padding');
+                return false;
+            }
+        });
+        
+        
+        $('.kl_borders_spacing_tabs a').click(function (e) {
+            e.preventDefault();
+            var connectedElement = $(this).attr('rel');
+            $('.kl_borders_spacing_tabs a').removeClass('active');
+            $(this).addClass('active');
+            $('.kl_border_spacing_section').hide();
+            $('#' + connectedElement).show();
+        });
+        tinyMCE.activeEditor.onNodeChange.add(function (e) {
+            currentSpacing('margin');
+            currentSpacing('padding');
         });
     }
 
@@ -1714,171 +1842,151 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             '    </a>' +
             '</h3>' +
             '<div class="kl_borders_spacing">' +
-            '<div class="btn-group-label">' +
-            '    <span>Apply to:</span>' +
-            '    <div class="btn-group kl_border_apply">' +
-            '        <a href="#" class="btn btn-mini active" rel="p, h2, h3, h4, h5">Paragraph/Heading</a>' +
-            '        <a href="#" class="btn btn-mini" rel="div">DIV</a>' +
-            '    </div>' +
-            '</div>' +
-            '<div>' +
-            '    <div class="btn-group-label kl_margin_bottom"><span>Border:</span>' +
-            '        <div class="btn-group">' +
-            '            <a href="#" class="btn btn-mini kl_custom_borders" rel="border border-trbl" data-tooltip="top" title="Full Borders"><span class="border border-trbl">&nbsp; &nbsp; &nbsp; </span></a>' +
-            '            <a href="#" class="btn btn-mini kl_custom_borders" rel="border border-rbl" data-tooltip="top" title="Right, Bottom and Left Borders"><span class="border border-rbl">&nbsp; &nbsp; &nbsp; </span></a>' +
-            '            <a href="#" class="btn btn-mini kl_custom_borders" rel="border border-tbl" data-tooltip="top" title="Top, Bottom, and Left Borders"><span class="border border-tbl">&nbsp; &nbsp; &nbsp; </span></a>' +
-            '            <a href="#" class="btn btn-mini kl_custom_borders" rel="border border-tl" data-tooltip="top" title="Top and Left Borders"><span class="border border-tl">&nbsp; &nbsp; &nbsp; </span></a>' +
-            '            <a href="#" class="btn btn-mini kl_custom_borders" rel="border border-b" data-tooltip="top" title="Bottom Border"><span class="border border-b">&nbsp; &nbsp; &nbsp; </span></a>' +
-            '            <a href="#" class="btn btn-mini kl_custom_borders" rel="border border-t" data-tooltip="top" title="Top Border"><span class="border border-t">&nbsp; &nbsp; &nbsp; </span></a>' +
-            '            <a href="#" class="btn btn-mini kl_remove icon-end kl_custom_borders" rel="" data-tooltip="top" title="Remove borders from selected paragraph or heading.">&nbsp;</a>' +
-            '        </div>' +
-            '    </div>' +
-            '    <div class="btn-group-label kl_margin_bottom"><span>Border Radius:</span>' +
-            '        <div class="btn-group">' +
-            '            <a href="#" class="btn btn-mini kl_custom_border_radius" rel="border-round" data-tooltip="top" title="All corners rounded"><span class="border border-trbl border-round">&nbsp; &nbsp; &nbsp; &nbsp; </span></a>' +
-            '            <a href="#" class="btn btn-mini kl_custom_border_radius" rel="border-round-b" data-tooltip="top" title="Bottom corners rounded"><span class="border border-trbl border-round-b">&nbsp; &nbsp; &nbsp; &nbsp; </span></a>' +
-            '            <a href="#" class="btn btn-mini kl_custom_border_radius" rel="border-round-t" data-tooltip="top" title="Top corners rounded"><span class="border border-trbl border-round-t">&nbsp; &nbsp; &nbsp; &nbsp; </span></a>' +
-            '            <a href="#" class="btn btn-mini kl_custom_border_radius" rel="border-round-tl" data-tooltip="top" title="Top Left corner rounded"><span class="border border-trbl border-round-tl">&nbsp; &nbsp; &nbsp; &nbsp; </span></a>' +
-            '            <a href="#" class="btn btn-mini kl_remove icon-end kl_custom_border_radius" rel="" data-tooltip="top" title="Remove border radius from selected paragraph or heading.">&nbsp;</a>' +
-            '        </div>' +
-            '    </div>' +
-            '    <div class="btn-group-label kl_margin_bottom"><span>Padding:</span>' +
-            '        <div class="btn-group">' +
-            '            <a href="#" class="btn btn-mini kl_custom_padding" rel="pad-box-mega">Mega</a>' +
-            '            <a href="#" class="btn btn-mini kl_custom_padding" rel="pad-box">Normal</a>' +
-            '            <a href="#" class="btn btn-mini kl_custom_padding" rel="pad-box-mini">Mini</a>' +
-            '            <a href="#" class="btn btn-mini kl_custom_padding" rel="pad-box-micro">Micro</a>' +
-            '            <a href="#" class="btn btn-mini kl_remove icon-end kl_custom_padding" rel="" data-tooltip="top" title="Remove padding from selected paragraph or heading.">&nbsp;</a>' +
-            '        </div>' +
-            '    </div>' +
-            '    <div class="btn-group-label kl_margin_bottom"><span>Margin:</span><br>' +
-            '        <div class="btn-group">' +
-            '            <a href="#" class="btn btn-mini kl_content_box" rel="content-box" data-tooltip="top" title="Content boxes automatically clear their floated children and have default margins.">Regular</a>' +
-            '            <a href="#" class="btn btn-mini kl_content_box" rel="content-box-mini" data-tooltip="top" title="A mini content box has half the margin of the regular content box.">Mini</a>' +
-            '            <a href="#" class="btn btn-mini kl_remove icon-end kl_content_box" rel="" data-tooltip="top" title="Remove content box from selected paragraph or heading.">&nbsp;</a>' +
-            '        </div>' +
-            '    </div>' +
-            '</div>' +
-            '<div class="kl_instructions_wrapper">' +
-            '   <p class="kl_instructions">Place your <span class="text-success"><strong>cursor</strong></span> within the element you want to edit.</p>' +
-            '</div>' +
+            '   <div class="btn-group kl_borders_spacing_tabs kl_margin_bottom">' +
+            '        <a href="#" class="btn btn-small" rel="kl_borders">Borders</a>' +
+            '        <a href="#" class="btn btn-small" rel="kl_padding">Padding</a>' +
+            '        <a href="#" class="btn btn-small active" rel="kl_margins">Margins</a>' +
+            '   </div>' +
+            '   <div class="kl_margin_top">' +
+            '       <div id="kl_borders" class="kl_border_spacing_section" style="display:none;">' +
+            '           <div class="btn-group-label kl_margin_bottom"><span>Borders:</span>' +
+            '               <div class="btn-group">' +
+            '                   <a href="#" class="btn btn-mini kl_custom_borders" rel="border border-trbl" data-tooltip="top" title="Full Borders"><span class="border border-trbl">&nbsp; &nbsp; &nbsp; </span></a>' +
+            '                   <a href="#" class="btn btn-mini kl_custom_borders" rel="border border-rbl" data-tooltip="top" title="Right, Bottom and Left Borders"><span class="border border-rbl">&nbsp; &nbsp; &nbsp; </span></a>' +
+            '                   <a href="#" class="btn btn-mini kl_custom_borders" rel="border border-tbl" data-tooltip="top" title="Top, Bottom, and Left Borders"><span class="border border-tbl">&nbsp; &nbsp; &nbsp; </span></a>' +
+            '                   <a href="#" class="btn btn-mini kl_custom_borders" rel="border border-tl" data-tooltip="top" title="Top and Left Borders"><span class="border border-tl">&nbsp; &nbsp; &nbsp; </span></a>' +
+            '                   <a href="#" class="btn btn-mini kl_custom_borders" rel="border border-b" data-tooltip="top" title="Bottom Border"><span class="border border-b">&nbsp; &nbsp; &nbsp; </span></a>' +
+            '                   <a href="#" class="btn btn-mini kl_custom_borders" rel="border border-t" data-tooltip="top" title="Top Border"><span class="border border-t">&nbsp; &nbsp; &nbsp; </span></a>' +
+            '                   <a href="#" class="btn btn-mini kl_remove icon-end kl_custom_borders" rel="" data-tooltip="top" title="Remove borders from selected paragraph or heading.">&nbsp;</a>' +
+            '               </div>' +
+            '           </div>' +
+            '           <div class="btn-group-label kl_margin_bottom"><span>Border Radius:</span>' +
+            '               <div class="btn-group">' +
+            '                   <a href="#" class="btn btn-mini kl_custom_border_radius" rel="border-round" data-tooltip="top" title="All corners rounded"><span class="border border-trbl border-round">&nbsp; &nbsp; &nbsp; &nbsp; </span></a>' +
+            '                   <a href="#" class="btn btn-mini kl_custom_border_radius" rel="border-round-b" data-tooltip="top" title="Bottom corners rounded"><span class="border border-trbl border-round-b">&nbsp; &nbsp; &nbsp; &nbsp; </span></a>' +
+            '                   <a href="#" class="btn btn-mini kl_custom_border_radius" rel="border-round-t" data-tooltip="top" title="Top corners rounded"><span class="border border-trbl border-round-t">&nbsp; &nbsp; &nbsp; &nbsp; </span></a>' +
+            '                   <a href="#" class="btn btn-mini kl_custom_border_radius" rel="border-round-tl" data-tooltip="top" title="Top Left corner rounded"><span class="border border-trbl border-round-tl">&nbsp; &nbsp; &nbsp; &nbsp; </span></a>' +
+            '                   <a href="#" class="btn btn-mini kl_remove icon-end kl_custom_border_radius" rel="" data-tooltip="top" title="Remove border radius from selected paragraph or heading.">&nbsp;</a>' +
+            '               </div>' +
+            '           </div>' +
+            '       </div>' +
+            '       <div id="kl_padding" class="kl_border_spacing_section" style="display:none;">' +
+            '           <h4>Padding:</h4>' +
+            '           <div class="btn-group">' +
+            '               <button id="kl_padding_current" class="btn btn-mini hide" data-tooltip="top" title="Populate Fields based on current element">Current</button>' +
+            '               <button id="kl_padding_apply" class="btn btn-mini" data-tooltip="top" title="Apply Entered values to current element">Apply</button>' +
+            '               <button id="kl_padding_clear" class="btn btn-mini" data-tooltip="top" title="Clear padding input fields">Clear</button>' +
+            '               <button id="kl_padding_default" class="btn btn-mini" data-tooltip="top" title="Reset current element&rsquo;s padding to default">Default</button>' +
+            '           </div>' +
+            '           <div class="btn-group-label kl_margin_bottom kl_margin_top"><span>Identical Padding:</span><br>' +
+            '                <form class="form-inline input-append">' +
+            '                   <input id="kl_padding_input_all" class="kl_padding_all kl_input_small" type="text" placeholder="#">' +
+            '                   <a href="#" id="kl_add_padding_all" class="btn add-on" data-tooltip="top" ' +
+            '                       title="Apply padding to all sides">' +
+            '                       <i class="icon-add"></i> All' +
+            '                   </a>' +
+            '                </form>' +
+            '           </div>' +
+            '           <div class="btn-group-label kl_margin_bottom" style="clear:left;"><span>Individual Padding:</span><br>' +
+            '               <div style="text-align:center;">' +
+            '                   <div class="input-append" style="margin-bottom:3px;">' +
+            '                      <input id="kl_padding_input_top" class="kl_padding kl_input_small" type="text" rel="top" placeholder="#">' +
+            '                      <a href="#" id="kl_add_padding_top" class="btn add-on" data-tooltip="top" ' +
+            '                          title="Apply top padding to selected element">' +
+            '                          <i class="icon-add"></i> Top' +
+            '                      </a>' +
+            '                   </div>' +
+            '                   <div class="input-append" style="float:left;margin-bottom:3px;">' +
+            '                      <input id="kl_padding_input_left" class="kl_padding kl_input_small" type="text" rel="left" placeholder="#">' +
+            '                      <a href="#" id="kl_add_padding_left" class="btn add-on" data-tooltip="top" ' +
+            '                          title="Apply left padding to selected element">' +
+            '                          <i class="icon-add"></i> Left' +
+            '                      </a>' +
+            '                   </div>' +
+            '                   <div class="input-append" style="float:right;margin-bottom:3px;">' +
+            '                      <input id="kl_padding_input_right" class="kl_padding kl_input_small" type="text" rel="right" placeholder="#">' +
+            '                      <a href="#" id="kl_add_padding_right" class="btn add-on" data-tooltip="top" ' +
+            '                          title="Apply right padding to selected element">' +
+            '                          <i class="icon-add"></i> Right' +
+            '                      </a>' +
+            '                   </div>' +
+            '                   <div class="input-append" style="clear:both;">' +
+            '                      <input id="kl_padding_input_bottom" class="kl_padding kl_input_small" type="text" rel="bottom" placeholder="#">' +
+            '                      <a href="#" id="kl_add_padding_bottom" class="btn add-on" data-tooltip="top" ' +
+            '                          title="Apply bottom padding to selected element">' +
+            '                          <i class="icon-add"></i> Bottom' +
+            '                      </a>' +
+            '                   </div>' +
+            '               </div>' +
+            '           </div>' +
+            '       </div>' +
+            '       <div id="kl_margins" class="kl_border_spacing_section">' +
+            '           <h4>Margins:</h4>' +
+            '           <div class="btn-group">' +
+            '               <button id="kl_margins_current" class="btn btn-mini hide" data-tooltip="top" title="Populate Fields based on current element">Current</button>' +
+            '               <button id="kl_margins_apply" class="btn btn-mini" data-tooltip="top" title="Apply Entered values to current element">Apply</button>' +
+            '               <button id="kl_margins_clear" class="btn btn-mini" data-tooltip="top" title="Clear margin input fields">Clear</button>' +
+            '               <button id="kl_margins_default" class="btn btn-mini" data-tooltip="top" title="Reset current element&rsquo;s margins to default">Default</button>' +
+            '           </div>' +
+            '           <div class="btn-group-label kl_margin_bottom kl_margin_top"><span>Identical Margins:</span><br>' +
+            '                <div class="input-append">' +
+            '                   <input id="kl_margin_input_all" class="kl_margins_all kl_input_small" type="text" placeholder="#">' +
+            '                   <a href="#" id="kl_add_margin_all" class="btn add-on" data-tooltip="top" ' +
+            '                       title="Apply margin to all sides">' +
+            '                       <i class="icon-add"></i> All' +
+            '                   </a>' +
+            '                </div>' +
+            '           </div>' +
+            '           <div class="btn-group-label kl_margin_bottom" style="clear:left;"><span>Individual Margins:</span><br>' +
+            '               <div style="text-align:center;">' +
+            '                   <div class="input-append" style="margin-bottom:3px;">' +
+            '                      <input id="kl_margin_input_top" class="kl_margins kl_input_small" type="text" rel="top" placeholder="#">' +
+            '                      <a href="#" id="kl_add_margin_top" class="btn add-on" data-tooltip="top" ' +
+            '                          title="Apply top margin to selected element">' +
+            '                          <i class="icon-add"></i> Top' +
+            '                      </a>' +
+            '                   </div>' +
+            '                   <div class="input-append" style="float:left; margin-bottom:3px;">' +
+            '                      <input id="kl_margin_input_left" class="kl_margins kl_input_small" type="text" rel="left" placeholder="#">' +
+            '                      <a href="#" id="kl_add_margin_left" class="btn add-on" data-tooltip="top" ' +
+            '                          title="Apply left margin to selected element">' +
+            '                          <i class="icon-add"></i> Left' +
+            '                      </a>' +
+            '                   </div>' +
+            '                   <div class="input-append" style="float:right; margin-bottom:3px;">' +
+            '                      <input id="kl_margin_input_right" class="kl_margins kl_input_small" type="text" rel="right" placeholder="#">' +
+            '                      <a href="#" id="kl_add_margin_right" class="btn add-on" data-tooltip="top" ' +
+            '                          title="Apply right margin to selected element">' +
+            '                          <i class="icon-add"></i> Right' +
+            '                      </a>' +
+            '                   </div>' +
+            '                   <div class="input-append" style="clear:both;">' +
+            '                      <input id="kl_margin_input_bottom" class="kl_margins kl_input_small" type="text" rel="bottom" placeholder="#">' +
+            '                      <a href="#" id="kl_add_margin_bottom" class="btn add-on" data-tooltip="top" ' +
+            '                          title="Apply bottom margin to selected element">' +
+            '                          <i class="icon-add"></i> Bottom' +
+            '                      </a>' +
+            '                   </div>' +
+            '               </div>' +
+            '           </div>' +
+            '       </div>' +
+            '   </div>' +
+            '   <div class="kl_instructions_wrapper">' +
+            '       <div class="kl_instructions">' +
+            '           <ul>'+
+            '               <li>Place your <span class="text-success"><strong>cursor</strong></span> within the element you want to edit</li>' +
+            '               <li>Use the breadcrumb below the editor to select a parent element</li>' + 
+            '               <li class="fa fa-info-circle">For best results, change &ldquo;EDITOR VIEW&rdquo; to &ldquo;Preview&rdquo;</li>' + 
+            '          </ul>' +
+            '       </div>' +
+            '   </div>' +
             '</div>';
         $('#kl_tools_accordion').append(toolsAccordionSection);
         bordersAndSpacingReady();
     }
 
 /////////////////////////////////////////////////////////////
-//  COLORS                                                 //
-///////////////////////////////////////////////////////////// 
-
-    ////// Supporting functions  //////
-    function initializeElementColorPicker(inputName, attribute) {
-        var chosenColor = '',
-            // startingColor = kl_getColor($(iframeID).contents().find(targetElement), attribute),
-            bgHex,
-            textColor;
-        $(inputName).spectrum({
-            // // color: startingColor,
-            showAlpha: true,
-            preferredFormat: 'hex',
-            showPaletteOnly: true,
-            togglePaletteOnly: true,
-            showInput: true,
-            palette: klToolsVariables.klThemeColors,
-            allowEmpty: true,
-            replacerClassName: 'spectrum_trigger',
-            containerClassName: 'spectrum_picker',
-            cancelText: 'Close',
-            localStorageKey: 'spectrum.wiki',
-            move: function (tinycolor) {
-                $(inputName).val(tinycolor);
-                chosenColor = $(inputName).val();
-                // $(iframeID).contents().find(targetElement).css(attribute, chosenColor);
-                tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), attribute, chosenColor);
-                if (attribute === 'background-color') {
-                    bgHex = chosenColor.replace('#', '');
-                    textColor = getContrastYIQ(bgHex);
-                    // $(iframeID).contents().find(targetElement).css('color', textColor);
-                    tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'color', textColor);
-                }
-                // $(iframeID).contents().find(targetElement).removeAttr('data-mce-style');
-            }
-        });
-    }
-
-    ////// On Ready/Click functions  //////
-    function colorsReady() {
-        $('.defaultSkin table.mceLayout .mceStatusbar div').show();
-        $('.defaultSkin table.mceLayout .mceStatusbar div').closest('tr').addClass('kl_mce_path_wrapper');
-        $('#' + tinyMCE.activeEditor.id + '_path_voice').hide();
-        $('#' + tinyMCE.activeEditor.id + '_path_row span:nth-of-type(2)').hide();
-        initializeElementColorPicker('#kl_selected_element_text_color', 'color');
-        initializeElementColorPicker('#kl_selected_element_bg_color', 'background-color');
-        initializeElementColorPicker('#kl_selected_element_border_color', 'border-color');
-        $('.kl_remove_color').click(function (e) {
-            e.preventDefault();
-            tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'background-color', '');
-            tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'color', '');
-            tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'border-color', '');
-        });
-    }
-
-    // function getSelectedElement() {
-    //     var selectedElement = tinymce.activeEditor.selection.getNode().nodeName;
-    //     tinyMCE.DOM.addClass(selectedElement, 'kl_edit_color');
-    //         // Initiate Color Pickers
-    // }
-
-    ////// Custom Tools Accordion tab setup  //////
-    function colors() {
-        var addAccordionSection = '<h3 class="kl_wiki">' +
-            'Colors' +
-            '    <a class="help pull-right kl_tools_help" data-tooltip=\'{"tooltipClass":"popover right", "position":"right"}\'' +
-            '      title="<div class=\'popover-title\'>Colors</div>' +
-            '        <div class=\'popover-content\'>' +
-            '            <p>Change the background or text color of page elements.</p>' +
-            '            <p>To change a color:<p>' +
-            '            <ol>' +
-            '                <li>Select an existing link that you would like turned into a button.</li>' +
-            '                <li>Click on the button style of your choice.</li>' +
-            '            </ol>' +
-            '        </div>">' +
-            '      &nbsp;<span class="screenreader-only">About Colors.</span>' +
-            '    </a>' +
-            '</h3>' +
-            '<div id="kl_custom_buttons">' +
-            '   <div class="btn-group-label kl_btn_examples kl_margin_bottom">' +
-            '       <span>Style:</span><br>' +
-            '       <table class="table table-striped table-condensed">' +
-            '       <thead><tr><th>Aspect</th><th>Color</th></tr></thead>' +
-            '           <tbody>' +
-            '               <tr>' +
-            '               </tr>' +
-            '                   <td><label for="kl_selected_element_bg_color">Background:</label></td>' +
-            '                   <td><input type="text" id="kl_selected_element_bg_color"></td>' +
-            '               <tr>' +
-            '                   <td><label for="kl_selected_element_text_color">Text:</label></td>' +
-            '                   <td><input type="text" id="kl_selected_element_text_color"></td>' +
-            '               </tr>' +
-            '               <tr>' +
-            '                   <td><label for="kl_selected_element_border_color">Border:</label></td>' +
-            '                   <td><input type="text" id="kl_selected_element_border_color"></td>' +
-            '               </tr>' +
-            '           </tbody>' +
-            '       </table>' +
-            '   </div>' +
-            '   <a href="#" class="btn btn-mini kl_remove icon-end kl_remove_color" rel="" data-tooltip="top" ' +
-            '       title="Click this to remove color for selected element."> Remove Colors</a>' +
-            '   <div class="kl_instructions_wrapper">' +
-            '       <p class="kl_instructions">Place the cursor in the element you want to change and then use the breadcrumb below the editor to select which level to apply changes.</p>' +
-            '   </div>' +
-            '</div>';
-        $('#kl_tools_accordion').append(addAccordionSection);
-        colorsReady();
-    }
-
-/////////////////////////////////////////////////////////////
-//  FONTS                                                  //
+//  BUTTONS                                                //
 /////////////////////////////////////////////////////////////
 
     ////// Supporting functions  //////
@@ -1965,7 +2073,117 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         $('#kl_tools_accordion').append(addAccordionSection);
         customButtonsReady();
     }
+
 /////////////////////////////////////////////////////////////
+//  COLORS                                                 //
+///////////////////////////////////////////////////////////// 
+
+    ////// Supporting functions  //////
+    function initializeElementColorPicker(inputName, attribute) {
+        var chosenColor = '',
+            // startingColor = kl_getColor($(iframeID).contents().find(targetElement), attribute),
+            bgHex,
+            textColor;
+        $(inputName).spectrum({
+            // // color: startingColor,
+            showAlpha: true,
+            preferredFormat: 'hex',
+            showPaletteOnly: true,
+            togglePaletteOnly: true,
+            showInput: true,
+            palette: klToolsVariables.klThemeColors,
+            allowEmpty: true,
+            replacerClassName: 'spectrum_trigger',
+            containerClassName: 'spectrum_picker',
+            cancelText: 'Close',
+            localStorageKey: 'spectrum.wiki',
+            move: function (tinycolor) {
+                $(inputName).val(tinycolor);
+                chosenColor = $(inputName).val();
+                // $(iframeID).contents().find(targetElement).css(attribute, chosenColor);
+                tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), attribute, chosenColor);
+                if (attribute === 'background-color') {
+                    bgHex = chosenColor.replace('#', '');
+                    textColor = getContrastYIQ(bgHex);
+                    // $(iframeID).contents().find(targetElement).css('color', textColor);
+                    tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'color', textColor);
+                }
+                // $(iframeID).contents().find(targetElement).removeAttr('data-mce-style');
+            }
+        });
+    }
+
+    ////// On Ready/Click functions  //////
+    function colorsReady() {
+        $('.defaultSkin table.mceLayout .mceStatusbar div').show();
+        $('.defaultSkin table.mceLayout .mceStatusbar div').closest('tr').addClass('kl_mce_path_wrapper');
+        $('#' + tinyMCE.activeEditor.id + '_path_voice').hide();
+        $('#' + tinyMCE.activeEditor.id + '_path_row span:nth-of-type(2)').hide();
+        initializeElementColorPicker('#kl_selected_element_text_color', 'color');
+        initializeElementColorPicker('#kl_selected_element_bg_color', 'background-color');
+        initializeElementColorPicker('#kl_selected_element_border_color', 'border-color');
+        $('.kl_remove_color').click(function (e) {
+            e.preventDefault();
+            tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'background-color', '');
+            tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'color', '');
+            tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'border-color', '');
+        });
+    }
+
+    ////// Custom Tools Accordion tab setup  //////
+    function colors() {
+        var addAccordionSection = '<h3 class="kl_wiki">' +
+            'Colors' +
+            '    <a class="help pull-right kl_tools_help" data-tooltip=\'{"tooltipClass":"popover right", "position":"right"}\'' +
+            '      title="<div class=\'popover-title\'>Colors</div>' +
+            '        <div class=\'popover-content\'>' +
+            '            <p>Change the background or text color of page elements.</p>' +
+            '            <p>To change a color:<p>' +
+            '            <ol>' +
+            '                <li>Select an existing link that you would like turned into a button.</li>' +
+            '                <li>Click on the button style of your choice.</li>' +
+            '            </ol>' +
+            '        </div>">' +
+            '      &nbsp;<span class="screenreader-only">About Colors.</span>' +
+            '    </a>' +
+            '</h3>' +
+            '<div id="kl_custom_buttons">' +
+            '   <div class="btn-group-label kl_btn_examples kl_margin_bottom">' +
+            '       <span>Style:</span><br>' +
+            '       <table class="table table-striped table-condensed">' +
+            '       <thead><tr><th>Aspect</th><th>Color</th></tr></thead>' +
+            '           <tbody>' +
+            '               <tr>' +
+            '               </tr>' +
+            '                   <td><label for="kl_selected_element_bg_color">Background:</label></td>' +
+            '                   <td><input type="text" id="kl_selected_element_bg_color"></td>' +
+            '               <tr>' +
+            '                   <td><label for="kl_selected_element_text_color">Text:</label></td>' +
+            '                   <td><input type="text" id="kl_selected_element_text_color"></td>' +
+            '               </tr>' +
+            '               <tr>' +
+            '                   <td><label for="kl_selected_element_border_color">Border:</label></td>' +
+            '                   <td><input type="text" id="kl_selected_element_border_color"></td>' +
+            '               </tr>' +
+            '           </tbody>' +
+            '       </table>' +
+            '   </div>' +
+            '   <a href="#" class="btn btn-mini kl_remove icon-end kl_remove_color" rel="" data-tooltip="top" ' +
+            '       title="Click this to remove color for selected element."> Remove Custom Colors</a>' +
+            '   <div class="kl_instructions_wrapper">' +
+            '       <div class="kl_instructions">' +
+            '           <ul>' +
+            '               <li>Place the cursor in the element you want to change.</li>' +
+            '               <li>Use the breadcrumb below the editor to select a parent element.</li>' +
+            '           </ul>' +
+            '       </div>' +
+            '   </div>' +
+            '</div>';
+        $('#kl_tools_accordion').append(addAccordionSection);
+        colorsReady();
+    }
+
+////////////////////////////////////////////////////////////
 //  HIGHLIGHTS                                             //
 ///////////////////////////////////////////////////////////// 
 
