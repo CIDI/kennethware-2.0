@@ -223,7 +223,7 @@ function newPageCheck() {
 }
 
 // SET UP TOOLS
-(function () {
+$(document).ready(function() {
     'use strict';
     // Get Current UserID
     var userID = ENV['current_user_id'],
@@ -316,7 +316,7 @@ function newPageCheck() {
             $('.profile_settings').attr({'data-tooltip': 'right', 'title': 'Click here to update email address'}).trigger('mouseover');
         }, 1000);
     }
-}());
+});
 ///////////////////////////////////////
 // End Kenneth's Custom Canvas Tools //
 ///////////////////////////////////////
