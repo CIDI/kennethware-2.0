@@ -1,6 +1,6 @@
 /*jslint browser: true, sloppy: false, eqeq: false, vars: false, maxerr: 50, indent: 4, plusplus: true */
 /*global $, jQuery, iframeID, alert, coursenum, console, klToolsPath, globalCSSPath, klFontAwesomePath, tinymce, tinyMCE, klToolsVariables,
-klToolsArrays, vendor_legacy_normal_contrast,  */
+klToolsArrays, vendor_legacy_normal_contrast, afterToolLaunch */
 
 // These tools were designed to facilitate rapid course development in the Canvas LMS
 // Copyright (C) 2014  Kenneth Larsen - Center for Innovative Design and Instruction
@@ -101,7 +101,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 timestamp =  +(new Date());
             $head.append($('<link/>', { rel: 'stylesheet', href: klToolsVariables.vendor_legacy_normal_contrast, type: 'text/css' }));
             $head.append($('<link/>', { rel: 'stylesheet', href: klToolsVariables.common_legacy_normal_contrast, type: 'text/css' }));
-            $head.append($('<link/>', { rel: 'stylesheet', href: globalCSSPath + '?' + timestamp, type: 'text/css' }));
+            $head.append($('<link/>', { rel: 'stylesheet', href: globalCSSFile + '?' + timestamp, type: 'text/css' }));
             $head.append($('<link/>', { rel: 'stylesheet', href: klToolsPath + 'css/canvasMCEEditor.css?' + timestamp, type: 'text/css' }));
             $head.append($("<link/>", { rel: "stylesheet", href: klFontAwesomePath, type: 'text/css'}));
             if ($(iframeID).contents().find('#kl_custom_css').length > 0) {
@@ -1648,7 +1648,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             kl_spacing_val = kl_spacing_val + 'px';
         } else if ($('#kl_' + type + '_input_all').val() !== '') {
             kl_spacing_val = $('#kl_' + type + '_input_all').val() + 'px';
-        } 
+        }
         tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type + '-' + direction, kl_spacing_val);
     }
     function changeAllSpacing(type) {
@@ -1673,11 +1673,11 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             kl_spacing_display_bottom = kl_spacing_bottom.replace('px', ''),
             kl_spacing_display_left = kl_spacing_left.replace('px', ''),
             kl_spacing_display_right = kl_spacing_right.replace('px', '');
-            $('#kl_' + type + '_input_all').attr('placeholder', '#').val('');
-            $('#kl_' + type + '_input_top').attr('placeholder', kl_spacing_display_top).val('');
-            $('#kl_' + type + '_input_bottom').attr('placeholder', kl_spacing_display_bottom).val('');
-            $('#kl_' + type + '_input_left').attr('placeholder', kl_spacing_display_left).val('');
-            $('#kl_' + type + '_input_right').attr('placeholder', kl_spacing_display_right).val('');
+        $('#kl_' + type + '_input_all').attr('placeholder', '#').val('');
+        $('#kl_' + type + '_input_top').attr('placeholder', kl_spacing_display_top).val('');
+        $('#kl_' + type + '_input_bottom').attr('placeholder', kl_spacing_display_bottom).val('');
+        $('#kl_' + type + '_input_left').attr('placeholder', kl_spacing_display_left).val('');
+        $('#kl_' + type + '_input_right').attr('placeholder', kl_spacing_display_right).val('');
     }
     function defaultSpacing(type) {
         tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type, '');
@@ -1803,8 +1803,6 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 return false;
             }
         });
-        
-        
         $('.kl_borders_spacing_tabs a').click(function (e) {
             e.preventDefault();
             var connectedElement = $(this).attr('rel');
@@ -1813,7 +1811,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $('.kl_border_spacing_section').hide();
             $('#' + connectedElement).show();
         });
-        tinyMCE.activeEditor.onNodeChange.add(function (e) {
+        tinyMCE.activeEditor.onNodeChange.add(function () {
             currentSpacing('margin');
             currentSpacing('padding');
         });
@@ -1973,10 +1971,10 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             '   </div>' +
             '   <div class="kl_instructions_wrapper">' +
             '       <div class="kl_instructions">' +
-            '           <ul>'+
+            '           <ul>' +
             '               <li>Place your <span class="text-success"><strong>cursor</strong></span> within the element you want to edit</li>' +
-            '               <li>Use the breadcrumb below the editor to select a parent element</li>' + 
-            '               <li class="fa fa-info-circle">For best results, change &ldquo;EDITOR VIEW&rdquo; to &ldquo;Preview&rdquo;</li>' + 
+            '               <li>Use the breadcrumb below the editor to select a parent element</li>' +
+            '               <li class="fa fa-info-circle">For best results, change &ldquo;EDITOR VIEW&rdquo; to &ldquo;Preview&rdquo;</li>' +
             '          </ul>' +
             '       </div>' +
             '   </div>' +
@@ -2108,6 +2106,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                     // $(iframeID).contents().find(targetElement).css('color', textColor);
                     tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'color', textColor);
                 }
+                tinyMCE.DOM.setAttrib(tinymce.activeEditor.selection.getNode(), 'data-mce-style', '');
                 // $(iframeID).contents().find(targetElement).removeAttr('data-mce-style');
             }
         });
@@ -2127,6 +2126,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'background-color', '');
             tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'color', '');
             tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'border-color', '');
+            tinyMCE.DOM.setAttrib(tinymce.activeEditor.selection.getNode(), 'data-mce-style', '');
         });
     }
 
@@ -4645,7 +4645,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     // Control whether or not to add policies on save
     function insertPolicies() {
         var policies = 'Policies need to be updated in the tools template course.';
-        $.post(klToolsVariables.klApiToolsPath + 'getPage.php', { courseID: klToolsVariables.klToolTemplatesCourseID, pageUrl: 'policies-and-procedures' })
+        $.post(klApiToolsPath + 'getPage.php', { courseID: klToolsVariables.klToolTemplatesCourseID, pageUrl: 'policies-and-procedures' })
             .done(function (data) {
                 policies = data;
             });
@@ -5453,473 +5453,6 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     }
 
 /////////////////////////////////////////////////////////////
-//  CLEANUP FUNCTIONS                                        //
-//  Cleanup content created with previous versons          //
-///////////////////////////////////////////////////////////// 
-
-    // Update existing code to new formats
-    function elementUpdate(checkElement, replaceElement) {
-        if ($(iframeID).contents().find(checkElement).length > 0) {
-            var originalTag = checkElement.replace('#', '').replace('.', ''),
-                replaceTag = replaceElement.replace('#', '').replace('.', '');
-            // If both elements are ID's
-            if (checkElement.indexOf('#') > -1 && replaceElement.indexOf('#') > -1) {
-                $(iframeID).contents().find(checkElement).attr('id', replaceTag);
-            }
-            // If both elements are Classes
-            if (checkElement.indexOf('.') > -1 && replaceElement.indexOf('.') > -1) {
-                $(iframeID).contents().find(checkElement).addClass(replaceTag).removeClass(originalTag);
-            }
-            // If original is an ID and new is a class
-            if (checkElement.indexOf('#') > -1 && replaceElement.indexOf('.') > -1) {
-                $(iframeID).contents().find(checkElement).addClass(replaceTag).attr('id', '');
-            }
-            // If original is a class and new is an ID 
-            if (checkElement.indexOf('.') > -1 && replaceElement.indexOf('#') > -1) {
-                $(iframeID).contents().find(checkElement).removeClass(originalTag).attr('id', replaceTag);
-            }
-        }
-    }
-    function clearAttribute(attributeToRemove) {
-        var originalTag = attributeToRemove.replace('#', '').replace('.', '');
-        if ($(iframeID).contents().find(attributeToRemove).length > 0) {
-            if (attributeToRemove.indexOf('#') > -1) {
-                $(iframeID).contents().find(attributeToRemove).removeAttr('id');
-            }
-            // If both elements are Classes
-            if (attributeToRemove.indexOf('.') > -1) {
-                $(iframeID).contents().find(attributeToRemove).removeClass(originalTag);
-            }
-        }
-    }
-    function updateCustomCss() {
-        // old custom css flag
-        if ($(iframeID).contents().find('#usu-custom-css').length > 0 || $(iframeID).contents().find('#custom-css').length > 0) {
-            alert('This course is using a course level css file. You may need to adjust your custom css because of this update.');
-        }
-        if ($(iframeID).contents().find('#usu-custom-css').length > 0) {
-            if ($(iframeID).contents().find('#usu-custom-css').text().length > 1) {
-                // if it has contents unwrap them
-                $(iframeID).contents().find('#usu-custom-css').contents().unwrap();
-                $(iframeID).contents().find('body').prepend('<div id="kl_custom_css">&nbsp;</div>');
-
-            }
-            // If the step above didn't fix it, remove old and add new
-            $(iframeID).contents().find('#usu-custom-css').remove();
-            if ($(iframeID).contents().find('#usu-custom-css').length === 0 && $(iframeID).contents().find('#kl_custom_css').length === 0) {
-                $(iframeID).contents().find('body').prepend('<div id="kl_custom_css">&nbsp;</div>');
-            }
-            $('#kl_custom_css_add').prop('checked', true);
-        }
-        elementUpdate('#custom-css', '#kl_custom_css');
-    }
-    function updateNavIcons(liClass, replacementIcon) {
-        if ($(iframeID).contents().find('.' + liClass).length > 0) {
-            $(iframeID).contents().find('.' + liClass + ' a').addClass(replacementIcon);
-        }
-    }
-    function updateWrapper() {
-        var i,
-            updateContents,
-            oldThemesArray = [
-                '.generic',
-                '.bookmark',
-                '.apple',
-                '.box-left-aggie-blue',
-                '.box-left-copper',
-                '.box-left-silver',
-                '.square-right-aggie-blue',
-                '.square-right-copper',
-                '.square-right-silver',
-                '.rounded-inset-aggie-blue',
-                '.rounded-inset-copper',
-                '.rounded-inset-silver',
-                '.circle-left-aggie-blue',
-                '.circle-left-copper',
-                '.circle-left-silver',
-                '.horiz-nav-template',
-                '.panel-nav-template'
-            ],
-            numThemes = oldThemesArray.length;
-        for (i = 0; i < numThemes; i++) {
-            if ($(iframeID).contents().find(oldThemesArray[i]).length > 0) {
-                $(iframeID).contents().find(oldThemesArray[i]).attr('id', 'kl_wrapper');
-            }
-        }
-        // Front Page
-        elementUpdate('#usu-template-front', '#kl_wrapper');
-        elementUpdate('#usu-template-banner', '#kl_banner');
-        clearAttribute('.title_banner');
-        elementUpdate('.subj-text', '.kl_mod_text');
-        elementUpdate('.subj-num', '.kl_mod_num');
-        elementUpdate('.usu-mod-num', '.kl_mod_num');
-        elementUpdate('#banner-right', '#kl_banner_right');
-        elementUpdate('#usu-home-img', '#kl_banner_image');
-        elementUpdate('#usu-home-nav', '#kl_navigation');
-        elementUpdate('#usu-template-nav', '#kl_navigation');
-        clearAttribute('.navigation');
-        elementUpdate('#usu-modules-grid', '#kl_modules');
-        elementUpdate('.quick_links', '.kl_modules_quick_links');
-        clearAttribute('.modules_grid');
-        elementUpdate('.connectedModule', '.kl_connected_module');
-        elementUpdate('.activeStart', '.kl_modules_active_start');
-        elementUpdate('.activeStop', '.kl_modules_active_stop');
-        elementUpdate('.contact_footer', '#kl_contact_footer');
-        clearAttribute('.usu-home-footer');
-        elementUpdate('.social_media', '#kl_social_media');
-        clearAttribute('.usu-social');
-        elementUpdate('.image_attribution', '#kl_image_attribution');
-        elementUpdate('.usu-home-attrib', '#kl_image_attribution');
-
-        // Update Wrapper
-        elementUpdate('#template-wrapper', '#kl_wrapper');
-        elementUpdate('#usu-template-page', '#kl_wrapper');
-        // Remove content wrapper
-        if ($(iframeID).contents().find('#template-content').length > 0) {
-            $(iframeID).contents().find('#template-content').contents().unwrap();
-        }
-        if ($(iframeID).contents().find('#usu-template-wrap').length > 0) {
-            elementUpdate('#usu-template-wrap', '#kl_wrapper');
-            $(iframeID).contents().find('#kl_banner').prependTo($(iframeID).contents().find('#kl_wrapper'));
-        }
-        // Theme Classes 
-        elementUpdate('.generic', '.kl_generic');
-        elementUpdate('.bookmark', '.kl_bookmark');
-        elementUpdate('.apple', '.kl_apple');
-        elementUpdate('.box-left-aggie-blue', '.kl_box_left');
-        elementUpdate('.box-left-copper', '.kl_box_left_2');
-        elementUpdate('.box-left-silver', '.kl_box_left_3');
-        elementUpdate('.square-right-aggie-blue', '.kl_square_right');
-        elementUpdate('.square-right-copper', '.kl_square_right_2');
-        elementUpdate('.square-right-silver', '.kl_square_right_3');
-        elementUpdate('.rounded-inset-aggie-blue', '.kl_rounded_inset');
-        elementUpdate('.rounded-inset-copper', '.kl_rounded_inset_2');
-        elementUpdate('.rounded-inset-silver', '.kl_rounded_inset_3');
-        elementUpdate('.circle-left-aggie-blue', '.kl_circle_left');
-        elementUpdate('.circle-left-copper', '.kl_circle_left_2');
-        elementUpdate('.circle-left-silver', '.kl_circle_left_3');
-        elementUpdate('.horiz-nav-template', '.kl_fp_horizontal_nav');
-        elementUpdate('.panel-nav-template', '.kl_fp_panel_nav');
-        elementUpdate('.panel-nav-template', '.kl_fp_panel_nav');
-        elementUpdate('.emta', '.kl_emta');
-        clearAttribute('.usu-template-flex');
-        // Old Banners with multiple h2 tags
-        if($(iframeID).contents().find('#kl_banner h2').length > 1){
-            if ($(iframeID).contents().find('#home-left-num').length > 0) {
-                updateContents = $(iframeID).contents().find('#home-left-num').html();
-                console.log(updateContents);
-                $(iframeID).contents().find('#home-left-num').replaceWith('<span id="kl_banner_left"><span class="kl_mod_text">' + updateContents + '</span></span>');
-            }
-            if ($(iframeID).contents().find('#home-right').length > 0) {
-                updateContents = $(iframeID).contents().find('#home-right').html();
-                console.log(updateContents);
-                $(iframeID).contents().find('#home-right').replaceWith('<span id="kl_banner_right">' + updateContents + '</span>');
-            }
-            if ($(iframeID).contents().find('#page-left').length > 0) {
-                updateContents = $(iframeID).contents().find('#page-left').html();
-                console.log(updateContents);
-                $(iframeID).contents().find('#page-left').replaceWith('<span id="kl_banner_left"><span class="kl_mod_text">' + updateContents + '</span></span>');
-            }
-            if ($(iframeID).contents().find('#page-right').length > 0) {
-                updateContents = $(iframeID).contents().find('#page-right').html();
-                console.log(updateContents);
-                $(iframeID).contents().find('#page-right').replaceWith('<span id="kl_banner_right">' + updateContents + '</span>');
-            }
-            updateContents = $(iframeID).contents().find('#kl_banner').html();
-            $(iframeID).contents().find('#kl_banner').html('<h2>' + updateContents + '</h2>');
-            $(iframeID).contents().find('#kl_banner_left').appendTo($(iframeID).contents().find('#kl_banner h2'));
-            $(iframeID).contents().find('.kl_mod_text').appendTo($(iframeID).contents().find('#kl_banner_left'));
-            $(iframeID).contents().find('.kl_mod_num').appendTo($(iframeID).contents().find('#kl_banner_left'));
-            $(iframeID).contents().find('#kl_banner_right').appendTo($(iframeID).contents().find('#kl_banner h2'));
-            $(iframeID).contents().find('#kl_banner br').remove();
-        }
-        // Banner
-        elementUpdate('#module-page-banner', '#kl_banner');
-        elementUpdate('#module-page-banner', '#kl_banner');
-        elementUpdate('#banner-left', '#kl_banner_left');
-        elementUpdate('#page-left', '#kl_banner_left');
-        elementUpdate('.mod-text', '.kl_mod_text');
-        elementUpdate('.mod-num', '.kl_mod_num');
-        elementUpdate('.emta-badge', '.kl_mod_num');
-        if ($(iframeID).contents().find('#usu-template-banner-middle').length > 0) {
-            $(iframeID).contents().find('#usu-template-banner-middle').remove();
-        }
-        clearAttribute('.banner_image');
-        elementUpdate('.banner-right', '#kl_banner_right');
-        elementUpdate('#page-right', '#kl_banner_right');
-        elementUpdate('#banner-bottom', '#kl_banner_bottom');
-        elementUpdate('#emta-title', '#kl_banner_bottom');
-        elementUpdate('#description', '#kl_description');
-        // EMTA Banners
-        if ($(iframeID).contents().find('#kl_banner_bottom h2').length > 0) {
-            updateContents = $(iframeID).contents().find('#kl_banner_bottom h2').html();
-            $(iframeID).contents().find('#kl_banner_bottom h2').replaceWith('<h3>' + updateContents + '</h3>');
-        }
-        if ($(iframeID).contents().find('#kl_banner').hasClass('kl_emta')) {
-            $(iframeID).contents().find('#kl_banner').removeClass('kl_emta');
-            $(iframeID).contents().find('#kl_wrapper').addClass('kl_emta');
-        }
-        if ($(iframeID).contents().find('#kl_banner_bottom').length > 0) {
-            $(iframeID).contents().find('#kl_banner_bottom').appendTo($(iframeID).contents().find('#kl_banner'));
-            $(iframeID).contents().find('.kl_mod_text').appendTo($(iframeID).contents().find('#kl_banner_left'));
-            $(iframeID).contents().find('.kl_mod_num').appendTo($(iframeID).contents().find('#kl_banner_left'));
-            $(iframeID).contents().find('.kl_banner_right').appendTo($(iframeID).contents().find('#kl_banner_left'));
-        }
-        // Update old Icons
-        updateNavIcons('usu-template-nav-start', 'icon-forward');
-        updateNavIcons('usu-template-nav-syllabus', 'icon-syllabus');
-        updateNavIcons('usu-template-nav-modules', 'icon-module');
-        updateNavIcons('usu-template-nav-resources', 'icon-add');
-        
-        // Template Sections
-        elementUpdate('.introduction', '#kl_introduction');
-        elementUpdate('.objectives', '#kl_objectives');
-        elementUpdate('.readings', '#kl_readings');
-        elementUpdate('.lectures', '#kl_lectures');
-        elementUpdate('.activities', '#kl_activities');
-        elementUpdate('.assignments', '#kl_assignments');
-        // Modal
-        elementUpdate('.customModalToggler', '.kl_modal_toggler');
-        elementUpdate('#customModal', '#kl_modal');
-        elementUpdate('.custom-modal', '.kl_modal');
-        elementUpdate('.modalTitle', '.kl_modal_title');
-        // Tooltip
-        elementUpdate('.tooltipTrigger', '.kl_tooltip_trigger');
-        elementUpdate('.tooltipText', '.kl_tooltip_text');
-        $(iframeID).contents().find('.kl_tooltip_text').each(function (index) {
-            var tipNum = index + 1;
-            elementUpdate('#tooltip' + tipNum, '#kl_tooltip_' + tipNum);
-            elementUpdate('.tooltip' + tipNum, '.kl_tooltip_' + tipNum);
-        });
-        // Popover
-        elementUpdate('.popoverTrigger', '.kl_popover_trigger');
-        elementUpdate('.popoverContent', '.kl_popover_content');
-        $(iframeID).contents().find('.kl_popover_content').each(function (index) {
-            var tipNum = index + 1;
-            elementUpdate('#Popover' + tipNum, '#kl_popover_' + tipNum);
-            elementUpdate('.Popover' + tipNum, '.kl_popover_' + tipNum);
-        });
-        // Syllabus Sections
-        // <div id="template-content" class="syllabus-content" style="margin: 0;">
-
-        // INFORMATION
-        elementUpdate('.information', '#kl_syllabus_information');
-        elementUpdate('.instructures', '.kl_syllabus_instructors');
-        elementUpdate('.additionalInstructior', '.kl_syllabus_additional_instructor');
-        elementUpdate('.teachingAssistants', '.kl_syllabus_teaching_assistant');
-        elementUpdate('.additionalTA', '.kl_syllabus_additional_teaching_assistant');
-        elementUpdate('.course_description', '.kl_syllabus_course_description');
-        // OUTCOMES
-        elementUpdate('.outcomes', '#kl_syllabus_outcomes');
-        elementUpdate('.learning_outcomes', '.kl_syllabus_learning_outcomes');
-        clearAttribute('#outcomeList');
-        // RESOURCES
-        elementUpdate('.resources', '#kl_syllabus_resources');
-        elementUpdate('.canvas', '.kl_syllabus_canvas_info');
-        elementUpdate('.software', '.kl_syllabus_software');
-        elementUpdate('.textbook-readings', '.kl_syllabus_textbook_readings');
-        elementUpdate('.videos', '.kl_syllabus_videos');
-        // ACTIVITIES
-        elementUpdate('.activities', '#kl_syllabus_activities');
-        elementUpdate('.readings_', '.kl_syllabus_activities_readings');
-        elementUpdate('.videos', '.kl_syllabus_activities_videos');
-        elementUpdate('.labs', '.kl_syllabus_labs');
-        elementUpdate('.discussions', '.kl_syllabus_discussions');
-        elementUpdate('.assignments_', '.kl_syllabus_assignments');
-        elementUpdate('.quizzes', '.kl_syllabus_quizzes');
-        elementUpdate('.exams', '.kl_syllabus_exams');
-        // POLICIES
-        elementUpdate('.policies', '#kl_syllabus_policies');
-        elementUpdate('.instructor_feedback', '.kl_syllabus_instructor_feedback');
-        elementUpdate('.student_feedback', '.kl_syllabus_student_feedback');
-        elementUpdate('.syllabus_changes', '.kl_syllabus_syllabus_changes');
-        elementUpdate('.submitting_files', '.kl_syllabus_submitting_files');
-        elementUpdate('.course_fees', '.kl_syllabus_course_fees');
-        elementUpdate('.late_work', '.kl_syllabus_late_work');
-        // GRADES
-        elementUpdate('.grades_', '#kl_syllabus_grades');
-        elementUpdate('.course_assignments', '.kl_syllabus_course_assignments');
-        elementUpdate('.grade_scheme', '.kl_syllabus_grade_scheme');
-        elementUpdate('#canvas_grade_scheme', '#kl_syllabus_canvas_grade_scheme');
-        // INSTITUTIONAL POLICIES
-        elementUpdate('.universityPolicies', '#kl_institutional_policies');
-    }
-    function updateProgressBar() {
-        var labelValue = '',
-            labelHeight = '',
-            barWidth = '',
-            newProgressBar = '',
-            labelOutside = false;
-        if ($(iframeID).contents().find('.custom-progressbar').length > 0) {
-            barWidth = Math.round(100 * parseFloat($(iframeID).contents().find('.ui-progressbar-value').css('width')) / parseFloat($(iframeID).contents().find('.ui-progressbar-value').parent().css('width')));
-            if ($(iframeID).contents().find('.pbHeightMicro').length > 0) {
-                labelHeight = '5px';
-                labelOutside = true;
-            } else if ($(iframeID).contents().find('.pbHeightSmall').length > 0) {
-                labelHeight = '10px';
-                labelOutside = true;
-            } else if ($(iframeID).contents().find('.pbHeightMed').length > 0) {
-                labelHeight = '15px';
-                labelOutside = true;
-            } else {
-                labelHeight = '20px';
-            }
-            if ($(iframeID).contents().find('.pblabel').length > 0) {
-                labelValue = $(iframeID).contents().find('.pblabel').html();
-            }
-            if (labelOutside === true) {
-                newProgressBar = '<div id="kl_progress_bar">' +
-                    '    <div class="kl_progress_bar_wrapper" style="width: 99%; overflow: hidden; background: #f2f2f2; border: #D1D1D1 1px solid;">' +
-                    '        <div class="kl_progress_bar_value kl_progress_bar_0_value" style="width: ' + barWidth + '%; background: #003366; text-align: right; height: ' + labelHeight + '; float: left;">' +
-                    '            <div class="kl_progress_bar_label kl_progress_bar_0_label" style="color: #fff;">&nbsp;</div>' +
-                    '        </div>' +
-                    '    </div>' +
-                    '    <div class="kl_progress_bar_wrapper_outside_labels" style="width: 99%; overflow: hidden;">' +
-                    '        <div class="kl_progress_bar_value kl_progress_bar_0_value" style="width: ' + barWidth + '%; text-align: right; height: 20px; float: left; background-position: initial initial; background-repeat: initial initial;">' +
-                    '            <div class="kl_progress_bar_label kl_progress_bar_0_label" style="color: #000000;">' + labelValue + '</div>' +
-                    '        </div>' +
-                    '    </div>' +
-                    '</div>';
-                $(iframeID).contents().find('.custom-progressbar').replaceWith(newProgressBar);
-            } else {
-                newProgressBar = '<div id="kl_progress_bar">' +
-                    '    <div class="kl_progress_bar_wrapper" style="width: 99%; overflow: hidden; background: #f2f2f2; border: #D1D1D1 1px solid;">' +
-                    '        <div class="kl_progress_bar_value kl_progress_bar_0_value" style="width: ' + barWidth + '%; background-color: #003366; text-align: right; height: ' + labelHeight + '; float: left;">' +
-                    '        <div class="kl_progress_bar_label kl_progress_bar_0_label" style="color: #fff;">' + labelValue + '</div>' +
-                    '    </div>' +
-                    '</div>';
-                $(iframeID).contents().find('.custom-progressbar').replaceWith(newProgressBar);
-            }
-        }
-    }
-    function updateAccordion() {
-        if ($(iframeID).contents().find('.custom-accordion h3').length > 0) {
-            $(iframeID).contents().find('.custom-accordion h3').each(function () {
-                var accordionTitle = $(this).html();
-                $(this).replaceWith('<h4>' + accordionTitle + '</h4>');
-            });
-        }
-        if ($(iframeID).contents().find('.custom-accordion-wrapper').length > 0) {
-            $(iframeID).contents().find('.custom-accordion-wrapper').attr('id', 'Custom_Accordion');
-            $(iframeID).contents().find('.custom-accordion h4 a').contents().unwrap();
-            elementUpdate('.custom-accordion-wrapper', '.kl_custom_accordion_wrapper');
-        }
-        if ($(iframeID).contents().find('.custom-accordion').length > 0) {
-            $(iframeID).contents().find('.custom-accordion h4 a').contents().unwrap();
-            $(iframeID).contents().find('.custom-accordion').attr('id', 'Custom_Accordion');
-        }
-        elementUpdate('.custom-accordion', '.kl_custom_accordion', '');
-    }
-    function updateTabs() {
-        if ($(iframeID).contents().find('.custom-tabs').length > 0) {
-            $(iframeID).contents().find('.custom-tabs').attr('id', 'Custom_Tabs');
-            $(iframeID).contents().find('.tab-list li').each(function (index) {
-                var connectedSection = $(this).attr('class'),
-                    tabTitle = $(this).text();
-                $(iframeID).contents().find('#' + connectedSection).before('<h4 class="kl_panel_' + index + '">' + tabTitle + '</h4>');
-                $(iframeID).contents().find('#' + connectedSection).attr('class', 'kl_tab_content kl_panel_' + index).removeAttr('id');
-            });
-            elementUpdate('.custom-tabs', '.kl_tabbed_section');
-            $(iframeID).contents().find('.tab-list').remove();
-        }
-    }
-
-    function updateQuickCheck() {
-        var i, numAnswers;
-        elementUpdate('#quickCheckOne', '#kl_quick_check_one');
-        elementUpdate('.quickCheckOneContent', '.kl_quick_check_one_content', '');
-        elementUpdate('#quickCheckTwo', '#kl_quick_check_two');
-        elementUpdate('.quickCheckTwoContent', '.kl_quick_check_two_content', '');
-        elementUpdate('.quickCheck', '.kl_quick_check', '');
-        elementUpdate('.quickCheckOneContent', '', '');
-        elementUpdate('.answers', '', '');
-        if ($(iframeID).contents().find('.answerWrapper').length > 0) {
-            numAnswers = $(iframeID).contents().find('.answerWrapper').length;
-            for (i = 0; i < numAnswers; i++) {
-                elementUpdate('.answer-' + i, '.kl_quick_check_answer_' + i, '');
-            }
-        }
-        elementUpdate('.answerWrapper', '.kl_quick_check_answer_wrapper', '');
-        elementUpdate('.answers', '.kl_quick_check_answers', '');
-        elementUpdate('.answer', '.kl_quick_check_answer', '');
-        elementUpdate('.response', '.kl_quick_check_response', '');
-        elementUpdate('.correctAnswer', '.kl_quick_check_correct_answer', '');
-
-    }
-    function identifyImportedContent() {
-         // Identify theme
-        currentPagesThemeCheck();
-        // Clear sections area and identify new sections
-        $('.kl_sections_list').empty();
-        $('.kl_template_sections_list input').each(function () {
-            $(this).prop('checked', false);
-        });
-        identifySections();
-        // Clear accordion/tabs panels and identify new
-        $('#kl_accordion_panels').empty();
-        getAccPanels();
-        $('#kl_tab_panels').empty();
-        getTabPanels();
-        // Update Navigation
-        updateNavItems();
-        // Remove and check progress bar
-        $('input[value=kl_progress_bar]').parents('li').remove();
-        $('.kl_progress_bar_addition_section').remove();
-        $('.kl_progress_bar_add').show();
-        $('#kl_progress_bar_controls').hide();
-        identifyProgressBar();
-        // Check quick checks
-        identifyQuickChecks();
-        if ($(iframeID).contents().find('#kl_social_media').length > 0) {
-            socialMediaReady();
-        }
-        identifyModuleList();
-    }
-    function updateContentCheck() {
-        if ($(iframeID).contents().find('#usu-template-banner').length > 0 || $(iframeID).contents().find('#template-wrapper').length > 0 ||  $(iframeID).contents().find('#usu-template-front').length > 0) {
-            var updateHtml = '<div class="kl_update_tools_wrapper"><a href="#" style="width: 216px;" class="btn btn-danger kl_update_tools kl_margin_bottom" data-tooltip="top" ' +
-                'title="Update code created with previous versions of these tools"><i class="fa fa-wrench"></i> Update Code</a>' +
-                '<div class="kl_instructions">This content was created using an older version of these tools. You will need to update the code before using the current version.</div>';
-            if ($('.kl_update_tools').length === 0) {
-                $('#kl_tools').prepend(updateHtml);
-                $('.kl_update_tools').unbind("click").click(function (e) {
-                    e.preventDefault();
-                    updateWrapper();
-                    updateCustomCss();
-                    updateProgressBar();
-                    updateAccordion();
-                    updateQuickCheck();
-                    updateTabs();
-                    if ($('.kl_update_success').length === 0) {
-                        $('#kl_tools').prepend('<div class="kl_success kl_update_success" style="display:none;"><i class="fa fa-spinner fa-spin"></i> Updating Code</div>');
-                    }
-                    $('.kl_update_success').slideDown();
-                    $('.kl_update_tools').slideUp();
-                    $('.kl_update_tools_wrapper .kl_instructions').hide();
-                    $('#kl_tools_accordion').show();
-                    $('.kl_view_options').show();
-                    $('#kl_tools .btn-mini').show();
-                    setTimeout(function () {
-                        // setupMainTools();
-                        $('.kl_update_tools_wrapper').hide();
-                        $('.kl_update_success').slideUp();
-                        updateContentCheck();
-                        identifyImportedContent();
-                    }, 2000);
-                });
-            } else {
-                $('.kl_update_success').hide();
-                $('.kl_update_tools').show();
-                $('.kl_update_tools_wrapper').show();
-                $('.kl_update_tools_wrapper .kl_instructions').show();
-            }
-            $('#kl_tools .btn-mini').hide();
-            $('#kl_tools_accordion').hide();
-            $('.kl_view_options').hide();
-        }
-    }
-
-/////////////////////////////////////////////////////////////
 //  API FUNCTIONS                                          //
 ///////////////////////////////////////////////////////////// 
 
@@ -5938,7 +5471,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $(this).parents('li').addClass('kl_loading').prepend('<i class="fa fa-spinner fa-spin"></i>');
             linkHref = $(this).attr('href').split('/pages/');
             contentUrl = linkHref[1];
-            $.post(klToolsVariables.klApiToolsPath + 'getPage.php', { courseID: coursenum, pageUrl: contentUrl })
+            $.post(klApiToolsPath + 'getPage.php', { courseID: coursenum, pageUrl: contentUrl })
                 .done(function (data) {
                     $(iframeID).contents().find('body').html(data);
                     $('.kl_loading i').remove();
@@ -5951,13 +5484,13 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
     }
     function checkPageTemplates() {
         $('#kl_course_template_pages').html('<i class="fa fa-spinner fa-spin"></i> Checking for template pages');
-        $.post(klToolsVariables.klApiToolsPath + 'checkTemplates.php', { courseID: coursenum })
+        $.post(klApiToolsPath + 'checkTemplates.php', { courseID: coursenum })
             .done(function (data) {
                 $('#kl_course_template_pages').html(data);
                 $('.kl_import_primary_template').unbind("click").click(function (e) {
                     e.preventDefault();
                     $('.kl_import_primary_template i').attr('class', 'fa fa-spinner fa-spin');
-                    $.post(klToolsVariables.klApiToolsPath + 'getPage.php', { courseID: coursenum, pageUrl: 'primary-template' })
+                    $.post(klApiToolsPath + 'getPage.php', { courseID: coursenum, pageUrl: 'primary-template' })
                         .done(function (data) {
                             $(iframeID).contents().find('body').html(data);
                             $('.kl_import_primary_template i').attr('class', 'fa fa-clipboard');
@@ -5969,7 +5502,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 $('.kl_import_secondary_template').unbind("click").click(function (e) {
                     e.preventDefault();
                     $('.kl_import_secondary_template i').attr('class', 'fa fa-spinner fa-spin');
-                    $.post(klToolsVariables.klApiToolsPath + 'getPage.php', { courseID: coursenum, pageUrl: 'secondary-template' })
+                    $.post(klApiToolsPath + 'getPage.php', { courseID: coursenum, pageUrl: 'secondary-template' })
                         .done(function (data) {
                             $(iframeID).contents().find('body').html(data);
                             $('.kl_import_secondary_template i').attr('class', 'fa fa-clipboard');
@@ -6001,7 +5534,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         } else {
             pageTitleUrl = pageTitleUrl[1];
         }
-        $.post(klToolsVariables.klApiToolsPath + 'getPage.php', { courseID: sourceCourseNum, pageUrl: pageTitleUrl })
+        $.post(klApiToolsPath + 'getPage.php', { courseID: sourceCourseNum, pageUrl: pageTitleUrl })
             .done(function (data) {
                 var re = new RegExp(sourceCourseNum, 'g');
                 data = data.replace(re, coursenum);
@@ -6041,8 +5574,6 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             '   </div>' +
             '   <a href="#" class="btn btn-mini kl_mce_preview" rel="">Preview</a>' +
             '</div>',
-            addStyleButton = ' <a href="#" class="btn btn-mini kl_add_style_to_iframe" data-tooltip="bottom" title="Click this if the css styles are not showing up in the editor">' +
-            '<i class="fa fa-magic"></i> Add Style to Editor</a>',
             removeEmptyButton = '<a class="btn btn-mini kl_remove_empty" href="#" data-tooltip="left" title="This button will clean up the page contents by removing any empty elements.' +
             '<p>This is especially useful when using the <i class=\'icon-collection-save\'></i> feature.</p>"><i class="icon-trash"></i> Clear Empty Elements</a>',
             tabNavigation = '<ul>' +
@@ -6061,7 +5592,7 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
             $('#kl_tools_wrapper').append('<div id="kl_tools" />').prepend(tabNavigation);
             $('#kl_tools_wrapper').tabs({active: 1});
         }
-        $('#kl_tools').html(visualBlocksButtons + customAccordionDiv + addStyleButton + removeEmptyButton);
+        $('#kl_tools').html(visualBlocksButtons + customAccordionDiv + removeEmptyButton);
         $('#toolsTrigger').click(function (e) {
             e.preventDefault();
             $('a:contains("HTML Editor")').get(0).scrollIntoView();
@@ -6139,12 +5670,12 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         progressBar();
         quickCheck();
         customTablesSection();
+        additionalAccordionSections();
         bloomsTaxonomy('objectives');
         contentIcons();
         aboutCustomTools();
         showPageTitle();
         // activate the accordion
-
         initializeToolsAccordion();
         delayedLoad();
         // Load JavaScript file that will clean up old format
@@ -6157,6 +5688,8 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
         importPageContentThisCourse();
         setTimeout(function () {
             bindAPIImportsTriggers();
+            // Load additional content from canvasGlobal.js if needed
+            afterToolLaunch();
         }, 300);
     }
     // Setup Syllabus Tools
@@ -6221,11 +5754,6 @@ klToolsArrays, vendor_legacy_normal_contrast,  */
                 });
             }
         }
-        $('.kl_add_style_to_iframe').unbind("click").click(function (e) {
-            e.preventDefault();
-            addStyletoIframe();
-            $('a:contains("HTML Editor")').get(0).scrollIntoView();
-        });
         // Make some changes before page is saved
         $('.submit').click(function () {
             // Handle when a box was unchecked but the remove button wasn't clicked

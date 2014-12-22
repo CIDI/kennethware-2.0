@@ -1,6 +1,6 @@
 <?php
 	// This page contains a variety of Canvas API calls
-	require_once (__DIR__.'/../config.php');
+	require_once 'config.php';
 
 	$tokenHeader = array("Authorization: Bearer ".$apiToken);
 

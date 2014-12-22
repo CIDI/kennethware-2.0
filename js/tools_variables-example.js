@@ -1,3 +1,6 @@
+/*jslint browser: true, sloppy: false, eqeq: false, vars: false, maxerr: 50, indent: 4, plusplus: true */
+/*global $, jQuery, alert, console, coursenum, klToolsPath */
+
 // These tools were designed to facilitate rapid course development in the Canvas LMS
 // Copyright (C) 2014  Kenneth Larsen - Center for Innovative Design and Instruction
 // Utah State University
@@ -15,20 +18,53 @@
 
 var klToolsVariables = {
 
-    // Customizable Variables
+// //////////////////////
+// // OPTIONAL LIMITS  //
+// //////////////////////
+
+    // OPTIONAL: Limit tools loading by users roll
+    klLimitByRole: false,
+    // Change klLimitByRole to "true" to limit to rolls in the klRoleArray array
+    // adjust roles as needed
+    klRoleArray: [
+        'student',
+        'teacher',
+        'admin'
+    ],
+    // OPTIONAL: Limit tools to an array of Canvas user IDs
+    klLimitByUser: false,
+    // Change klLimitByUser to "true" to limit to users in the klUserArray array
+    // klUserArray is the Canvas user ID not the SIS user ID
+    klUserArray: [
+        '1234',
+        '987654'
+    ],
+
+//////////////////////
+// THEMES           //
+//////////////////////
+
     // To add a theme, add the class here and add a thumbnail to the <toolspath>/images/template_thumbs folder 
     // Frontpage thumbnails approx 225px X 106px
     klFrontPageThemeArray: [
-        'kl_fp_horizontal_nav',
-        'kl_fp_panel_nav'
+        'kl_fp_horizontal_nav_2',
+        'kl_fp_panel_nav_2',
+        'kl_fp_squares_1x1',
+        'kl_fp_flat_sections',
+        'kl_fp_colored_headings',
+        'kl_fp_circles_1x1'
     ],
     // To add a theme, add the class here and add a thumbnail to the <toolspath>/images/template_thumbs folder 
     // WikiPage thumbnails approx 116px x 116px
     // Themes without a description div
     klPagesThemeArray: [
         'kl_generic',
+        'kl_basic_color',
         'kl_bookmark',
         'kl_apple',
+        'kl_basic_bar',
+        'kl_flat_sections',
+        'kl_colored_headings',
         'kl_box_left',
         'kl_box_left_2',
         'kl_box_left_3',
@@ -42,28 +78,35 @@ var klToolsVariables = {
         'kl_circle_left_2',
         'kl_circle_left_3'
     ],
+    // The templates in this list will match the Canvas background color
+    matchCanvasBackgroundTemplates: [
+        'kl_colored_headings',
+        'kl_fp_colored_headings'
+    ],
+    // Templates in this list will not hide the Canvas page title by default
+    showPageTitleTemplates: [
+        'kl_basic_bar'
+    ],
     // Themes with a bottom banner div (includes subtitle and description)
     // To add a theme, add the class here and add a thumbnail to the <toolspath>/images/template_thumbs folder 
     klBottomBannerPagesThemeArray: ['kl_emta'],
 
     // Colors included in this array will be included as swatches in the colorpicker
     klThemeColors: [
-        ['#003366', '#AC8D73', '#A4AEB5', '#0F2439'], // Institutional colors
-        ["#000","#444","#666","#999","#ccc","#eee","#f3f3f3","#fff"], // Grayscale
-        ["#f4cccc","#fce5cd","#fff2cc","#d9ead3","#d0e0e3","#cfe2f3","#d9d2e9","#ead1dc"], // color spectrum
-        ["#ea9999","#f9cb9c","#ffe599","#b6d7a8","#a2c4c9","#9fc5e8","#b4a7d6","#d5a6bd"], // color spectrum
-        ["#e06666","#f6b26b","#ffd966","#93c47d","#76a5af","#6fa8dc","#8e7cc3","#c27ba0"], // color spectrum
-        ["#c00","#e69138","#f1c232","#6aa84f","#45818e","#3d85c6","#674ea7","#a64d79"], // color spectrum
-        ["#900","#b45f06","#bf9000","#38761d","#134f5c","#0b5394","#351c75","#741b47"], // color spectrum
-        ["#600","#783f04","#7f6000","#274e13","#0c343d","#073763","#20124d","#4c1130"] // color spectrum
+        ['#003366', '#AC8D73', '#A4AEB5', '#0F2439'],
+        ['#000', '#444', '#666', '#999', '#ccc', '#eee', '#f3f3f3', '#fff'],
+        ['#f4cccc', '#fce5cd', '#fff2cc', '#d9ead3', '#d0e0e3', '#cfe2f3', '#d9d2e9', '#ead1dc'],
+        ['#ea9999', '#f9cb9c', '#ffe599', '#b6d7a8', '#a2c4c9', '#9fc5e8', '#b4a7d6', '#d5a6bd'],
+        ['#e06666', '#f6b26b', '#ffd966', '#93c47d', '#76a5af', '#6fa8dc', '#8e7cc3', '#c27ba0'],
+        ['#c00', '#e69138', '#f1c232', '#6aa84f', '#45818e', '#3d85c6', '#674ea7', '#a64d79'],
+        ['#900', '#b45f06', '#bf9000', '#38761d', '#134f5c', '#0b5394', '#351c75', '#741b47'],
+        ['#600', '#783f04', '#7f6000', '#274e13', '#0c343d', '#073763', '#20124d', '#4c1130']
     ],
-    // To utilize the features that pull from the Canvas api you will need the hosted php files put their path here
-    klApiToolsPath: klToolsPath + 'api/',
 
     // To show Canvas styles in the editor, check the following against the stylesheets loaded in the head of a Canvas page
     // You may need to update the numbers at the end
-    vendor_legacy_normal_contrast: '/assets/vendor_legacy_normal_contrast.css?1405955204',
-    common_legacy_normal_contrast: '/assets/common_legacy_normal_contrast.css?1405955210',
+    vendor_legacy_normal_contrast: '/assets/vendor_legacy_normal_contrast.css?1408316217',
+    common_legacy_normal_contrast: '/assets/common_legacy_normal_contrast.css?1408316151',
 
     // Institutional policies and procedures need to be included in a Canvas course with a page named "Policies and Procedures" include the Canvas course ID here
     klToolTemplatesCourseID: '343656',
@@ -83,7 +126,7 @@ var klToolsVariables = {
         '    Description' +
         '</div>' +
         '</div>',
-    klPagesBannerImage: '<div id="kl_banner_image">&nbsp;</div>',
+    klPagesBannerImage: '<div id="kl_banner_image"><img class="kl_image_full_width" style="width: 100%; height: auto; max-width: 100%;" src="https://elearn.usu.edu/canvas_branding/css/images/homePageBanner.jpg" alt="home page banner" /></div>',
     klPagesNavSection: '<div id="kl_navigation">' +
         '<ul>' +
         '    <li><a class="icon-forward" title="start here" href="/courses/' + coursenum + '/pages/start-here">Start Here</a></li>' +
@@ -287,7 +330,7 @@ var klToolsVariables = {
         '   <h4>Canvas Notification Preferences</h4>' +
         '   <p>Please make sure your Canvas notification preferences are set so that you will receive course announcments <a href="/profile/communication?task=announcements_asap" target="_blank">ASAP</a> or <a href="/profile/communication?task=announcements_daily" target="_blank">Daily</a> <em>(click the appropriate link to set your preference)</em>.</p>' +
         '</div>',
-   // Instructor Feedback/communication
+    // Instructor Feedback/communication
     klSyllabusCourseInstructorFeedback: '<div class="kl_syllabus_instructor_feedback" style="margin-left:10px;">' +
         '   <h4>Instructor Feedback/Communication</h4>' +
         '   <p>Text</p>' +
@@ -381,9 +424,9 @@ var klToolsVariables = {
         '   <div id="Step_5">' +
         '       <h3 class="icon-info">Step 5: Read about academic integrity and netiquette</h3>' +
         '       <p>All students at Utah State University agree on admission to abide by the university <em>Honor Code</em>.' +
-        '       Please review this <a title="Honor Pledge" href="/courses/' + coursenum + '/pages/honor-pledge">Academic Integrity</a> tutorial to familiarize yourself with USU policies and procedures pertaining to the USU honor code.' +
+        '       Please review this <a title="Honor Pledge" href="/courses/172956/pages/honor-pledge" target="_blank">Academic Integrity</a> tutorial to familiarize yourself with USU policies and procedures pertaining to the USU honor code.' +
         '       This tutorial links to an additional, in-depth review on how to' +
-        '       <a title="Academic Dishonesty Defined" href="/courses/' + coursenum + '/pages/academic-dishonesty-defined">avoid plagiarism and cite sources</a>, which you are strongly encouraged to review.' +
+        '       <a title="Academic Dishonesty Defined" href="/courses/172956/pages/academic-dishonesty-defined" target="_blank">avoid plagiarism and cite sources</a>, which you are strongly encouraged to review.' +
         '       Also, please review the <a href="http://www.albion.com/netiquette/corerules.html" target="_blank">core rules of netiquette</a> for some guidelines and expectations on how to behave in an online learning environment.</p>' +
         '   </div>' +
         '   <div id="Next_Steps">' +
