@@ -253,22 +253,12 @@
   .kl_border_bottom_rounded {border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;}
 
   /* Shrink Inputs with appended buttons in tools wrapper */
-  #kl_tools .input-append input[type="text"] {
-    font-size: 12px;
-    height: 14px;
-  }
-  #kl_tools .input-append .add-on {
-    font-size: 12px;
-    height: 14px;
-    line-height: 14px;
-  }
+  #kl_tools .input-append input[type="text"] {font-size: 12px; height: 14px; }
+  #kl_tools .input-append .add-on {font-size: 12px; height: 14px; line-height: 14px; }
   #kl_tools .input-append .add-on i[class*=icon-]:before, 
   #kl_tools .input-append .add-on i[class^=icon-]:before,
   #kl_tools .input-append .add-on i[class*=fa-]:before, 
-  #kl_tools .input-append .add-on i[class^=fa-]:before{
-    font-size: 14px;
-    line-height: 15px;
-  }
+  #kl_tools .input-append .add-on i[class^=fa-]:before{font-size: 14px; line-height: 15px; }
   /* Tools Accordion */
   #kl_tools .kl_custom_accordion.ui-accordion .ui-accordion-header{ padding-left: 15px; }
   #kl_tools .kl_custom_accordion.ui-accordion .ui-accordion-header .ui-icon{ left: 5px; }
