@@ -24,29 +24,16 @@
 // Development version will be loaded in the following courses
 var iframeID,
     // Path to where the canvasCustomTools folder is located
-    klToolsPath = 'https://elearn.usu.edu/canvasCustomTools/templateTools/production/',
+    klToolsPath = 'https://<path to tools>/',
     // Path to the tools_variables file
-    // klToolsVariablesFile = klToolsPath + 'js/tools_variables.js',
-    klToolsVariablesFile = 'https://elearn.usu.edu/canvasCustomTools/templateTools/custom/learn/tools_variables.js',
+    klToolsVariablesFile = klToolsPath + 'js/tools_variables.js',
     // Path to additional_customization file
-    // klToolsAdditionalCustomizationFile = klToolsPath + 'js/additional_customization.js',
-    klToolsAdditionalCustomizationFile = 'https://elearn.usu.edu/canvasCustomTools/templateTools/custom/learn/additional_customization.js',
+    klToolsAdditionalCustomizationFile = klToolsPath + 'js/additional_customization.js',
     // To utilize the features that pull from the Canvas api you will need the hosted php files put their path here
     klApiToolsPath = klToolsPath + 'api/',
-    // klApiToolsPath = 'https://elearn.usu.edu/canvasCustomTools/templateTools/custom/learn/api/',
     // Path to institutional css file
-    globalCSSFile = 'https://elearn.usu.edu/canvas_branding/css/catalogCanvasGlobal.css',
-    // klFontAwesomePath = '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css',
-    klFontAwesomePath = 'https://elearn.usu.edu/canvasCustomTools/resources/font-awesome/4.2.0/css/font-awesome.min.css',
-    devCourseArray = [
-        "21" // Kenneth Dev
-        // "4" // CIDI Custom Tools
-    ],
-    // Learning Path Courses
-    learningPathCourseArray = [
-        "Kenneth Dev",
-        "TEAL-6280"
-    ],
+    globalCSSFile = 'https://<path to css>/canvasGlobal.css',
+    klFontAwesomePath = '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css',
     coursenum;
 
 function getCourseNum() {
@@ -66,11 +53,6 @@ function getCourseNum() {
 getCourseNum();
 
 
-// Dev Environment
-if ($.inArray(coursenum, devCourseArray) !== -1) {
-    console.log('DEVELOPMENT VERSION');
-}
-
 // Pull in custom variables
 $.getScript(klToolsVariablesFile, function () {
     'use strict';
@@ -78,11 +60,6 @@ $.getScript(klToolsVariablesFile, function () {
 });
 // Additional Customization
 $.getScript(klToolsAdditionalCustomizationFile, function () {
-    'use strict';
-    console.log("additional_customization.js loaded");
-});
-// USU Code Cleanup
-$.getScript('https://elearn.usu.edu/canvasCustomTools/templateTools/production/js/code_update.js', function () {
     'use strict';
     console.log("additional_customization.js loaded");
 });
