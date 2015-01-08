@@ -32,11 +32,11 @@ var iframeID,
     // To utilize the features that pull from the Canvas api you will need the hosted php files put their path here
     klApiToolsPath = klToolsPath + 'api/',
     // Path to institutional css file
-    globalCSSFile = 'https://<path to css>/canvasGlobal.css',
+    klGlobalCSSFile = 'https://<path to css>/canvasGlobal.css',
     klFontAwesomePath = '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css',
     coursenum;
 
-function getCourseNum() {
+function klGetCourseNum() {
     'use strict';
     var matches, killspot;
     // Parse Course Number - It is stored in the variable "coursenum"
@@ -50,7 +50,7 @@ function getCourseNum() {
         }
     }
 }
-getCourseNum();
+klGetCourseNum();
 
 
 // Pull in custom variables

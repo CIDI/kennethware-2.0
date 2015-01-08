@@ -1,29 +1,29 @@
 /*jslint browser: true, sloppy: false, eqeq: false, vars: false, maxerr: 50, indent: 4, plusplus: true */
 /*global $, jQuery, alert, console, klToolsVariables, coursenum, tinyMCE, iframeID, ENV */
 
-function changeVariables() {
+function klChangeVariables() {
     'use strict';
 }
 
-function additionalAfterContentLoaded() {
+function klAdditionalAfterContentLoaded() {
     'use strict';
     // Additional code to run after a page's content has loaded
 }
 
-function afterToolDependenciesLoaded() {
+function klAfterToolDependenciesLoaded() {
     'use strict';
     // Additional code to load with tool dependencies
 }
 
-function additionalAccordionSections() {
+function klAdditionalAccordionSections() {
     'use strict';
 }
 
-function afterToolLaunch() {
+function klAfterToolLaunch() {
     'use strict';
     // Additional code to load after the tools are launched
 }
-function additionalLiveView() {
+function klAdditionalLiveView() {
     'use strict';
     // Additional code 
 }
