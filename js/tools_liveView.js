@@ -106,7 +106,7 @@ var anchor, activePanel, activeTab, bgColor, bgHex, textColor, icons, modalTitle
 // SHOW PAGES TITLE
 currentTheme = $('#kl_wrapper').attr('class');
 if ($('.kl_show_title').length === 0 && $.inArray(currentTheme, klToolsVariables.klShowPageTitleTemplates) === -1) {
-    if ($('#kl_banner h2').length > 0 && $('#course_home_content').length === 0)) {
+    if ($('#kl_banner h2').length > 0 && $('#course_home_content').length === 0) {
         $('h1.page-title').addClass('screenreader-only');
         $('#kl_wrapper').css('margin-top', '-25px');
     }
