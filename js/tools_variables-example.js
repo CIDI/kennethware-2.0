@@ -79,12 +79,12 @@ var klToolsVariables = {
         'kl_circle_left_3'
     ],
     // The templates in this list will match the Canvas background color
-    matchCanvasBackgroundTemplates: [
+    klMatchCanvasBackgroundTemplates: [
         'kl_colored_headings',
         'kl_fp_colored_headings'
     ],
     // Templates in this list will not hide the Canvas page title by default
-    showPageTitleTemplates: [
+    klShowPageTitleTemplates: [
         'kl_basic_bar'
     ],
     // Themes with a bottom banner div (includes subtitle and description)
@@ -381,7 +381,7 @@ var klToolsVariables = {
         '   <div id="kl_syllabus_canvas_grade_scheme">&nbsp;</div>' +
         '</div>',
 
-    startHereContent: '<div id="kl_wrapper" class="kl_box_left">' +
+    klStartHereContent: '<div id="kl_wrapper" class="kl_box_left">' +
         '   <div id="kl_banner">' +
         '       <h2><span id="kl_banner_left"> <span class="kl_mod_text">Start Here: </span></span><span id="kl_banner_right">Welcome to the Course</span></h2>' +
         '   </div>' +
