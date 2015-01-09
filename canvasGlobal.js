@@ -57,16 +57,14 @@ klGetCourseNum();
 $.getScript(klToolsVariablesFile, function () {
     'use strict';
     console.log("tools_variables.js loaded");
-});
-// Additional Customization
-$.getScript(klToolsAdditionalCustomizationFile, function () {
-    'use strict';
-    console.log("additional_customization.js loaded");
-});
-// Run code to initialize tools
-$.getScript(klToolsPath + "js/master_controls.js", function () {
-    'use strict';
-    console.log("master_controls.js loaded");
+    // Additional Customization
+    $.getScript(klToolsAdditionalCustomizationFile, function () {
+        console.log("additional_customization.js loaded");
+        // Run code to initialize tools
+        $.getScript(klToolsPath + "js/master_controls.js", function () {
+            console.log("master_controls.js loaded");
+        });
+    });
 });
 
 ////////////////////////////////////////////////////
