@@ -25,7 +25,7 @@
   h3[class*=icon-]:before, h3[class^=icon-]:before, 
   h4[class*=icon-]:before, h4[class^=icon-]:before, 
   h5[class*=icon-]:before, h5[class^=icon-]:before, 
-  li[class*=icon-]:before, li[class^=icon-]:before { font-family: 'canvas-icons'; display: inline-block; vertical-align: middle; position: relative; top: -3px; text-rendering: optimizeLegibility; /*font-size: 16px;*/ text-transform: none !important; font-weight: normal !important; font-style: normal !important; margin-right: 5px; }
+  li[class*=icon-]:before, li[class^=icon-]:before { font-family: 'canvas-icons'; display: inline-block; vertical-align: middle; text-rendering: optimizeLegibility; /*font-size: 16px;*/ text-transform: none !important; font-weight: normal !important; font-style: normal !important; margin-right: 5px; }
   li[class*=icon-]:before, li[class^=icon-]:before, 
   li[class*=fa-]:before, li[class^=fa-]:before { margin-left: -20px; margin-right: 6px; }
   h2[class*=fa-]:before, h2[class^=fa-]:before, 
@@ -115,12 +115,45 @@
   /**************************************/
 
   #kl_wrapper .ui-widget-header .ui-state-default,
-  #kl_wrapper .ui-state-default {border: 1px solid #dbdbdb; color: #333; font-weight: normal; background-image: none; background: #efefef; text-shadow: none; border-bottom-color: #bbb; box-shadow: none; }
+  #kl_wrapper .ui-state-default {background-image: none; background: #efefef;}
   #kl_wrapper .ui-widget-header .ui-state-active {background-color: #fff; background: #fff; }
   #kl_wrapper .ui-widget-content {border: 1px solid #dbdbdb; border-top:none; background: #fff; color: #222; font-size: 16px; }
   #kl_wrapper h4.ui-accordion-header-active {background: #08c; }
   #kl_wrapper .kl_custom_accordion.ui-accordion .ui-accordion-header {text-transform: capitalize; font-weight: normal; }
   #kl_wrapper .ui-widget-header {border-bottom: 1px solid #dbdbdb; }
+
+  /*************************/
+  /* Expander Box          */
+  /*************************/
+  #kl_wrapper .kl_expand_box {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 10px 0;
+  }
+  #kl_wrapper .kl_expand_box h5.kl_expand_box_title {
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 10px;
+    line-height: 20px;
+    border-radius: 5px;
+    border: none;
+    letter-spacing: 0;
+  }
+  #kl_wrapper .kl_expand_box h5.kl_expand_box_title a:hover {
+    cursor: pointer;
+  }
+  #kl_wrapper .kl_expand_box.kl_expand_box_open h5.kl_expand_box_title {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom: 1px solid #ddd;
+  }
+  #kl_wrapper .kl_expand_box div.kl_expand_box_content {
+    padding: 10px;
+    display: none;
+  }
+  .mceContentBody #kl_wrapper .kl_expand_box div.kl_expand_box_content {
+    display: block;
+  }
 
   /*************************/
   /* Module Grid Styles    */
@@ -253,8 +286,8 @@
   .kl_border_bottom_rounded {border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;}
 
   /* Shrink Inputs with appended buttons in tools wrapper */
-  #kl_tools .input-append input[type="text"] {font-size: 12px; height: 14px; }
-  #kl_tools .input-append .add-on {font-size: 12px; height: 14px; line-height: 14px; }
+  #kl_tools .input-append input[type="text"] {font-size: 12px; height: 14px; padding: 4px; }
+  #kl_tools .input-append .add-on {font-size: 12px; height: 14px; line-height: 14px; padding: 4px;}
   #kl_tools .input-append .add-on i[class*=icon-]:before, 
   #kl_tools .input-append .add-on i[class^=icon-]:before,
   #kl_tools .input-append .add-on i[class*=fa-]:before, 
@@ -602,6 +635,7 @@
   #kl_wrapper.kl_fp_panel_nav_2 #kl_navigation ul li {background: none; display: block; list-style-type: none; padding: 0 0 50px 10px; }
   #kl_wrapper.kl_fp_panel_nav_2 #kl_navigation ul li a {color: #003366; }
   #kl_wrapper.kl_fp_panel_nav_2 #kl_navigation ul li a:hover {color: #0088CC; }
+  #kl_wrapper.kl_fp_panel_nav_2 #kl_navigation li a:visited { color: #0088CC; }
 
   @media screen and (max-width: 1565px) {
     #kl_wrapper.kl_fp_panel_nav_2 {width: 950px;}
@@ -792,7 +826,7 @@
   #kl_wrapper.kl_fp_flat_sections #kl_modules li[class*=icon-]:before,
   #kl_wrapper.kl_flat_sections #kl_modules li[class*=icon-]:before,
   #kl_wrapper.kl_fp_flat_sections #kl_modules li[class^=icon-]:before,
-  #kl_wrapper.kl_flat_sections #kl_modules li[class^=icon-]:before {margin: 4px 10px 5px 0; font-size: 20px; float: left;}
+  #kl_wrapper.kl_flat_sections #kl_modules li[class^=icon-]:before {margin: 0 10px 5px 0; font-size: 20px; float: left;}
   #kl_wrapper.kl_fp_flat_sections #kl_modules li[class*=fa-]:before,
   #kl_wrapper.kl_flat_sections #kl_modules li[class*=fa-]:before,
   #kl_wrapper.kl_fp_flat_sections #kl_modules li[class^=fa-]:before,
@@ -805,12 +839,20 @@
   #kl_wrapper.kl_flat_sections #kl_modules.kl_modules_tabbed li[class*=fa-]:before,
   #kl_wrapper.kl_fp_flat_sections #kl_modules.kl_modules_tabbed li[class^=fa-]:before,
   #kl_wrapper.kl_flat_sections #kl_modules.kl_modules_tabbed li[class^=fa-]:before {margin: 7px 0 5px 10px; font-size: 20px; float: left;}
+  .mceContentBody #kl_wrapper.kl_fp_flat_sections #kl_modules.kl_modules_tabbed li[class*=icon-]:before,
+  .mceContentBody #kl_wrapper.kl_flat_sections #kl_modules.kl_modules_tabbed li[class*=icon-]:before,
+  .mceContentBody #kl_wrapper.kl_fp_flat_sections #kl_modules.kl_modules_tabbed li[class^=icon-]:before,
+  .mceContentBody #kl_wrapper.kl_flat_sections #kl_modules.kl_modules_tabbed li[class^=icon-]:before,
+  .mceContentBody #kl_wrapper.kl_fp_flat_sections #kl_modules.kl_modules_tabbed li[class*=fa-]:before,
+  .mceContentBody #kl_wrapper.kl_flat_sections #kl_modules.kl_modules_tabbed li[class*=fa-]:before,
+  .mceContentBody #kl_wrapper.kl_fp_flat_sections #kl_modules.kl_modules_tabbed li[class^=fa-]:before,
+  .mceContentBody #kl_wrapper.kl_flat_sections #kl_modules.kl_modules_tabbed li[class^=fa-]:before {margin: 0 10px 0 0;}
   #kl_wrapper.kl_fp_flat_sections #kl_introduction p:first-child,
   #kl_wrapper.kl_flat_sections #kl_introduction p:first-child {font-size: 21px; font-weight: 200; line-height: 30px; }
   #kl_wrapper.kl_fp_flat_sections blockquote,
   #kl_wrapper.kl_flat_sections blockquote {border-left: 5px solid #E0E0E0; }
   /* CP */
-  #kl_wrapper.kl_flat_sections #kl_banner {background: #1e5799; padding: 20px 0; color: #fff; margin: -25px -25px 50px;}
+  #kl_wrapper.kl_flat_sections #kl_banner {background: #1e5799; padding: 20px 0; color: #fff; margin: 0 -25px 50px;}
   #kl_wrapper.kl_flat_sections #kl_banner h2 {text-transform: uppercase; text-align: center; border-top: 1px solid #fff; }
   #kl_wrapper.kl_flat_sections #kl_banner #kl_banner_left{display: block; background-color: #fff; font-size: 18px; line-height: 30px; width: 250px; margin: -15px auto 10px; border-radius: 30px; color: #696969; }
   #kl_wrapper.kl_flat_sections #kl_banner #kl_banner_right {font-size: 35px; margin-top: 20px; display: block; /*text-shadow: 1px 0px 2px #000;*/ }
@@ -846,7 +888,7 @@
 
   #kl_wrapper.kl_bookmark { color: #0F2439; width: 100%; }
   #kl_wrapper.kl_bookmark h3 { color: #0F2439; font-family: "PT Sans",Helvetica,Arial,sans-serif; font-weight: bold; border-bottom: 1px solid #E0E0E0; line-height: 25px; margin-top:45px;}
-  #kl_wrapper.kl_bookmark #kl_banner {background-color: #0F2439; color: #FFF; font-family: "PT Sans"; margin: -22px -22px 30px; position: relative;}
+  #kl_wrapper.kl_bookmark #kl_banner {background-color: #0F2439; color: #FFF; font-family: "PT Sans"; margin: 13px -22px 30px; position: relative;}
   #kl_wrapper.kl_bookmark.kl_show_title #kl_banner {margin-top: 22px; }
   #kl_wrapper.kl_bookmark #kl_banner #kl_banner_left{ border-right: 3px solid #fff; display: table-cell; vertical-align: top; min-width: 50px; padding: 5px;}
   #kl_wrapper.kl_bookmark #kl_banner #kl_banner_left .kl_mod_text { padding: 0 10px; display: block; font-size: 16px; line-height: 19px; }
@@ -869,7 +911,7 @@
   #kl_wrapper.kl_box_left_3 h3:before { display: inline-block; width: 35px; text-align: center; height: 35px; line-height: 35px; margin-right: 10px;  -webkit-box-shadow: 1px 1px 1px #000000; -moz-box-shadow: 1px 1px 1px #000000; box-shadow: 1px 1px 1px #000000; }
   #kl_wrapper.kl_box_left #kl_banner,
   #kl_wrapper.kl_box_left_2 #kl_banner,
-  #kl_wrapper.kl_box_left_3 #kl_banner {margin: 0 -25px 50px; position: relative;}
+  #kl_wrapper.kl_box_left_3 #kl_banner {margin: 15px -25px 50px; position: relative;}
   #kl_wrapper.kl_box_left #kl_banner_left,
   #kl_wrapper.kl_box_left_2 #kl_banner_left,
   #kl_wrapper.kl_box_left_3 #kl_banner_left {font-weight: normal; font-size: 16px; line-height: 20px; display: block; float: left; margin-left: 15px; -webkit-box-shadow: 1px 1px 1px #000000; -moz-box-shadow: 1px 1px 1px #000000; box-shadow: 1px 1px 1px #000000; }
@@ -904,7 +946,7 @@
   #kl_wrapper.kl_square_right_3 .kl_mod_num {font-size: 30px; line-height: 30px; display: block; padding: 0px 0 10px;}
   #kl_wrapper.kl_square_right #kl_banner,
   #kl_wrapper.kl_square_right_2 #kl_banner,
-  #kl_wrapper.kl_square_right_3 #kl_banner { margin: 0 -25px 45px;}
+  #kl_wrapper.kl_square_right_3 #kl_banner { margin: 35px -25px 45px;}
   #kl_wrapper.kl_square_right h2,
   #kl_wrapper.kl_square_right_2 h2,
   #kl_wrapper.kl_square_right_3 h2 { position: relative; font-weight: normal; padding: 5px; margin-top: 15px; line-height: 30px;}
@@ -949,7 +991,7 @@
   #kl_wrapper.kl_circle_left_3 h3:before { display: inline-block; width: 40px; text-align: center; height: 40px; line-height: 40px; font-size: 18px; margin-right: 10px; position: absolute; left: -20px; top: -5px; border-radius: 20px;}
   #kl_wrapper.kl_circle_left #kl_banner,
   #kl_wrapper.kl_circle_left_2 #kl_banner,
-  #kl_wrapper.kl_circle_left_3 #kl_banner { position:relative; -webkit-box-shadow: 1px 1px 1px #000000; -moz-box-shadow: 1px 1px 1px #000000; box-shadow: 1px 1px 1px #000000; margin: 15px -25px 50px; }
+  #kl_wrapper.kl_circle_left_3 #kl_banner { position:relative; -webkit-box-shadow: 1px 1px 1px #000000; -moz-box-shadow: 1px 1px 1px #000000; box-shadow: 1px 1px 1px #000000; margin: 30px -25px 50px; }
   #kl_wrapper.kl_circle_left #kl_banner_left,
   #kl_wrapper.kl_circle_left_2 #kl_banner_left,
   #kl_wrapper.kl_circle_left_3 #kl_banner_left { float: left; border-radius: 40px; width: 60px; height: 60px; text-align: center; margin: -10px 10px 0 25px; -webkit-box-shadow: 1px 1px 1px #000000; -moz-box-shadow: 1px 1px 1px #000000; box-shadow: 1px 1px 1px #000000; }
@@ -985,10 +1027,9 @@
   /***** CP: ROUNDED-INSET THEMES 1, 2, 3 ******************************/
 
   /* BASE */
-  #kl_wrapper.kl_rounded_inset.kl_show_title #kl_banner {margin-top: 25px; }
   #kl_wrapper.kl_rounded_inset #kl_banner,
   #kl_wrapper.kl_rounded_inset_2 #kl_banner,
-  #kl_wrapper.kl_rounded_inset_3 #kl_banner { position:relative; padding: 6px 0; margin: -15px -25px 50px -25px;}
+  #kl_wrapper.kl_rounded_inset_3 #kl_banner { position:relative; padding: 6px 0; margin: 10px -25px 50px;}
   #kl_wrapper.kl_rounded_inset h2,
   #kl_wrapper.kl_rounded_inset_2 h2,
   #kl_wrapper.kl_rounded_inset_3 h2 { width: 90%;  border-top-right-radius: 20px; border-bottom-right-radius: 20px; border: solid 1px #8A8A8A; border-left: none; margin: 0; font-weight: normal; background: #e5e5e5; /* Old browsers */ background: -moz-linear-gradient(top, #e5e5e5 0%, #fcfcfc 20%, #fcfcfc 80%, #e5e5e5 100%); /* FF3.6+ */ background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e5e5e5), color-stop(20%,#fcfcfc), color-stop(80%,#fcfcfc), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */ background: -webkit-linear-gradient(top, #e5e5e5 0%,#fcfcfc 20%,#fcfcfc 80%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */ background: -o-linear-gradient(top, #e5e5e5 0%,#fcfcfc 20%,#fcfcfc 80%,#e5e5e5 100%); /* Opera 11.10+ */ background: -ms-linear-gradient(top, #e5e5e5 0%,#fcfcfc 20%,#fcfcfc 80%,#e5e5e5 100%); /* IE10+ */ background: linear-gradient(to bottom, #e5e5e5 0%,#fcfcfc 20%,#fcfcfc 80%,#e5e5e5 100%); /* W3C */ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */}
@@ -1019,7 +1060,7 @@
   /***** CP: APPLE THEME    ********************************************/
 
   #kl_wrapper.kl_apple.kl_show_title #kl_banner { position:relative; margin-top: 10px;}
-  #kl_wrapper.kl_apple #kl_banner { position:relative; margin: -10px -20px 50px;}
+  #kl_wrapper.kl_apple #kl_banner { position:relative; margin: 10px -20px 50px;}
   #kl_wrapper.kl_apple #kl_banner h2 {line-height: 35px; border-radius: 5px; background: #0F2439;  color: #fff; padding: 5px 10px 5px 2px; }
   #kl_wrapper.kl_apple #kl_banner #kl_banner_left{ float: left; height: 40px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; }
   #kl_wrapper.kl_apple #kl_banner #kl_banner_left .kl_mod_text { display: none; }
@@ -1046,7 +1087,7 @@
   /*********************************************************************/
   /***** CP: GENERIC THEME  ********************************************/
 
-  #kl_wrapper.kl_generic #kl_banner{ margin-bottom: 25px; }
+  #kl_wrapper.kl_generic #kl_banner{ margin: 25px 0; }
   #kl_wrapper.kl_generic #kl_banner #kl_banner_left .kl_mod_num{ margin-left: 5px; }
   #kl_wrapper.kl_generic #kl_banner_right .kl_subtitle { font-size: medium; display: block; line-height: 15px;}
 
@@ -1055,7 +1096,7 @@
 
   #kl_wrapper.kl_basic_color.kl_show_title #kl_banner {margin-top: 22px; }
   #kl_wrapper.kl_basic_color #kl_banner {background-color: #0F2439; color: #FFF; font-family: "PT Sans"; position: relative;}
-  #wiki_page_show #kl_wrapper.kl_basic_color #kl_banner { margin: -22px -22px 30px;}
+  #wiki_page_show #kl_wrapper.kl_basic_color #kl_banner { margin: 13px -22px 30px;}
   #kl_wrapper.kl_basic_color #kl_banner h2 { line-height: 26px; font-size: 26px; }
   #kl_wrapper.kl_basic_color #kl_banner h2 small { line-height: 29px; margin-left: 5px; }
   #kl_wrapper.kl_basic_color #kl_banner #kl_banner_left {display: table-cell; border-right: 2px solid #fff; font-size: 1.2em; padding: 10px;}
@@ -1078,8 +1119,7 @@
   #kl_wrapper.kl_fp_colored_headings #kl_banner #kl_banner_right {display: block; font-size: 35px; margin: 0 0 0 135px; text-align: left; }
   #kl_wrapper.kl_fp_colored_headings #kl_banner #kl_banner_right .kl_subtitle { display: block; font-size: medium; line-height: 20px; margin-top: 5px;}
   /* CP */
-  #kl_wrapper.kl_colored_headings #kl_banner {background: #2F4661; color: #fff; padding: 0 0 5px; }
-  #wiki_page_show #kl_wrapper.kl_colored_headings #kl_banner {margin: -25px -25px 50px; }
+  #kl_wrapper.kl_colored_headings #kl_banner {background: #2F4661; color: #fff; padding: 0 0 5px; margin: 0 -25px 50px; }
   #kl_wrapper.kl_colored_headings #kl_banner h2 { position: relative; text-align: center; text-transform: uppercase; }
   #kl_wrapper.kl_colored_headings #kl_banner #kl_banner_left {background-color: #fff; color: #696969; display: inline-block; font-size: 18px; line-height: 20px; margin: 0 auto 10px; padding: 5px 20px; }
   #kl_wrapper.kl_colored_headings #kl_banner #kl_banner_right {display: block; font-size: 35px; margin-top: 0; }
