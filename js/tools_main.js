@@ -252,7 +252,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch */
         });
     }
     // Cleans out all empty elements and elements containing only &nbsp;
-    function klRemoveEmpty() {
+    function klCleanUp() {
         $('.kl_remove_empty').unbind("click").click(function (e) {
             e.preventDefault();
             $(iframeID).contents().find('h2, h3, h4, p, h3, li, ol, ul').each(function () {
@@ -261,6 +261,11 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch */
                     $(this).remove();
                 }
             });
+        });
+        $('.kl_unwrap').unbind("click").click(function (e) {
+            e.preventDefault();
+            tinyMCE.DOM.addClass(tinyMCE.activeEditor.selection.getNode(), "kl_unwrap_me");
+            $(iframeID).contents().find('.kl_unwrap_me').contents().unwrap();
         });
     }
     // Clear out the blank span added when the template wrapper is first created
@@ -5576,8 +5581,11 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch */
             '   </div>' +
             '   <a href="#" class="btn btn-mini kl_mce_preview" rel="">Preview</a>' +
             '</div>',
-            klRemoveEmptyButton = '<a class="btn btn-mini kl_remove_empty" href="#" data-tooltip="left" title="This button will clean up the page contents by removing any empty elements.' +
-            '<p>This is especially useful when using the <i class=\'icon-collection-save\'></i> feature.</p>"><i class="icon-trash"></i> Clear Empty Elements</a>',
+            klCleanUpButtons = '<div class="btn-group">' +
+            '   <a class="btn btn-mini kl_remove_empty" href="#" data-tooltip="left" title="This button will clean up the page contents by removing any empty elements.' +
+            '       This is especially useful when using the <i class=\'icon-collection-save\'></i> feature."><i class="icon-trash"></i> Clear Empty Elements</a>' +
+            '   <a class="btn btn-mini kl_unwrap" href="#" data-tooltip="top" title="Remove the tag that wraps the selected element"><i class="fa fa-code"></i> Unwrap Selected</a>' +
+            '</div>',
             tabNavigation = '<ul>' +
             '   <li><a href="#canvas_tools" class="kl_tools_tab">Canvas Tools</a></li>' +
             '   <li><a href="#kl_tools" id="toolsTrigger" class="kl_tools_tab">Custom Tools</a></li>' +
@@ -5594,7 +5602,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch */
             $('#kl_tools_wrapper').append('<div id="kl_tools" />').prepend(tabNavigation);
             $('#kl_tools_wrapper').tabs({active: 1});
         }
-        $('#kl_tools').html(visualBlocksButtons + customAccordionDiv + klRemoveEmptyButton);
+        $('#kl_tools').html(visualBlocksButtons + customAccordionDiv + klCleanUpButtons);
         $('#toolsTrigger').click(function (e) {
             e.preventDefault();
             $('a:contains("HTML Editor")').get(0).scrollIntoView();
@@ -5681,7 +5689,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch */
         klInitializeToolsAccordion();
         klDelayedLoad();
         // Load JavaScript file that will clean up old format
-        klRemoveEmpty();
+        klCleanUp();
         klBindHover();
         $('.kl_add_tools').remove();
 
@@ -5706,7 +5714,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch */
         klInitializeToolsAccordion();
         // Load JavaScript file that will clean up old format
         klDelayedLoad();
-        klRemoveEmpty();
+        klCleanUp();
         klBindHover();
         $('.kl_add_tools').remove();
     }
