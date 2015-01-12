@@ -414,7 +414,7 @@ if ($('.kl_modules_tabbed').length > 0 && $('#wiki_page_revisions').length === 0
     bgHex = '0F2439';
     textColor = 'FFF';
     $("head").append($("<link/>", { rel: "stylesheet", href: klFontAwesomePath, type: 'text/css'}));
-    $('#kl_modules').before('<div id="kl_gathering_data" class="alert alert-info"><i class="fa fa-spinner fa-spin"></i> Gathering Progress Data</div>');
+    $('#kl_modules').after('<div id="kl_gathering_data" class="alert alert-info"><i class="fa fa-spinner fa-spin"></i> Gathering Progress Data</div>');
     // Check theme color and set tab highlight to match
     if ($('#kl_banner').length > 0) {
         bgColor = $('#kl_banner').css('background-color');
