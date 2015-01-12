@@ -1,6 +1,6 @@
 /*jslint browser: true, sloppy: false, eqeq: false, vars: false, maxerr: 50, indent: 4, plusplus: true */
 /*global $, jQuery, iframeID, alert, coursenum, console, klToolsPath, klGlobalCSSPath, klFontAwesomePath, tinymce, tinyMCE, klToolsVariables,
-klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch */
+klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAccordionSections */
 
 // These tools were designed to facilitate rapid course development in the Canvas LMS
 // Copyright (C) 2014  Kenneth Larsen - Center for Innovative Design and Instruction
@@ -748,7 +748,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch */
             '    title="Place the cursor on the element you want to become the module title and click this button.">' +
             '    <i class="icon-text"></i> Make Title' +
             '</a>';
-            $('#kl_sections_buttons').prepend(klTitleButtons).append($('.kl_remove_empty').clone());
+        $('#kl_sections_buttons').prepend(klTitleButtons).append($('.kl_remove_empty').clone());
         $('.kl_mark_title').unbind("click").click(function (e) {
             var existingTitle = tinyMCE.DOM.getParent(tinyMCE.activeEditor.selection.getNode()).innerHTML;
             e.preventDefault();
@@ -990,10 +990,10 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch */
                 $(this).addClass('active');
             }
         });
-        if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-             //Doesn't work in Firefox
-             $('.kl_accessibility_color_check_toggle').addClass('disabled');
-             $('.kl_accessibility_color_check_toggle').after('<p class="alert alert-error">Does not work in Firefox</p>');
+        if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+            //Doesn't work in Firefox
+            $('.kl_accessibility_color_check_toggle').addClass('disabled');
+            $('.kl_accessibility_color_check_toggle').after('<p class="alert alert-error">Does not work in Firefox</p>');
         }
     }
 
@@ -5059,7 +5059,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch */
     }
     // Outcomes Section
     function klAdditionalOutcomesControls() {
-        var learningOutcomesBtns, ideaBox, bloomsHelp, ideaHelp;
+        var learningOutcomesBtns, ideaBox, bloomsHelp, ideaHelp, extraOutcomesBtn;
         function klCheckOutcomesBox() {
             if ($('.kl_syllabus_learning_outcomes_section').is(':checked')) {
                 $('#kl_syllabus_outcomes_syllabus_sections_buttons').show();
@@ -5067,9 +5067,14 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch */
                 $('#kl_syllabus_outcomes_syllabus_sections_buttons').hide();
             }
         }
+        // If additional outcomes if they are set
+        if (klToolsVariables.klUseAdditionalOutcomes) {
+            extraOutcomesBtn = '<a class="btn btn-mini fa fa-book kl_idea_btn  kl_margin_bottom_small" href="#">' + klToolsVariables.klUseAdditionalOutcomesTitle + '</a>';
+        }
+        // BLOOM's Outcomes variables
         learningOutcomesBtns = '<h4>Learning Outcomes</h4>' +
             '<div class="btn-group kl_margin_bottom kl_outcome_extras">' +
-            '   <a class="btn btn-mini fa fa-book kl_idea_btn  kl_margin_bottom_small" href="#">IDEA Objectives</a>' +
+                extraOutcomesBtn +
             '</div>' +
             '<div class="btn-group-label kl_margin_bottom">Include Assessments:' +
             '   <div class="btn-group">' +
@@ -5079,40 +5084,36 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch */
             '</div>' +
             '<a class="btn btn-mini kl_syllabus_outcomes_add kl_margin_bottom" href="#" style="display:none" data-tooltip="top" title="Insert a new Outcome/Assessment pair into the outcomes list."><i class="fa fa-list-ul"></i> Add Outcome/Assessment Pair</a>';
         $('#kl_syllabus_outcomes_syllabus_sections_buttons').append(learningOutcomesBtns);
-        ideaBox = '<div id="kl_idea_box" style="display:none;" title="IDEA Objectives">' +
-            '<div class="<div class="btn-group-label">Insert At:' +
-            '    <div class="btn-group">' +
-            '        <a class="btn btn-mini kl_idea_new_item active" href="#" data-tooltip="top" tile="Will add a new list item to the &ldquo;Outcomes&rdquo; list.">New List Item</a>' +
-            '        <a class="btn btn-mini kl_idea_at_cursor" href="#">At Cursor</a>' +
-            '    </div>' +
-            '</div>' +
-            '<ol id="kl_idea_controls">' +
-            '    <li><a href="#" class="kl_idea_objective"><span class="kl_idea_objective_text">Gaining factual knowledge (terminology, classifications, methods, trends)</span> - IDEA Objective 1</a></li>' +
-            '    <li><a href="#" class="kl_idea_objective"><span class="kl_idea_objective_text">Learning fundamental principles, generalizations, or theories</span> - IDEA Objective 2</a></li>' +
-            '    <li><a href="#" class="kl_idea_objective"><span class="kl_idea_objective_text">Learning to Apply Course Material (to improve thinking, problem solving, and decisions)</span> - IDEA Objective 3</a></li>' +
-            '    <li><a href="#" class="kl_idea_objective"><span class="kl_idea_objective_text">Developing specific skills, competencies, and points of view needed by professionals in the field most closely related to this course</span> - IDEA Objective 4</a></li>' +
-            '    <li><a href="#" class="kl_idea_objective"><span class="kl_idea_objective_text">Acquiring skills in working with others as a member of a team</span> - IDEA Objective 5</a></li>' +
-            '    <li><a href="#" class="kl_idea_objective"><span class="kl_idea_objective_text">Developing creative capacities (writing, inventing, designing, performing in art, music, drama, etc.)</span> - IDEA Objective 6</a></li>' +
-            '    <li><a href="#" class="kl_idea_objective"><span class="kl_idea_objective_text">Gaining a broader understanding and appreciation of intellectual/cultural activity</span> - IDEA Objective 7</a></li>' +
-            '    <li><a href="#" class="kl_idea_objective"><span class="kl_idea_objective_text">Developing skill in expressing myself orally or in writing</span> - IDEA Objective 8</a></li>' +
-            '    <li><a href="#" class="kl_idea_objective"><span class="kl_idea_objective_text">Learning how to find and use resources for answering questions or solving problems</span> - IDEA Objective 9</a></li>' +
-            '    <li><a href="#" class="kl_idea_objective"><span class="kl_idea_objective_text">Developing a clearer understanding of, and commitment to, personal values</span> - IDEA Objective 10</a></li>' +
-            '    <li><a href="#" class="kl_idea_objective"><span class="kl_idea_objective_text">Learning to analyze and critically evaluate ideas, arguments, and points of view</span> - IDEA Objective 11</a></li>' +
-            '    <li><a href="#" class="kl_idea_objective"><span class="kl_idea_objective_text">Acquiring an interest in learning more by asking questions and seeking answers</span> - IDEA Objective 12</a></li>' +
-            '</ol>' +
-            '</div>';
         bloomsHelp = '<div class="well kl_blooms_help" style="padding:5px;display:none;">' +
             '    <h5>Bloom&lsquo;s Help</h5>' +
             '    <p><small><span class="text-info"><strong>Select one of the six levels</strong></span> to see a list of action verbs. <span class="text-info"><strong>Click a verb</strong></span> to insert it.</small>' +
             '    <a href="#" class="kl_close_help btn btn-mini">Close Help</a>' +
             '</div>';
-        ideaHelp = '<div class="well kl_idea_help" style="padding:5px;display:none;">' +
-            '    <h5>IDEA Objectives Help</h5>' +
-            '    <p><small>Click an objective <span class="text-info"><strong>once to expand</strong></span>. When you have found one you need <span class="text-info"><strong>click again to apply</strong></span>.</small>' +
-            '    <p><small>You can also use <span class="text-info"><strong>Tab</strong></span> and <span class="text-info"><strong>Shift+Tab</strong></span> to navigate through the objectives and <span class="text-info"><strong>Enter</strong></span> to apply.</p>' +
-            '    <a href="#" class="kl_close_help btn btn-mini">Close Help</a>' +
-            '</div>';
-        $('#kl_syllabus_outcomes_syllabus_sections_buttons').append(ideaBox + bloomsHelp + ideaHelp);
+        // Show additional outcomes if selected
+        if (klToolsVariables.klUseAdditionalOutcomes) {
+            ideaBox = '<div id="kl_idea_box" style="display:none;" title="' + klToolsVariables.klUseAdditionalOutcomesTitle + '">' +
+                '<div class="<div class="btn-group-label">Insert At:' +
+                '    <div class="btn-group">' +
+                '        <a class="btn btn-mini kl_idea_new_item active" href="#" data-tooltip="top" tile="Will add a new list item to the &ldquo;Outcomes&rdquo; list.">New List Item</a>' +
+                '        <a class="btn btn-mini kl_idea_at_cursor" href="#">At Cursor</a>' +
+                '    </div>' +
+                '</div>' +
+                '<ol id="kl_idea_controls">' +
+                '</ol>' +
+                '</div>';
+            ideaHelp = '<div class="well kl_idea_help" style="padding:5px;display:none;">' +
+                '    <h5>' + klToolsVariables.klUseAdditionalOutcomesTitle + ' Help</h5>' +
+                '    <p><small>Hover over an objective <span class="text-info"><strong> to expand</strong></span>. When you have found one you need <span class="text-info"><strong>click again to apply</strong></span>.</small>' +
+                '    <p><small>You can also use <span class="text-info"><strong>Tab</strong></span> and <span class="text-info"><strong>Shift+Tab</strong></span> to navigate through the objectives and <span class="text-info"><strong>Enter</strong></span> to apply.</p>' +
+                '    <a href="#" class="kl_close_help btn btn-mini">Close Help</a>' +
+                '</div>';
+            $('#kl_syllabus_outcomes_syllabus_sections_buttons').append(ideaBox + bloomsHelp + ideaHelp);
+            $.each(klToolsVariables.klAdditionalOutcomes, function (key, value) {
+                $('#kl_idea_controls').append('<li><a href="#" class="kl_idea_objective">' + value + '</a></li>');
+            });
+        } else {
+            $('#kl_syllabus_outcomes_syllabus_sections_buttons').append(bloomsHelp);
+        }
         $('.kl_syllabus_learning_outcomes_section').change(function () {
             klCheckOutcomesBox();
         });
@@ -5123,45 +5124,57 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch */
         klCheckOutcomesBox();
 
         //// IDEA ////
-        // Trigger for IDEA dialog
-        $('.kl_idea_btn').unbind("click").click(function (e) {
-            e.preventDefault();
-            klScrollToElement('.kl_syllabus_learning_outcomes');
-            $('#kl_idea_box').dialog({ position: { my: 'right top', at: 'left top', of: '#kl_tools' }, modal: false, width: 255 });
-            $('.kl_idea_help').slideDown();
-            $('#kl_idea_box').parent('div').find('.ui-dialog-titlebar-close').click(function () {
-                $('.kl_idea_help').slideUp();
+        if(klToolsVariables.klUseAdditionalOutcomes) {
+            // Trigger for IDEA dialog
+            $('.kl_idea_btn').unbind("click").click(function (e) {
+                e.preventDefault();
+                klScrollToElement('.kl_syllabus_learning_outcomes');
+                $('#kl_idea_box').dialog({ position: { my: 'right top', at: 'left top', of: '#kl_tools' }, modal: false, width: 255 });
+                $('.kl_idea_help').slideDown();
+                $('#kl_idea_box').parent('div').find('.ui-dialog-titlebar-close').click(function () {
+                    $('.kl_idea_help').slideUp();
+                });
             });
-        });
-        // Selection Hover
-        $('.kl_idea_objective').unbind("click").click(function (e) {
-            e.preventDefault();
-            var selectedObjective = $(this).find('.kl_idea_objective_text').text();
-            if ($(this).hasClass('kl_idea_expand')) {
-                if ($('.kl_idea_new_item').hasClass('active')) {
-                    $(iframeID).contents().find('.kl_syllabus_learning_outcomes ul').append('<li>' + selectedObjective + ' </li>');
-                } else {
-                    tinyMCE.execCommand('mceInsertContent', false, selectedObjective + ' ');
+            // Selection Hover
+            $('.kl_idea_objective').unbind("click").click(function (e) {
+                e.preventDefault();
+                var selectedObjective = $(this).find('.kl_additional_outcome_text').text();
+                if ($(this).hasClass('kl_idea_expand')) {
+                    if ($('.kl_idea_new_item').hasClass('active')) {
+                        $(iframeID).contents().find('.kl_syllabus_learning_outcomes ul').append('<li>' + selectedObjective + ' </li>');
+                    } else {
+                        tinyMCE.execCommand('mceInsertContent', false, selectedObjective + ' ');
+                    }
                 }
-            }
-            $(this).focus();
-        });
-        $('.kl_idea_objective').focus(function () {
-            $('.kl_idea_expand').removeClass('kl_idea_expand');
-            $(this).addClass('kl_idea_expand');
-        });
-        // Determine whether word is inserted as a new item or at the cursor position
-        $('.kl_idea_new_item').unbind("click").click(function (e) {
-            e.preventDefault();
-            $(this).addClass('active');
-            $('.kl_idea_at_cursor').removeClass('active');
-        });
-        $('.kl_idea_at_cursor').unbind("click").click(function (e) {
-            e.preventDefault();
-            $(this).addClass('active');
-            $('.kl_idea_new_item').removeClass('active');
-        });
-        // Close IDEA help
+                $(this).focus();
+            });
+            $('.kl_idea_objective').focus(function () {
+                $('.kl_idea_expand').removeClass('kl_idea_expand');
+                $(this).addClass('kl_idea_expand');
+            });
+            $('.kl_idea_objective').mouseover(function () {
+                var el = $(this),
+                    timeoutID = setTimeout(function () {
+                        $('.kl_idea_expand').removeClass('kl_idea_expand');
+                        el.addClass('kl_idea_expand');
+                        klScrollToElement('#' + connectedSection);
+                    }, 500);
+                el.mouseout(function () {
+                    clearTimeout(timeoutID);
+                });
+            });
+            // Determine whether word is inserted as a new item or at the cursor position
+            $('.kl_idea_new_item').unbind("click").click(function (e) {
+                e.preventDefault();
+                $(this).addClass('active');
+                $('.kl_idea_at_cursor').removeClass('active');
+            });
+            $('.kl_idea_at_cursor').unbind("click").click(function (e) {
+                e.preventDefault();
+                $(this).addClass('active');
+                $('.kl_idea_new_item').removeClass('active');
+            });
+        } // Close IDEA help
         // Check whether to include assessment in list or not
         $('.kl_syllabus_outcomes_assessments_yes').unbind("click").click(function (e) {
             e.preventDefault();

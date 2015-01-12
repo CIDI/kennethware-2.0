@@ -102,7 +102,26 @@ var klToolsVariables = {
         ['#900', '#b45f06', '#bf9000', '#38761d', '#134f5c', '#0b5394', '#351c75', '#741b47'],
         ['#600', '#783f04', '#7f6000', '#274e13', '#0c343d', '#073763', '#20124d', '#4c1130']
     ],
+    // Do you want additional outcomes in the syllabus tools
+    klUseAdditionalOutcomes: true,
+    // Title for button and dialog box
+    klUseAdditionalOutcomesTitle: 'IDEA Objectives',
+    // Outcomes: The text within the .kl_additional_outcome_text span will be inserted, text outside that span is for display purposes only
+    klAdditionalOutcomes: [
+        '<span class="kl_additional_outcome_text">Gaining factual knowledge (terminology, classifications, methods, trends)</span> - IDEA Objective 1</a></li>',
+        '<span class="kl_additional_outcome_text">Learning fundamental principles, generalizations, or theories</span> - IDEA Objective 2</a></li>',
+        '<span class="kl_additional_outcome_text">Learning to Apply Course Material (to improve thinking, problem solving, and decisions)</span> - IDEA Objective 3</a></li>',
+        '<span class="kl_additional_outcome_text">Developing specific skills, competencies, and points of view needed by professionals in the field most closely related to this course</span> - IDEA Objective 4</a></li>',
+        '<span class="kl_additional_outcome_text">Acquiring skills in working with others as a member of a team</span> - IDEA Objective 5</a></li>',
+        '<span class="kl_additional_outcome_text">Developing creative capacities (writing, inventing, designing, performing in art, music, drama, etc.)</span> - IDEA Objective 6</a></li>',
+        '<span class="kl_additional_outcome_text">Gaining a broader understanding and appreciation of intellectual/cultural activity</span> - IDEA Objective 7</a></li>',
+        '<span class="kl_additional_outcome_text">Developing skill in expressing myself orally or in writing</span> - IDEA Objective 8</a></li>',
+        '<span class="kl_additional_outcome_text">Learning how to find and use resources for answering questions or solving problems</span> - IDEA Objective 9</a></li>',
+        '<span class="kl_additional_outcome_text">Developing a clearer understanding of, and commitment to, personal values</span> - IDEA Objective 10</a></li>',
+        '<span class="kl_additional_outcome_text">Learning to analyze and critically evaluate ideas, arguments, and points of view</span> - IDEA Objective 11</a></li>',
+        '<span class="kl_additional_outcome_text">Acquiring an interest in learning more by asking questions and seeking answers</span> - IDEA Objective 12</a></li>'
 
+    ],
     // To show Canvas styles in the editor, check the following against the stylesheets loaded in the head of a Canvas page
     // You may need to update the numbers at the end
     vendor_legacy_normal_contrast: '/assets/vendor_legacy_normal_contrast.css?1408316217',
