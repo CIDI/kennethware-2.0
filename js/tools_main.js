@@ -186,7 +186,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
                 clearTimeout(timeoutID);
             });
         });
-        $('#kl_accordion_panels li, #kl_tab_panels li, .kl_sections_li li, #kl_module_list li, .kl_sections_list li').mouseover(function () {
+        $('#kl_accordion_panels li, #kl_tab_panels li, .kl_sections_list li, .kl_qc_sections li').mouseover(function () {
             var el = $(this),
                 connectedSection = $(this).attr('rel'),
                 timeoutID = setTimeout(function () {
@@ -3300,7 +3300,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             } else {
                 $(iframeID).contents().find(connectedSection).find('.kl_quick_check_correct_answer').removeClass('kl_quick_check_correct_answer');
                 $(iframeID).contents().find(connectedAnswer).addClass('kl_quick_check_correct_answer');
-                $(this).parents('.kl_sections_li').find('.kl_quick_check_correct').removeClass('kl_quick_check_correct');
+                $(this).parents('.kl_qc_sections').find('.kl_quick_check_correct').removeClass('kl_quick_check_correct');
                 $(this).addClass('kl_quick_check_correct');
             }
         });
@@ -3423,7 +3423,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             '        <a href="#" class="btn btn-mini kl_quick_check_add_answer" rel="kl_quick_check_one" data-tooltip="top" title="Add an answer to the bottom of the Quick Check"><i class="icon-add"></i>Add Answer</a>' +
             '        <a href="#" class="btn btn-mini kl_quick_check_update_answers"><i class="icon-refresh"></i> Update Answers</a>' +
             '    </div>' +
-            '    <ol id="kl_quick_check_one_sort" class="kl_sections_li unstyled" rel="#kl_quick_check_one" style="margin:10px 0;"></ol>' +
+            '    <ol id="kl_quick_check_one_sort" class="kl_qc_sections unstyled" rel="#kl_quick_check_one" style="margin:10px 0;"></ol>' +
             '    <a href="#" id="kl_quick_check_one_remove" class="btn btn-mini kl_remove kl_quick_check_remove kl_margin_bottom" rel="kl_quick_check_one" style="display:none;" data-tooltip="top" title="Click this button to remove the Quick Check section."><i class="icon-end"></i> Remove QuickCheck 1</a>' +
             '</div>' +
             '<div class="kl_quick_check_two_section_wrap" style="display:none;">' +
@@ -3433,7 +3433,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             '        <a href="#" class="btn btn-mini kl_quick_check_add_answer" rel="kl_quick_check_two" data-tooltip="top" title="Add an answer to the bottom of the Quick Check"><i class="icon-add"></i>Add Answer</a>' +
             '        <a href="#" class="btn btn-mini kl_quick_check_update_answers"><i class="icon-refresh"></i> Update Answers</a>' +
             '    </div>' +
-            '    <ol id="kl_quick_check_two_sort" class="kl_sections_li unstyled" rel="#kl_quick_check_two" style="margin:10px 0;"></ol>' +
+            '    <ol id="kl_quick_check_two_sort" class="kl_qc_sections unstyled" rel="#kl_quick_check_two" style="margin:10px 0;"></ol>' +
             '    <a href="#" id="kl_quick_check_two_remove" class="btn btn-mini kl_remove kl_quick_check_remove kl_margin_bottom" rel="kl_quick_check_two" style="display:none;" data-tooltip="top" title="Click this button to remove the Quick Check section."><i class="icon-end"></i> Remove QuickCheck 2</a>' +
             '</div>' +
             '</div>';
