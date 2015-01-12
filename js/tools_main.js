@@ -739,11 +739,16 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch */
         klBindHover();
     }
     // Parent element of cursor position will become the title of the theme
-    function klMarkTitle() {
-        $('#kl_sections_buttons').prepend(' <a class="btn btn-mini kl_mark_title kl_margin_bottom" href="#" data-tooltip="top"' +
+    function klEditTitle() {
+        var klTitleButtons = ' <a class="btn btn-mini kl_add_subtitle kl_margin_bottom" href="#" data-tooltip="top"' +
+            '   title="Add a subtitle to the page banner"><i class="icon-text"></i> Add Subtitle</a>' +
+            ' <a class="btn btn-mini kl_remove_subtitle kl_margin_bottom" href="#" data-tooltip="top"' +
+            '   title="Remove the page banner subtitle"><i class="icon-text"></i> Remove Subtitle</a>' +
+            ' <a class="btn btn-mini kl_mark_title kl_margin_bottom" href="#" data-tooltip="top"' +
             '    title="Place the cursor on the element you want to become the module title and click this button.">' +
             '    <i class="icon-text"></i> Make Title' +
-            '</a>').append($('.kl_remove_empty').clone());
+            '</a>';
+            $('#kl_sections_buttons').prepend(klTitleButtons).append($('.kl_remove_empty').clone());
         $('.kl_mark_title').unbind("click").click(function (e) {
             var existingTitle = tinyMCE.DOM.getParent(tinyMCE.activeEditor.selection.getNode()).innerHTML;
             e.preventDefault();
@@ -752,6 +757,25 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch */
             // if it is an <h2> it will remove original
             tinyMCE.activeEditor.dom.remove(tinyMCE.activeEditor.dom.getParent(tinyMCE.activeEditor.selection.getNode(), 'h2'));
         });
+        $('.kl_add_subtitle').unbind("click").click(function (e) {
+            e.preventDefault();
+            $(iframeID).contents().find('#kl_banner_right').append('<span class="kl_subtitle">Page Subtitle</span>');
+            $('.kl_add_subtitle').hide();
+            $('.kl_remove_subtitle').show();
+        });
+        $('.kl_remove_subtitle').unbind("click").click(function (e) {
+            e.preventDefault();
+            $(iframeID).contents().find('.kl_subtitle').remove();
+            $('.kl_add_subtitle').show();
+            $('.kl_remove_subtitle').hide();
+        });
+        if ($(iframeID).contents().find('.kl_subtitle').length > 0) {
+            $('.kl_add_subtitle').hide();
+            $('.kl_remove_subtitle').show();
+        } else {
+            $('.kl_add_subtitle').show();
+            $('.kl_remove_subtitle').hide();
+        }
     }
     // Make kl_sections_list sortable so sections can be reordered
     function klSortableSections(sectionArray) {
@@ -819,7 +843,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch */
         klIdentifySections(sectionArray);
         klSortableSections(sectionArray);
         klSelectionToSection();
-        klMarkTitle();
+        klEditTitle();
         // Add headings to the template section list
         $('.kl_introduction_section').parents('li').before('<li class="kl_li_heading">Content Page</li>');
         $('.kl_banner_section').parents('li').before('<li class="kl_li_heading">Front Page</li>');

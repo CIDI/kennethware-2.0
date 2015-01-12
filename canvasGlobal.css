@@ -297,18 +297,17 @@
   #kl_tools .kl_custom_accordion.ui-accordion .ui-accordion-header .ui-icon{ left: 5px; }
   #kl_tools .kl_custom_accordion h3 { margin-top: 0 !important; }
   #kl_tools .ui-accordion .ui-accordion-content { padding: 10px 10px 0 10px !important; clear: both; top: -2px; }
-  #kl_tools .ui-accordion .ui-accordion-header{ padding-left: 15px; height: 20px; }
+  #kl_tools .ui-accordion .ui-accordion-header{ padding: 0 0 0 15px; height: 20px; margin: 1px 0; border-radius: 3px; }
   #kl_tools .ui-accordion .ui-accordion-header .ui-icon{ left: 0; }
   #kl_tools .ui-accordion .kl_tools_help { margin-top: -2px; line-height: 10px; height: 10px; }
   #kl_tools .ui-accordion .form-inline{ margin: 0 0 10px; }
 
   /* Accordions in content */
-  #kl_wrapper .kl_custom_accordion.ui-accordion .ui-accordion-header{ padding-left: 15px; line-height: 15px; text-transform: uppercase; font-weight: bold; -webkit-margin-before: 0; -webkit-margin-after: 0; }
+  #kl_wrapper .kl_custom_accordion.ui-accordion .ui-accordion-header{ padding: 5px 0 5px 15px; margin: 2px 0 2px; font-weight: bold; }
   #kl_wrapper .kl_custom_accordion.ui-accordion .ui-accordion-header .ui-icon{ left: 5px; }
   #kl_wrapper .kl_custom_accordion, 
   #kl_wrapper .custom-tabs { margin-top: 20px;}
-  #kl_wrapper .kl_custom_accordion h4 { margin: 0 !important; }
-  #kl_wrapper .ui-accordion .ui-accordion-content { padding: 10px !important; clear: both; top: -2px; margin-bottom: 0;}
+  #kl_wrapper .ui-accordion .ui-accordion-content { padding: 10px; clear: both; top: -2px; margin-bottom: 0;}
   #kl_wrapper .ui-accordion .ui-accordion-header .ui-icon{ left: 0; }
 
   /* Themes Panel */
