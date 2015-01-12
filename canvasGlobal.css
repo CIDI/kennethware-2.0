@@ -297,7 +297,7 @@
   #kl_tools .kl_custom_accordion.ui-accordion .ui-accordion-header .ui-icon{ left: 5px; }
   #kl_tools .kl_custom_accordion h3 { margin-top: 0 !important; }
   #kl_tools .ui-accordion .ui-accordion-content { padding: 10px 10px 0 10px !important; clear: both; top: -2px; }
-  #kl_tools .ui-accordion .ui-accordion-header{ padding: 0 0 0 15px; height: 20px; margin: 1px 0; border-radius: 3px; }
+  #kl_tools .ui-accordion .ui-accordion-header{ padding: 0 0 0 15px; height: 20px; margin: 1px 0; border-radius: 3px; text-shadow: none;}
   #kl_tools .ui-accordion .ui-accordion-header .ui-icon{ left: 0; }
   #kl_tools .ui-accordion .kl_tools_help { margin-top: -2px; line-height: 10px; height: 10px; }
   #kl_tools .ui-accordion .form-inline{ margin: 0 0 10px; }
