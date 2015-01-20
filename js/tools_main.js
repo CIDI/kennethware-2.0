@@ -3783,7 +3783,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         klTablesReady();
     }
     function klCustomTablesButton() {
-        var tablesDialog = '<a href="#" class="btn btn-mini kl_table_dialog_trigger" style="margin-left:5px;"><i class="fa fa-table"></i> Custom Tables</a>' +
+        var tablesDialog = '<a href="#" class="btn btn-mini kl_table_dialog_trigger"><i class="fa fa-table"></i> Custom Table</a>' +
             '<div id="kl_tables_dialog" title="Custom Tables" style="display:none;">' +
             '    <div class="btn-group kl_table_options kl_option_third_wrap">' +
             '        <a href="#" class="btn btn-small active" rel=".kl_table_new">Create</a>' +
@@ -3859,7 +3859,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             '        </div>' +
             '    </div>' +
             '</div>';
-        $('.kl_add_style_to_iframe').after(tablesDialog);
+        $('#kl_tools').append(tablesDialog);
         $('.kl_table_dialog_trigger').unbind("click").click(function (e) {
             e.preventDefault();
             $('#kl_tables_dialog').dialog({ position: { my: 'right top', at: 'left top', of: '#kl_tools' }, modal: false, width: 255 });
