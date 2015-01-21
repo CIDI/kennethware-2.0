@@ -266,6 +266,17 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             e.preventDefault();
             tinyMCE.DOM.addClass(tinyMCE.activeEditor.selection.getNode(), "kl_unwrap_me");
             $(iframeID).contents().find('.kl_unwrap_me').contents().unwrap();
+            $('.kl_current_node_title').html('&lt;' + tinymce.activeEditor.selection.getNode().nodeName + '&gt;');
+        });
+        $('.kl_delete_node').unbind("click").click(function (e) {
+            e.preventDefault();
+            tinyMCE.DOM.addClass(tinyMCE.activeEditor.selection.getNode(), "kl_delete_me");
+            $(iframeID).contents().find('.kl_delete_me').remove();
+        });        
+        // Adjust node title when the node changes
+        $('.kl_current_node_title').html('&lt;' + tinymce.activeEditor.selection.getNode().nodeName + '&gt;');
+        tinyMCE.activeEditor.onNodeChange.add(function () {
+            $('.kl_current_node_title').html('&lt;' + tinymce.activeEditor.selection.getNode().nodeName + '&gt;');
         });
     }
     // Clear out the blank span added when the template wrapper is first created
@@ -1903,7 +1914,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             '           </div>' +
             '       </div>' +
             '       <div id="kl_padding" class="kl_border_spacing_section" style="display:none;">' +
-            '           <h4>Padding:</h4>' +
+            '           <h4>Selected <span class="kl_current_node_title"></span> Padding:</h4>' +
             '           <div class="btn-group">' +
             '               <button id="kl_padding_current" class="btn btn-mini hide" data-tooltip="top" title="Populate Fields based on current element">Current</button>' +
             '               <button id="kl_padding_apply" class="btn btn-mini" data-tooltip="top" title="Apply Entered values to current element">Apply</button>' +
@@ -1953,7 +1964,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             '           </div>' +
             '       </div>' +
             '       <div id="kl_margins" class="kl_border_spacing_section">' +
-            '           <h4>Margins:</h4>' +
+            '           <h4>Selected <span class="kl_current_node_title"></span> Margins:</h4>' +
             '           <div class="btn-group">' +
             '               <button id="kl_margins_current" class="btn btn-mini hide" data-tooltip="top" title="Populate Fields based on current element">Current</button>' +
             '               <button id="kl_margins_apply" class="btn btn-mini" data-tooltip="top" title="Apply Entered values to current element">Apply</button>' +
@@ -2113,11 +2124,11 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
     ////// Supporting functions  //////
     function klInitializeElementColorPicker(inputName, attribute) {
         var chosenColor = '',
-            // startingColor = klGetColor($(iframeID).contents().find(targetElement), attribute),
+            startingColor = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), attribute, true),
             bgHex,
             textColor;
         $(inputName).spectrum({
-            // // color: startingColor,
+            color: startingColor,
             showAlpha: true,
             preferredFormat: 'hex',
             showPaletteOnly: true,
@@ -2162,6 +2173,11 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'border-color', '');
             tinyMCE.DOM.setAttrib(tinymce.activeEditor.selection.getNode(), 'data-mce-style', '');
         });
+        tinyMCE.activeEditor.onNodeChange.add(function () {
+            klInitializeElementColorPicker('#kl_selected_element_text_color', 'color');
+            klInitializeElementColorPicker('#kl_selected_element_bg_color', 'background-color');
+            klInitializeElementColorPicker('#kl_selected_element_border_color', 'border-color');
+        });
     }
 
     ////// Custom Tools Accordion tab setup  //////
@@ -2183,7 +2199,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             '</h3>' +
             '<div id="kl_custom_buttons">' +
             '   <div class="btn-group-label kl_btn_examples kl_margin_bottom">' +
-            '       <span>Style:</span><br>' +
+            '       <span>Selected <span class="kl_current_node_title"></span> Colors:</span><br>' +
             '       <table class="table table-striped table-condensed">' +
             '       <thead><tr><th>Aspect</th><th>Color</th></tr></thead>' +
             '           <tbody>' +
@@ -5618,10 +5634,11 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             '   </div>' +
             '   <a href="#" class="btn btn-mini kl_mce_preview" rel="">Preview</a>' +
             '</div>',
-            klCleanUpButtons = '<div class="btn-group">' +
-            '   <a class="btn btn-mini kl_remove_empty" href="#" data-tooltip="left" title="This button will clean up the page contents by removing any empty elements.' +
+            klCleanUpButtons = '<a class="btn btn-mini kl_remove_empty" href="#" data-tooltip="left" title="This button will clean up the page contents by removing any empty elements.' +
             '       This is especially useful when using the <i class=\'icon-collection-save\'></i> feature."><i class="icon-trash"></i> Clear Empty Elements</a>' +
-            '   <a class="btn btn-mini kl_unwrap" href="#" data-tooltip="top" title="Remove the tag that wraps the selected element"><i class="fa fa-code"></i> Unwrap Selected</a>' +
+            '<div class="btn-group">' +
+            '   <a class="btn btn-mini kl_unwrap" href="#" data-tooltip="left" title="Remove the tag that wraps the selected element"><i class="fa fa-code"></i> Remove <span class="kl_current_node_title"></span> Tag</a>' +
+            '   <a class="btn btn-mini kl_delete_node" href="#" data-tooltip="left" title="Delete the selected element and it&lsquo;s contents"><i class="icon-end"></i> Delete <span class="kl_current_node_title"></span></a>' +
             '</div>',
             tabNavigation = '<ul>' +
             '   <li><a href="#canvas_tools" class="kl_tools_tab">Canvas Tools</a></li>' +
