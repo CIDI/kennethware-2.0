@@ -750,8 +750,8 @@
   #kl_wrapper.kl_fp_circles_1x1 #kl_banner_image img{border: none; border-radius: 160px; }
   #kl_wrapper.kl_fp_circles_1x1 #kl_navigation {background-color: transparent; display: table; margin: -300px auto 0; overflow: hidden; position: relative; width: 660px; height: 360px; }
   #kl_wrapper.kl_fp_circles_1x1 #kl_navigation ul {width: 0px; margin: 0px; }
-  #kl_wrapper.kl_fp_circles_1x1 #kl_navigation ul li {background-color: #c2c2c2; background-image: none; border-radius: 75px; display: block; font-size: 18px; height: 130px; overflow: hidden; padding: 0; position: absolute; text-align: center; white-space: normal; width: 130px; }
-  #kl_wrapper.kl_fp_circles_1x1 #kl_navigation ul li a {background-color: #013953; color: #fff; display: block; padding: 35px 0 80px; text-align: center; width: 100%; }
+  #kl_wrapper.kl_fp_circles_1x1 #kl_navigation ul li {background-color: #013953; background-image: none; border-radius: 75px; display: block; font-size: 18px; height: 130px; overflow: hidden; padding: 0; position: absolute; text-align: center; white-space: normal; width: 130px; }
+  #kl_wrapper.kl_fp_circles_1x1 #kl_navigation ul li a {color: #fff; display: block; padding: 35px 0 80px; text-align: center; width: 100%; }
   #kl_wrapper.kl_fp_circles_1x1 #kl_navigation ul li:nth-child(1) {top: 0px; left: 0px; }
   #kl_wrapper.kl_fp_circles_1x1 #kl_navigation ul li:nth-child(2) {top: 160px; left: 0px; }
   #kl_wrapper.kl_fp_circles_1x1 #kl_navigation ul li:nth-child(3) {top: 0px; right: 0px; }
@@ -1115,7 +1115,7 @@
   /***** FP & CP COLORED HEADINGS THEME  *******************************/
   
   /* FP */
-  #kl_wrapper.kl_fp_colored_headings #kl_banner { border: none; background: #2F4661; color: #fff; margin: 0 0 5px 0; padding: 0 0 5px; }
+  #kl_wrapper.kl_fp_colored_headings #kl_banner { border: none; background: #2F4661; color: #fff; margin: 0 0 5px 0; padding: 0 0 5px; overflow: visible;}
   #kl_wrapper.kl_fp_colored_headings #kl_banner h2 { position: relative; text-align: center; text-transform: uppercase; padding: 20px 0 0;}
   #kl_wrapper.kl_fp_colored_headings #kl_banner_image { border: none; margin: 0;}
   #kl_wrapper.kl_fp_colored_headings #kl_banner #kl_banner_left {background-color: #fff; color: #696969; display: inline-block; font-size: 18px; line-height: 20px; padding: 5px 20px; position: absolute; left: 15px; top: 15px; border-bottom: 10px solid #696969;}
@@ -1192,6 +1192,14 @@
   #kl_wrapper.kl_colored_headings #kl_modules.kl_modules_tabbed li[class*=fa-]:before,
   #kl_wrapper.kl_fp_colored_headings #kl_modules.kl_modules_tabbed li[class^=fa-]:before,
   #kl_wrapper.kl_colored_headings #kl_modules.kl_modules_tabbed li[class^=fa-]:before {margin: 7px 0 5px 10px; font-size: 20px; float: left;}
+  .mceContentBody #kl_wrapper.kl_fp_colored_headings #kl_modules.kl_modules_tabbed li[class*=icon-]:before,
+  .mceContentBody #kl_wrapper.kl_colored_headings #kl_modules.kl_modules_tabbed li[class*=icon-]:before,
+  .mceContentBody #kl_wrapper.kl_fp_colored_headings #kl_modules.kl_modules_tabbed li[class^=icon-]:before,
+  .mceContentBody #kl_wrapper.kl_colored_headings #kl_modules.kl_modules_tabbed li[class^=icon-]:before,
+  .mceContentBody #kl_wrapper.kl_fp_colored_headings #kl_modules.kl_modules_tabbed li[class*=fa-]:before,
+  .mceContentBody #kl_wrapper.kl_colored_headings #kl_modules.kl_modules_tabbed li[class*=fa-]:before,
+  .mceContentBody #kl_wrapper.kl_fp_colored_headings #kl_modules.kl_modules_tabbed li[class^=fa-]:before,
+  .mceContentBody #kl_wrapper.kl_colored_headings #kl_modules.kl_modules_tabbed li[class^=fa-]:before {margin: 0 10px 0 0;}
 
 
   /* Default Headings */
