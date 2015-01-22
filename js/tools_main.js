@@ -770,7 +770,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         });
         $('.kl_add_subtitle').unbind("click").click(function (e) {
             e.preventDefault();
-            $(iframeID).contents().find('#kl_banner_right').append('<span class="kl_subtitle">Page Subtitle</span>');
+            $(iframeID).contents().find('#kl_banner_right').append('<span class="kl_subtitle">Subtitle</span>');
             $('.kl_add_subtitle').hide();
             $('.kl_remove_subtitle').show();
         });
