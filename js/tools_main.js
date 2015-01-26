@@ -1695,6 +1695,8 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             kl_spacing_val = $('#kl_' + type + '_input_all').val() + 'px';
         }
         tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type + '-' + direction, kl_spacing_val);
+        // Remove data-mce-style
+        tinyMCE.DOM.setAttrib(tinymce.activeEditor.selection.getNode(), 'data-mce-style', '');
     }
     function klChangeAllSpacing(type) {
         klChangeSpacing(type, 'top');
