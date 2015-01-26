@@ -4705,7 +4705,12 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             if ($('.kl_syllabus_policies_yes').hasClass('active')) {
                 $(iframeID).contents().find('.universityPolicies').remove();
                 $(iframeID).contents().find('#kl_institutional_policies').remove();
-                $(iframeID).contents().find('body').append('<div id="kl_institutional_policies" />');
+                // If the tools were used to add content, include policies in wrapper if not, put in body
+                if ($(iframeID).contents().find('#kl_wrapper').length > 0) {
+                    $(iframeID).contents().find('#kl_wrapper').append('<div id="kl_institutional_policies" />');
+                } else {
+                    $(iframeID).contents().find('body').append('<div id="kl_institutional_policies" />');
+                }
                 $(iframeID).contents().find('#kl_institutional_policies').html(policies);
             }
         });

@@ -311,25 +311,38 @@ if (($("#kl_institutional_policies").length > 0 || $("#kl_wrapper").length > 0) 
         var title = $(value).text(),
             anchorName = title.replace("&", "");
         anchorName = anchorName.replace(/ /g, "_");
-        $(value).prepend('<a name="' + anchorName + '"></a>');
-        $("#kl_syllabus_nav_list").append('<li class="kl_' + anchorName + '_link"><a href="#' +
-            anchorName + '" class="kl_syllabus_nav_link" rel="#kl_' + anchorName + '_sub">' + title +
-            '</a></li><ul style="display:none;" id="kl_' + anchorName + '_sub" class="kl_sub_nav_list"></ul>');
-        $(value).parent('div').contents().find("h4").each(function (index, secondValue) {
-            var subtitle = $(secondValue).text(),
-                subAnchorName = subtitle.replace("&", "");
-            subAnchorName = subAnchorName.replace(/ /g, "_");
-            $(secondValue).prepend('<a name="kl_' + subAnchorName + '"></a>');
-            $('#kl_' + anchorName + '_sub').append('<li class="kl_' + subAnchorName + 'Link"><a href="#kl_' + subAnchorName + '">' + subtitle + '</a></li>');
-        });
+            // console.log('* ' + anchorName);
+        if($(value).parent('div').attr('id') !== 'kl_institutional_policies') {
+            $(value).prepend('<a name="' + anchorName + '"></a>');
+            $("#kl_syllabus_nav_list").append('<li class="kl_' + anchorName + '_link"><a href="#' +
+                anchorName + '" class="kl_syllabus_nav_link" rel="#kl_' + anchorName + '_sub">' + title +
+                '</a></li><ul style="display:none;" id="kl_' + anchorName + '_sub" class="kl_sub_nav_list"></ul>');
+            $(value).parent('div').contents().find("h4").each(function (index, secondValue) {
+                var subtitle = $(secondValue).text(),
+                    subAnchorName = subtitle.replace("&", "");
+                    console.log('-' + subtitle);
+                subAnchorName = subAnchorName.replace(/ /g, "_");
+                $(secondValue).prepend('<a name="kl_' + subAnchorName + '"></a>');
+                $('#kl_' + anchorName + '_sub').append('<li class="kl_' + subAnchorName + 'Link"><a href="#kl_' + subAnchorName + '">' + subtitle + '</a></li>');
+            });
+            
+        }
     });
-    // $(".universityPolicies h4").each(function () {
-    //     var subtitle = $(this).text(),
-    //         subAnchorName = subtitle.replace("&", "");
-    //     subAnchorName = subAnchorName.replace(/ /g, "");
-    //     $(this).prepend('<a name="' + subAnchorName + '"></a>');
-    //     $('#UNIVERSITYPOLICIESPROCEDURESSub').append('<li class="' + subAnchorName + 'Link"><a href="#' + subAnchorName + '">' + subtitle + '</a></li>');
-    // });
+    // Institutional Policies
+    var kl_policies_nav_title = $('#kl_institutional_policies h3:first').text();
+    $("#kl_syllabus_nav_list").append('<li class="kl_institutional_policies_link"><a href="#' +
+                'kl_institutional_policies" class="kl_syllabus_nav_link" rel="#kl_institutional_policies_sub">' + kl_policies_nav_title +
+                '</a></li><ul style="display:none;" id="kl_institutional_policies_sub" class="kl_sub_nav_list"></ul>');
+    $('div#kl_institutional_policies').find("h4").each(function (index, secondValue) {
+        'use strict';
+        var subtitle = $(secondValue).text(),
+            subAnchorName = subtitle.replace("&", "");
+            console.log('-' + subtitle);
+        subAnchorName = subAnchorName.replace(/ /g, "_");
+        $(secondValue).prepend('<a name="kl_' + subAnchorName + '"></a>');
+        $('#kl_institutional_policies_sub').append('<li class="kl_' + subAnchorName + 'Link"><a href="#kl_' + subAnchorName + '">' + subtitle + '</a></li>');
+    });
+
     $(".kl_syllabus_nav_link").each(function () {
         'use strict';
         var subNav = $(this).attr("rel");
@@ -342,7 +355,7 @@ if (($("#kl_institutional_policies").length > 0 || $("#kl_wrapper").length > 0) 
     $(".kl_syllabus_nav_link").click(function () {
         'use strict';
         $(".kl_sub_nav_list").slideUp();
-        $(".icon-arrow-down").addClass('icon-mini-arrow-right').removeClass('icon-mini-arrow-down');
+        $(".icon-mini-arrow-down").addClass('icon-mini-arrow-right').removeClass('icon-mini-arrow-down');
         var subNav = $(this).attr("rel");
         if ($(subNav + " li").length > 0) {
             $(subNav).slideDown();
