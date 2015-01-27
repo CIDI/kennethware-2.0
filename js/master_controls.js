@@ -54,7 +54,7 @@ function klPageContentCheck(klContentWrapperElement) {
     'use strict';
     var contentLoaded = false;
     // Content Pages
-    if ($('.show-content').length > 0 && $('.show-content').text().length > 50) {
+    if ($('.show-content').length > 0 && $('.show-content').children().length > 0) {
         contentLoaded = true;
     // Discussions
     } else if ($('#discussion_topic').length > 0 && $('.user_content').text().length > 0) {
