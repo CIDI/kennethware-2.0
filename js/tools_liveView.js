@@ -26,21 +26,13 @@ function kl_gatherModuleDetails() {
     'use strict';
     $.ajaxJSON('/courses/' + coursenum + '/modules/items/assignment_info', 'GET', {}, function (data) {
         $.each(data, function (id, info) {
-            $context_module_item = $("#context_module_item_" + id);
-            data = {};
             if (info.points_possible !== null) {
-                data.points_possible_display = info.points_possible + ' pts';
-                // data.points_possible_display = I18n.t('points_possible_short', '%{points} pts', { 'points': "" + info.points_possible});
+                $('#context_module_item_' + id + ' .points_possible_display').html(info.points_possible + ' pts').show();
             }
             if (info.due_date !== null) {
-                data.due_date_display = $.dateString(info.due_date);
-            } else if (info.vdd_tooltip !== null) {
-                info['vdd_tooltip']['link_href'] = $context_module_item.find('a.title').attr('href');
-                $context_module_item.find('.due_date_display').html(vddTooltipView(info.vdd_tooltip));
+                $('#context_module_item_' + id + ' .due_date_display').html($.dateString(info.due_date));
             }
-            $context_module_item.fillTemplateData({data: data, htmlValues: ['points_possible_display']});
         });
-        vddTooltip();
     });
 }
 // Gather data on student module progress
@@ -51,27 +43,43 @@ function kl_update_progress() {
             url = '/courses/' + coursenum + '/modules/progressions?user_id=' + current_user_id;
         $.ajaxJSON(url, 'GET', {}, function (data) {
             var module_id, item_id, complete_type, workflow_state, idx, indexComplete, requirements_met;
-            // console.log(data);
             for (idx in data) {
                 if (data.hasOwnProperty(idx)) {
                     module_id = data[idx].context_module_progression.context_module_id;
                     workflow_state = data[idx].context_module_progression.workflow_state;
+                    // If it is locked, grey out all contents
                     if (workflow_state === 'locked') {
                         $('#context_module_' + module_id).addClass('locked_module');
+                    // If the module is set to complete sequentially, lock all individual items
+                    } else if (workflow_state === 'unlocked' || workflow_state === 'started') {
+                        $('#context_module_' + module_id + ' .title').hide();
+                        $('#context_module_' + module_id + ' .locked_title').show();
                     }
+                    // Look at requirements met array and make changes to completed items
                     requirements_met = data[idx].context_module_progression.requirements_met;
                     for (indexComplete in requirements_met) {
                         if (requirements_met.hasOwnProperty(indexComplete)) {
                             item_id = data[idx].context_module_progression.requirements_met[indexComplete].id;
                             complete_type = data[idx].context_module_progression.requirements_met[indexComplete].type;
                             $('#context_module_item_' + item_id).addClass('completed_item');
+                            $('#context_module_item_' + item_id + ' .title').show();
+                            $('#context_module_item_' + item_id + ' .locked_title').remove();
                         }
                     }
-                    // console.log(module_id + ': ' + workflow_state);
                     $('#context_module_' + module_id + ' .progression_state').html(workflow_state);
                 }
             }
             $('#kl_gathering_data').remove();
+            $('.context_module').each(function (){
+                var module_id = $(this).attr('data-module-id'),
+                    workflow_state = $('#context_module_' + module_id + ' .progression_state').text();
+                    if (workflow_state === 'unlocked' || workflow_state === 'started') {
+                        $('#context_module_' + module_id + ' .locked_title').filter(":first").parents('li').addClass('kl_unlock');
+                        $('#kl_modules .kl_unlock .title').show();
+                        $('#kl_modules .kl_unlock .locked_title').hide();
+                        $('#kl_modules .kl_unlock').removeClass('kl_unlock');
+                    }
+            });
         });
     } else {
         $('#kl_gathering_data').remove();
@@ -453,6 +461,8 @@ if ($('.kl_modules_tabbed').length > 0 && $('#wiki_page_revisions').length === 0
     $('head').append(appendStyle);
 
     // Loop through modules to gather details
+    var moduleCount = $('.kl_connected_module').length,
+        moduleDetailsCount = 0;
     $('.kl_connected_module').each(function () {
         'use strict';
         var module_id = $(this).attr('id'),
@@ -475,8 +485,11 @@ if ($('.kl_modules_tabbed').length > 0 && $('#wiki_page_revisions').length === 0
         });
     }).ajaxStop(function () {
         'use strict';
-        kl_gatherModuleDetails();
-        kl_update_progress();
+        moduleDetailsCount++;
+        if (moduleDetailsCount === moduleCount) {
+            kl_gatherModuleDetails();
+            kl_update_progress();
+        }
     });
     if ($('#kl_modules .kl_current').length > 0) {
         activeTab = $("#kl_modules ul li.kl_current").index();
