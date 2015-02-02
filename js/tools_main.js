@@ -3865,7 +3865,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         klTablesReady();
     }
     function klCustomTablesButton() {
-        var tablesDialog = '<a href="#" class="btn btn-mini kl_table_dialog_trigger"><i class="fa fa-table"></i> Custom Table</a>' +
+        var tablesDialog = '<a href="#" class="btn btn-mini kl_table_dialog_trigger kl_margin_top"><i class="fa fa-table"></i> Custom Table</a>' +
             '<div id="kl_tables_dialog" title="Custom Tables" style="display:none;">' +
             '    <div class="btn-group kl_table_options kl_option_third_wrap">' +
             '        <a href="#" class="btn btn-small active" rel=".kl_table_new">Create</a>' +
@@ -4429,7 +4429,8 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
                         dateDiff = klGetDateDiff(startDate, stopDate, 'milliseconds');
                         numModules = $('.kl_modules_from').length;
                         for (i = 1; i < numModules; i++) {
-                            startDate = stopDate + 86400000;
+                            // Add 1 day and 2.5 hours (to account for daylight savings)
+                            startDate = stopDate + 86400000 + 9000000;
                             stopDate = startDate + dateDiff;
                             printStart = new Date(startDate);
                             printStop = new Date(stopDate);
