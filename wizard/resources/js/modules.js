@@ -4,7 +4,7 @@ $(function () {
     'use strict';
     if (primaryTemplate === false) {
         $(".primaryPageInput").prop("checked", false).prop("disabled", true);
-        $(".primaryPage").append('<span class="addPrimaryWrapper"> (<a href="' + canvasURL + '/courses/' + courseID + '/wiki/primary-template" class="addPrimaryTemplate" target="_blank">Add</a>)</span>');
+        $(".primaryPage").append('<span class="addPrimaryWrapper"> (<a href="' + canvasURL + '/courses/' + courseID + '/pages/primary-template" class="addPrimaryTemplate" target="_blank">Add</a>)</span>');
     }
     $('.addPrimaryTemplate').click(function () {
         $(".primaryPageInput").prop("checked", true).prop("disabled", false);
@@ -12,7 +12,7 @@ $(function () {
     });
     if (secondaryTemplate === false) {
         $('.secondaryPageControls').hide();
-        $(".secondaryPageAddSection").html('No Secondary Template Page (<a href="' + canvasURL + '/courses/' + courseID + '/wiki/secondary-template" class="addSecondaryTemplate" target="_blank">Add</a>)');
+        $(".secondaryPageAddSection").html('No Secondary Template Page (<a href="' + canvasURL + '/courses/' + courseID + '/pages/secondary-template" class="addSecondaryTemplate" target="_blank">Add</a>)');
     } else {
         $('.secondaryPageControls').show();
         $('.secondaryPageAddSection').hide();
@@ -169,7 +169,7 @@ $(function () {
             totalNewModules = $('.contentModule').length;
         // add link to front page if it is set to be created
         if ($('#frontPage').is(":checked")) {
-            $('.createModules').after('<a href="' + canvasURL + '/courses/' + courseID + '/wiki/Home" class="btn btn-primary" style="margin-left: 5px;" target="_blank">Edit Front Page <i class="fa fa-external-link"></i></a>');
+            $('.createModules').after('<a href="' + canvasURL + '/courses/' + courseID + '/pages/Home" class="btn btn-primary" style="margin-left: 5px;" target="_blank">Edit Front Page <i class="fa fa-external-link"></i></a>');
         }
         // Loop through new modules and compile the data to be processed
         $(".contentModule").each(function () {
@@ -298,8 +298,8 @@ $(function () {
         $.post('wizard_create_front_page.php', {createPage: true})
             .done(function (data) {
                 $('.addFrontPage').html(data);
-                $('.addFrontPage').after('<a href="' + canvasURL + '/courses/' + courseID + '/wiki/Home" class="btn btn-primary" style="margin-left: 5px;" target="_blank">Edit Front Page <i class="fa fa-external-link"></i></a>');
-                $('.createModules').last().after('<a href="' + canvasURL + '/courses/' + courseID + '/wiki/Home" class="btn btn-primary" style="margin-left: 5px;" target="_blank">Edit Front Page <i class="fa fa-external-link"></i></a>');
+                $('.addFrontPage').after('<a href="' + canvasURL + '/courses/' + courseID + '/pages/Home" class="btn btn-primary" style="margin-left: 5px;" target="_blank">Edit Front Page <i class="fa fa-external-link"></i></a>');
+                $('.createModules').last().after('<a href="' + canvasURL + '/courses/' + courseID + '/pages/Home" class="btn btn-primary" style="margin-left: 5px;" target="_blank">Edit Front Page <i class="fa fa-external-link"></i></a>');
             });
     });
 });
