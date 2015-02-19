@@ -462,7 +462,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
 
     // Ensure that necessary sections exist for a given style, will also fix broken banner
     function klThemeElements(templateClass) {
-        var modNum, modText, modTitle, templateBanner;
+        var modNum, modText, modTitle, modSubtitle, templateBanner;
         // this first portion is designed to fix anything that might have broken
         // Look to see if kl_mod_num exists and grab value
         if ($(iframeID).contents().find('.kl_mod_num').length > 0 && $(iframeID).contents().find('.kl_mod_num').text() !== '') {
@@ -482,6 +482,18 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         } else {
             modText = 'Text ';
         }
+        // Look to see if subtitle exists and grab value and remove it
+        if ($(iframeID).contents().find('.kl_subtitle').length > 0 && $(iframeID).contents().find('.kl_subtitle').text() !== '') {
+            modSubtitle = $(iframeID).contents().find('.kl_subtitle').text();
+            if (modSubtitle === ' ') {
+                modSubtitle = 'Subtitle';
+            }
+            modSubtitle = ' <span class="kl_subtitle">' + modSubtitle + '</span>';
+            $(iframeID).contents().find('.kl_subtitle').remove();
+        } else {
+            modSubtitle = '';
+        }
+
         // Look to see if title exists and grab value
         if ($(iframeID).contents().find('#kl_banner_right').length > 0 && $(iframeID).contents().find('#kl_banner_right').text() !== '') {
             modTitle = $(iframeID).contents().find('#kl_banner_right').text();
@@ -496,7 +508,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         templateBanner = '<h2><span id="kl_banner_left">' +
             '    <span class="kl_mod_text">' + modText + ' </span><span class="kl_mod_num">' + modNum + ' </span>' +
             '</span>' +
-            '<span id="kl_banner_right">' + modTitle + '</span></h2>' +
+            '<span id="kl_banner_right">' + modTitle + modSubtitle + '</span></h2>' +
             '</div>';
         // Look to see if kl_banner is intact
         if ($(iframeID).contents().find('#kl_banner').length > 0) {
