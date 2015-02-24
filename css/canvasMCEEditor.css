@@ -207,7 +207,7 @@
 	line-height: 15px;
 }
 #kl_custom_css:after {
-	content: "\f1bc  Custom CSS";
+	content: "\f112  Custom CSS";
 }
 .kl_mce_visual_sections #kl_introduction {
 	border: 1px dashed #aa00ff;
@@ -488,7 +488,7 @@
 	font-size: 25px;
 	top: 20px;
 	left: -20px;
-	content: "\f1bc";
+	content: "\f112";
 	color: #468847;
 	text-shadow: 1px 1px 2px #000000;
 	width: 0px;
@@ -607,7 +607,7 @@
 	}
 	.kl_mce_visual_sections .kl_tabbed_section h4.kl_current_tab:before, .kl_mce_visual_sections .kl_custom_accordion h4.kl_current_acc:before {
 		font-family: 'canvas-icons';
-		content: '\f1bc';
+		content: '\f112';
 		background: #468847;
 		margin: -6px 0 0 -16px;
 		display: inline-block;

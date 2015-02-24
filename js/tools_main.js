@@ -376,8 +376,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
                     // $(iframeID).contents().find(targetElement).css('color', textColor);
                     tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'color', textColor);
                 }
-                tinyMCE.DOM.setAttrib(tinymce.activeEditor.selection.getNode(), 'data-mce-style', '');
-                // $(iframeID).contents().find(targetElement).removeAttr('data-mce-style');
+                clearDataMCEStyle();
             }
         });
     }
@@ -404,6 +403,11 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
                 $('input.' + sectionToRemove + '_section').prop('checked', false);
             }
         });
+    }
+
+    function clearDataMCEStyle() {
+        // This attribute saves styling and overwrites when saving page
+        tinyMCE.DOM.setAttrib(tinymce.activeEditor.selection.getNode(), 'data-mce-style', '');
     }
 
 /////////////////////////////////////////////////////////////
@@ -458,7 +462,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
 
     // Ensure that necessary sections exist for a given style, will also fix broken banner
     function klThemeElements(templateClass) {
-        var modNum, modText, modTitle, templateBanner;
+        var modNum, modText, modTitle, modSubtitle, templateBanner;
         // this first portion is designed to fix anything that might have broken
         // Look to see if kl_mod_num exists and grab value
         if ($(iframeID).contents().find('.kl_mod_num').length > 0 && $(iframeID).contents().find('.kl_mod_num').text() !== '') {
@@ -478,6 +482,18 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         } else {
             modText = 'Text ';
         }
+        // Look to see if subtitle exists and grab value and remove it
+        if ($(iframeID).contents().find('.kl_subtitle').length > 0 && $(iframeID).contents().find('.kl_subtitle').text() !== '') {
+            modSubtitle = $(iframeID).contents().find('.kl_subtitle').text();
+            if (modSubtitle === ' ') {
+                modSubtitle = 'Subtitle';
+            }
+            modSubtitle = ' <span class="kl_subtitle">' + modSubtitle + '</span>';
+            $(iframeID).contents().find('.kl_subtitle').remove();
+        } else {
+            modSubtitle = '';
+        }
+
         // Look to see if title exists and grab value
         if ($(iframeID).contents().find('#kl_banner_right').length > 0 && $(iframeID).contents().find('#kl_banner_right').text() !== '') {
             modTitle = $(iframeID).contents().find('#kl_banner_right').text();
@@ -492,7 +508,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         templateBanner = '<h2><span id="kl_banner_left">' +
             '    <span class="kl_mod_text">' + modText + ' </span><span class="kl_mod_num">' + modNum + ' </span>' +
             '</span>' +
-            '<span id="kl_banner_right">' + modTitle + '</span></h2>' +
+            '<span id="kl_banner_right">' + modTitle + modSubtitle + '</span></h2>' +
             '</div>';
         // Look to see if kl_banner is intact
         if ($(iframeID).contents().find('#kl_banner').length > 0) {
@@ -1734,8 +1750,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         } else {
             tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-' + direction + '-style', style);
         }
-        // Remove data-mce-style
-        tinyMCE.DOM.setAttrib(tinymce.activeEditor.selection.getNode(), 'data-mce-style', '');
+        clearDataMCEStyle();
     }
     function klChangeAllBorders(type) {
         var kl_border_style = $('#kl_border_style_all option:selected').val();
@@ -1753,14 +1768,14 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         } else {
             tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type + '-' + direction, kl_spacing_val);
         }
-        // Remove data-mce-style
-        tinyMCE.DOM.setAttrib(tinymce.activeEditor.selection.getNode(), 'data-mce-style', '');
+        clearDataMCEStyle();
     }
     function klChangeAllSpacing(type) {
         klChangeSpacing(type, 'top');
         klChangeSpacing(type, 'right');
         klChangeSpacing(type, 'bottom');
         klChangeSpacing(type, 'left');
+        clearDataMCEStyle();
     }
     function klClearSpacingInput(type) {
         $('#kl_' + type + '_input_all').attr('placeholder', '#').val('');
@@ -1770,7 +1785,6 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         $('#kl_' + type + '_input_left').attr('placeholder', '#').val('');
     }
     function klCurrentSpacing(type) {
-        console.log('klCurrentSpacing');
         var kl_spacing_top = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), type + '-top', true),
             kl_spacing_right = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), type + '-right', true),
             kl_spacing_bottom = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), type + '-bottom', true),
@@ -1786,7 +1800,6 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         $('#kl_' + type + '_input_right').attr('placeholder', kl_spacing_display_right).val('');
     }
     function klCurrentBorder() {
-        console.log('klCurrentBorder');
         var kl_border_top = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-top-width', true),
             kl_border_right = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-right-width', true),
             kl_border_bottom = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-bottom-width', true),
@@ -1820,11 +1833,13 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         var kl_border_val = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-' + direction + '-width', true),
             kl_border_display_val = kl_border_val.replace('px', '');
         $('#kl_border_input_' + direction).val(kl_border_display_val);
+        clearDataMCEStyle();
     }
     function klSetSpacingValue(type, direction) {
         var kl_spacing_val = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), type + '-' + direction, true),
             kl_spacing_display_val = kl_spacing_val.replace('px', '');
         $('#kl_' + type + '_input_' + direction).val(kl_spacing_display_val);
+        clearDataMCEStyle();
     }
     function klDefaultSpacing(type) {
         tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type, '');
@@ -1832,6 +1847,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type + '-bottom', '');
         tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type + '-left', '');
         tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type + '-right', '');
+        clearDataMCEStyle();
     }
 
     ////// On Ready/Click functions  //////
@@ -1896,6 +1912,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-right-color', '');
             tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-bottom-color', '');
             tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-left-color', '');
+            clearDataMCEStyle();
             klCurrentBorder();
             $('#kl_border_input_all').val('');
         });
@@ -2237,7 +2254,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'background-color', '');
             tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'color', '');
             tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'border-color', '');
-            tinyMCE.DOM.setAttrib(tinymce.activeEditor.selection.getNode(), 'data-mce-style', '');
+            clearDataMCEStyle();
         });
         tinyMCE.activeEditor.onNodeChange.add(function () {
             klInitializeElementColorPicker('#kl_selected_element_text_color', 'color');
