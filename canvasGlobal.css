@@ -314,7 +314,7 @@
   /* Themes Panel */
   #kl_tools .kl_active_theme:before { font-family: 'canvas-icons'; display: inline-block; vertical-align: middle; position: relative; text-rendering: optimizeLegibility; text-transform: none !important; font-weight: normal !important; font-style: normal !important; top: -1px; font-size: 16px; }
   #kl_tools .kl_active_theme  { border: 1px solid #00BD03 !important; }
-  #kl_tools .kl_active_theme:before { content: "\f1bc"; color: #00BD03; text-shadow: 1px 1px 2px #000000; left: 22px; width: 0; top: 13px; font-size: 22px; }
+  #kl_tools .kl_active_theme:before { content: "\f112"; color: #00BD03; text-shadow: 1px 1px 2px #000000; left: 22px; width: 0; top: 13px; font-size: 22px; }
   #kl_tools .kl_fp_themes .kl_active_theme:before { font-size: 40px; text-shadow: 2px 2px 2px #000000; left: 10px; width: 0; top: 5px; }
   #kl_tools .kl_fp_themes { text-align: center; overflow: hidden; }
   #kl_tools .kl_fp_themes img { width: 100px; }
