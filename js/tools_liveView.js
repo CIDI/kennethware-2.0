@@ -110,7 +110,7 @@ function rgb2hex(rgb) {
     return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
 }
 
-var anchor, activePanel, activeTab, bgColor, bgHex, textColor, icons, modalTitle, today, currentTheme, appendStyle, maxWidth, klStudentName;
+var anchor, activePanel, activeTab, bgColor, bgHex, colorHexArray, textColor, icons, modalTitle, today, currentTheme, appendStyle, maxWidth, klStudentName;
 // SHOW PAGES TITLE
 currentTheme = $('#kl_wrapper').attr('class');
 if ($('.kl_show_title').length === 0 && $.inArray(currentTheme, klToolsVariables.klShowPageTitleTemplates) === -1) {
@@ -432,7 +432,7 @@ if ($('#kl_modules .kl_current').length > 0 && $('.kl_modules_quick_links').leng
 }
 if ($('.kl_modules_tabbed').length > 0 && $('#wiki_page_revisions').length === 0) {
     bgColor = '';
-    bgHex = '0F2439';
+    bgHex = '545454';
     textColor = 'FFF';
     $("head").append($("<link/>", { rel: "stylesheet", href: klFontAwesomePath, type: 'text/css'}));
     $('#kl_modules').after('<div id="kl_gathering_data" class="alert alert-info"><i class="fa fa-spinner fa-spin"></i> Gathering Progress Data</div>');
@@ -443,7 +443,9 @@ if ($('.kl_modules_tabbed').length > 0 && $('#wiki_page_revisions').length === 0
     if (($('#kl_banner').length === 0 && $('#kl_navigation').length > 0) || ($('#kl_navigation').length > 0 && bgColor === 'rgba(0, 0, 0, 0)')) {
         bgColor = $('#kl_navigation').css('background-color');
     }
-    if (bgColor !== '' && bgColor !== 'rgba(0, 0, 0, 0)') {
+    // If there is a color set and it is not rgba
+    colorHexArray = bgColor.split(',');
+    if (bgColor !== '' && typeof colorHexArray[3] === 'undefined') {
         bgHex = rgb2hex(bgColor);
         bgHex = bgHex.replace('#', '');
         textColor = getContrastYIQ(bgHex);
