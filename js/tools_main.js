@@ -275,7 +275,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         });        
         // Adjust node title when the node changes
         $('.kl_current_node_title').html('&lt;' + tinymce.activeEditor.selection.getNode().nodeName + '&gt;');
-        tinyMCE.activeEditor.onNodeChange.add(function () {
+        tinyMCE.activeEditor.on('NodeChange', function () {
             $('.kl_current_node_title').html('&lt;' + tinymce.activeEditor.selection.getNode().nodeName + '&gt;');
         });
     }
@@ -1972,7 +1972,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             $('#' + connectedElement).show();
         });
         // Identify when TinyMCE node changes
-        tinyMCE.activeEditor.onNodeChange.add(function () {
+        tinyMCE.activeEditor.on('NodeChange', function () {
             klCurrentSpacing('margin');
             klCurrentSpacing('padding');
             klCurrentBorder();
@@ -2242,10 +2242,6 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
 
     ////// On Ready/Click functions  //////
     function klColorsReady() {
-        $('.defaultSkin table.mceLayout .mceStatusbar div').show();
-        $('.defaultSkin table.mceLayout .mceStatusbar div').closest('tr').addClass('kl_mce_path_wrapper');
-        $('#' + tinyMCE.activeEditor.id + '_path_voice').hide();
-        $('#' + tinyMCE.activeEditor.id + '_path_row span:nth-of-type(2)').hide();
         klInitializeElementColorPicker('#kl_selected_element_text_color', 'color');
         klInitializeElementColorPicker('#kl_selected_element_bg_color', 'background-color');
         klInitializeElementColorPicker('#kl_selected_element_border_color', 'border-color');
@@ -2256,7 +2252,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'border-color', '');
             clearDataMCEStyle();
         });
-        tinyMCE.activeEditor.onNodeChange.add(function () {
+        tinyMCE.activeEditor.on('NodeChange', function () {
             klInitializeElementColorPicker('#kl_selected_element_text_color', 'color');
             klInitializeElementColorPicker('#kl_selected_element_bg_color', 'background-color');
             klInitializeElementColorPicker('#kl_selected_element_border_color', 'border-color');
