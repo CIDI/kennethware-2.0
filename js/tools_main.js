@@ -275,7 +275,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         });        
         // Adjust node title when the node changes
         $('.kl_current_node_title').html('&lt;' + tinymce.activeEditor.selection.getNode().nodeName + '&gt;');
-        tinyMCE.activeEditor.onNodeChange.add(function () {
+        tinyMCE.activeEditor.on('NodeChange', function () {
             $('.kl_current_node_title').html('&lt;' + tinymce.activeEditor.selection.getNode().nodeName + '&gt;');
         });
     }
@@ -1024,13 +1024,13 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
                 '<a html="#" class="kl_identify_section kl_identify_section_' + key + ' icon-collection-save" rel="' + key + '" data-tooltip="left" title="Turn selected content into <br>' + displayTitle + ' section"> Identify ' + displayTitle + ' section</a>' +
                 '</li>');
         });
-        if (toolsToLoad !== 'syllabus') {
+        if (toolsToLoad === 'syllabus' || klToolsVariables.usePHP === false) {
+            templateContentBtns = '<a href="#" class="btn btn-mini kl_sections_btn kl_margin_bottom fa fa-magic"> Template Sections</a>';
+        } else {
             templateContentBtns = '<div class="btn-group">' +
                 '   <a href="#" class="btn btn-mini kl_sections_btn kl_margin_bottom fa fa-magic"> Template Sections</a>' +
                 '   <a href="#" class="btn btn-mini kl_existing_content_btn kl_margin_bottom fa fa-files-o"> Copy Existing</a>' +
                 '</div>';
-        } else {
-            templateContentBtns = '<a href="#" class="btn btn-mini kl_sections_btn kl_margin_bottom fa fa-magic"> Template Sections</a>';
         }
         $('.kl_template_content_btn').html(templateContentBtns);
         klSectionsReady(sectionArray);
@@ -1972,7 +1972,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             $('#' + connectedElement).show();
         });
         // Identify when TinyMCE node changes
-        tinyMCE.activeEditor.onNodeChange.add(function () {
+        tinyMCE.activeEditor.on('NodeChange', function () {
             klCurrentSpacing('margin');
             klCurrentSpacing('padding');
             klCurrentBorder();
@@ -2242,10 +2242,6 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
 
     ////// On Ready/Click functions  //////
     function klColorsReady() {
-        $('.defaultSkin table.mceLayout .mceStatusbar div').show();
-        $('.defaultSkin table.mceLayout .mceStatusbar div').closest('tr').addClass('kl_mce_path_wrapper');
-        $('#' + tinyMCE.activeEditor.id + '_path_voice').hide();
-        $('#' + tinyMCE.activeEditor.id + '_path_row span:nth-of-type(2)').hide();
         klInitializeElementColorPicker('#kl_selected_element_text_color', 'color');
         klInitializeElementColorPicker('#kl_selected_element_bg_color', 'background-color');
         klInitializeElementColorPicker('#kl_selected_element_border_color', 'border-color');
@@ -2256,7 +2252,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'border-color', '');
             clearDataMCEStyle();
         });
-        tinyMCE.activeEditor.onNodeChange.add(function () {
+        tinyMCE.activeEditor.on('NodeChange', function () {
             klInitializeElementColorPicker('#kl_selected_element_text_color', 'color');
             klInitializeElementColorPicker('#kl_selected_element_bg_color', 'background-color');
             klInitializeElementColorPicker('#kl_selected_element_border_color', 'border-color');
@@ -4800,7 +4796,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
 
     function klSyllabusReady() {
         // Insert notice about policies below the content editor
-        if ($('#kl_syllabus_policy_notice').length === 0) {
+        if ($('#kl_syllabus_policy_notice').length === 0 && (typeof klToolsVariables.usePHP === 'undefined' || klToolsVariables.usePHP)) {
             $('.form-actions').before('<div id="kl_syllabus_policy_notice" style="font-size:16px;">' +
                 '   <div class="btn-group">' +
                 '       <a href="#" class="btn btn-small kl_syllabus_policies_yes">Yes<span class="screenreader-only">, include policies and procedures</span></a>' +
