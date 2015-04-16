@@ -213,24 +213,18 @@ $(document).ready(function () {
     task = klGetURLParameter("task");
     if (task === "setGradeScheme") {
         setTimeout(function () {
-            $(".edit_course_link").get(0).scrollIntoView();
-            $("#course_details_tabs").tabs("option", "active", 0);
-            $(".edit_course_link").attr({"data-tooltip": "top", "title": "Click Here"}).trigger('mouseenter').click(function () {
+            $(".grading_standard_checkbox").get(0).scrollIntoView();
+            $(".grading_standard_checkbox").attr({"data-tooltip": "top", "title": "Check this box"}).trigger('mouseenter').change(function () {
                 setTimeout(function () {
-                    $(".grading_standard_checkbox").get(0).scrollIntoView();
-                    $(".grading_standard_checkbox").attr({"data-tooltip": "top", "title": "Check this box"}).trigger('mouseenter').change(function () {
+                    $(".edit_letter_grades_link").attr({"data-tooltip": "top", "title": "Click this link"}).trigger('mouseenter').click(function () {
                         setTimeout(function () {
-                            $(".edit_letter_grades_link").attr({"data-tooltip": "top", "title": "Click this link"}).trigger('mouseenter').click(function () {
+                            $(".edit_grading_standard_link").attr({"data-tooltip": "top", "title": "Click this link if you want to make changes."}).trigger('mouseenter');
+                            $(".display_grading_standard .done_button").attr({"data-tooltip": "top", "title": "When you are finished, click here."}).trigger('mouseenter').click(function () {
+                                $(".edit_letter_grades_link").trigger("mouseout");
+                                $(".edit_grading_standard_link").trigger("mouseout");
                                 setTimeout(function () {
-                                    $(".edit_grading_standard_link").attr({"data-tooltip": "top", "title": "Click this link if you want to make changes."}).trigger('mouseenter');
-                                    $(".display_grading_standard .done_button").attr({"data-tooltip": "top", "title": "When you are finished, click here."}).trigger('mouseenter').click(function () {
-                                        $(".edit_letter_grades_link").trigger("mouseout");
-                                        $(".edit_grading_standard_link").trigger("mouseout");
-                                        setTimeout(function () {
-                                            $(".coursesettings .form-actions .btn-primary").get(0).scrollIntoView();
-                                            $(".coursesettings .form-actions .btn-primary").attr({"data-tooltip": "top", "title": "Next Steps:<ol><li>Click this button to save changes.</li><li>Wait for the page to save.</li><li>Close this tab.</li></ol>"}).trigger('mouseenter');
-                                        }, 600);
-                                    });
+                                    $(".coursesettings .form-actions .btn-primary").get(0).scrollIntoView();
+                                    $(".coursesettings .form-actions .btn-primary").attr({"data-tooltip": "top", "title": "Next Steps:<ol><li>Click this button to save changes.</li><li>Wait for the page to save.</li><li>Close this tab.</li></ol>"}).trigger('mouseenter');
                                 }, 600);
                             });
                         }, 600);

@@ -4757,12 +4757,22 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
 
     function klAboutCustomTools() {
         var addAccordionSection = '<h3 class="kl_wiki" style="margin-top: 10px;">' +
-            '   About Custom Tools' +
+            '   About Design Tools' +
             '</h3>' +
             '<div class="kl_instructions">' +
             '   <p>This collection of tools is designed to assist in rapid course creation.</p>' +
             '   <p class="kl_margin_bottom">These tools were developed by USU&lsquo;s <a href="http://cidi.usu.edu/" target="_blank">Center for Innovative Design &amp; Instruction</a>.</p>' +
             '   <p><a href="https://usu.instructure.com/courses/305202" target="_blank">Learn more about these tools</a></p>' +
+            '</div>';
+        $('#kl_tools_accordion').append(addAccordionSection);
+    }
+    function klAboutSyllabusTools() {
+        var addAccordionSection = '<h3 class="kl_wiki" style="margin-top: 10px;">' +
+            '   About Syllabus Tools' +
+            '</h3>' +
+            '<div class="kl_instructions">' +
+            '   <p>Based on the <a href="http://salsa.usu.edu/" target="_blank"><img src="https://raw.githubusercontent.com/idbygeorge/salsa/master/public/img/salsa_icon.png" style="vertical-align: bottom; max-width: 25px;">Salsa</a> project developed at <a href="http://usu.edu" target="_blank">Utah State University</a>.</p>' +
+            '   <p style="margin-bottom:10px;"><a href="https://usu.instructure.com/courses/305202" target="_blank">Learn more about these tools</a></p>' +
             '</div>';
         $('#kl_tools_accordion').append(addAccordionSection);
     }
@@ -5366,7 +5376,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
                     $('.kl_grade_scheme_walkthrough').unbind("click").click(function (e) {
                         e.preventDefault();
                         var defaulthref = $('.settings').attr('href'),
-                            newhref = defaulthref + '?task=setGradeScheme';
+                            newhref = defaulthref + '?task=setGradeScheme#tab-details';
                         $('.settings').attr({'data-tooltip': 'right', 'title': 'Click here!<br>We will open it in a new tab.', 'target': '_blank', 'href': newhref}).trigger('mouseover').focus();
                         $('.settings').click(function () {
                             $('.settings').attr({'data-tooltip': '', 'title': ''}).trigger('mouseout');
@@ -5727,7 +5737,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             '</div>',
             tabNavigation = '<ul>' +
             '   <li><a href="#canvas_tools" class="kl_tools_tab">Canvas Tools</a></li>' +
-            '   <li><a href="#kl_tools" id="toolsTrigger" class="kl_tools_tab">Custom Tools</a></li>' +
+            '   <li><a href="#kl_tools" id="toolsTrigger" class="kl_tools_tab">Design Tools</a></li>' +
             '</ul>',
             customAccordionDiv = '<div id="kl_tools_accordion" class="kl_margin_bottom" />';
 
@@ -5848,7 +5858,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         klSyllabusTools();
         klSectionsTool(klToolsArrays.klSyllabusPrimarySections);
         klCustomTablesButton();
-        klAboutCustomTools();
+        klAboutSyllabusTools();
         // activate the accordion
         klInitializeToolsAccordion();
         // Load JavaScript file that will clean up old format
@@ -5885,7 +5895,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         if ($('#editor_tabs').length > 0) {
             // Add button to trigger tools
             if ($('#kl_tools_accordion').length === 0) {
-                $('#right-side').prepend('<a href="#" class="btn btn-primary kl_add_tools"><i class="fa fa-rocket" style="font-size: 18px;"></i> Launch Custom Tools</a>');
+                $('#right-side').prepend('<a href="#" class="btn btn-primary kl_add_tools"><i class="fa fa-rocket" style="font-size: 18px;"></i> Launch Design Tools</a>');
                 // Decide which tools to load
                 toolsToLoad = 'wiki';
                 if (document.URL.indexOf('/syllabus') > -1) {
