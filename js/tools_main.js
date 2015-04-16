@@ -966,6 +966,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         // Duplicate Canvas list
         $('.kl_existing_content_btn').unbind("click").click(function (e) {
             e.preventDefault();
+            klCheckPageTemplates();
             $('#kl_import_content_box').dialog({ position: { my: 'right top', at: 'left top', of: '#kl_tools' }, modal: false, width: 265 });
         });
     }
@@ -1011,7 +1012,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             '    <div id="kl_import_content_box" style="display:none;" title="Import Content from Page">' +
             '       <div id="kl_course_template_pages"></div>' +
             '       <div id="kl_existing_pages"></div>' +
-            '       <h4>Copy page content by url</h4>' +
+            '       <label for="kl_page_url">Copy page content by url</label for="kl_page_url">' +
             '       <form class="form-inline input-append"><input id="kl_page_url" type="text" placeholder="Canvas page url" style="width:180px;"><a href="#" id="kl_get_existing" class="btn add-on" data-tooltip="top" title="Copy page contents by url"><i class="fa fa-files-o"></i><span class="screenreader-only">Get existing</span></a></form>' +
             '    </div>' +
             '</div>';
@@ -5615,11 +5616,6 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
 ///////////////////////////////////////////////////////////// 
 
     function klImportPageContentThisCourse() {
-        $('#kl_existing_pages').html($('#pages_tab_panel .wiki_pages').clone());
-        $('#kl_existing_pages .wiki_pages').removeClass('wiki_pages page_list').addClass('kl_existing_page_links');
-        $('.kl_existing_page_links li').each(function () {
-            $(this).attr({'data-tooltip': 'left', 'title': 'Pull content from this page'}).addClass('fa fa-files-o');
-        });
         $('.kl_existing_page_links a').unbind("click").click(function (e) {
             e.preventDefault();
             var linkHref, contentUrl;
@@ -5644,24 +5640,15 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         $.post(klApiToolsPath + 'checkTemplates.php', { courseID: coursenum })
             .done(function (data) {
                 $('#kl_course_template_pages').html(data);
-                $('.kl_import_primary_template').unbind("click").click(function (e) {
-                    e.preventDefault();
-                    $('.kl_import_primary_template i').attr('class', 'fa fa-spinner fa-spin');
-                    $.post(klApiToolsPath + 'getPage.php', { courseID: coursenum, pageUrl: 'primary-template' })
+                $('#inputUnpublished').focus();
+                $('.kl_copy_page').unbind('change').on('change', function (e) {
+                    var myValue = this.value;
+                    $('#kl_course_template_pages').prepend('<div id="kl_getting_content" class="alert alert-info"><i class="fa fa-spinner fa-spin"></i> Retrieving Content</div>');
+                    $.post(klApiToolsPath + 'getPage.php', { courseID: coursenum, pageUrl: myValue })
                         .done(function (data) {
                             $(iframeID).contents().find('body').html(data);
+                            $('#kl_getting_content').remove();
                             $('.kl_import_primary_template i').attr('class', 'fa fa-clipboard');
-                            sectionsPanelDefault = true;
-                            klSetupMainTools();
-                        });
-                });
-                $('.kl_import_secondary_template').unbind("click").click(function (e) {
-                    e.preventDefault();
-                    $('.kl_import_secondary_template i').attr('class', 'fa fa-spinner fa-spin');
-                    $.post(klApiToolsPath + 'getPage.php', { courseID: coursenum, pageUrl: 'secondary-template' })
-                        .done(function (data) {
-                            $(iframeID).contents().find('body').html(data);
-                            $('.kl_import_secondary_template i').attr('class', 'fa fa-clipboard');
                             sectionsPanelDefault = true;
                             klSetupMainTools();
                         });
@@ -5842,7 +5829,6 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         klBindHover();
         $('.kl_add_tools').remove();
 
-        klCheckPageTemplates();
         klImportPageContentThisCourse();
         setTimeout(function () {
             klBindAPIImportsTriggers();

@@ -5,35 +5,64 @@
 	error_reporting(E_ALL);
 	ini_set('display_errors', '1');
 	$courseID = $_POST['courseID'];
-	$primaryButton = '';
-	$secondaryButton = '';
-	$primaryTemplate = false;
-	$secondaryTemplate = false;
-
-	// Query to see if Primary/Secondary templates exist otherwise option to create
-	$primaryTemplateExists = getPageFromCourse($courseID, "primary-template");
-	// echo $primaryTemplateExists;
-	$workingList = json_decode($primaryTemplateExists,true);
-	if(isset($workingList['created_at'])){
-		if($workingList['created_at'] !== ''){
-			$primaryTemplate = true;
-			$primaryButton = '<a href="#" class="btn btn-mini kl_import_primary_template kl_margin_bottom"><i class="fa fa-clipboard"></i><span class="screenreader-only">Import content from</span> Primary Template</a>';
-		}
+	$publishedCount = 0;
+	$unpublishedCount = 0;
+	function cmp($a, $b) {
+	    return strcmp($a->title, $b->title);
 	}
-	$secondaryTemplateExists = getPageFromCourse($courseID, "secondary-template");
-	// echo $secondaryTemplateExists;
-	$workingList2 = json_decode($secondaryTemplateExists,true);
-	if(isset($workingList2['created_at'])){
-		if($workingList2['created_at'] !== ''){
-			$secondaryTemplate = true;
-			$secondaryButton = '<a href="#" class="btn btn-mini kl_import_secondary_template kl_margin_bottom"><i class="fa fa-clipboard"></i><span class="screenreader-only">Import content from</span> Secondary Template</a>';
+	$coursePages = getCoursePages($courseID);
+	usort($coursePages, "cmp");
+	if (count($coursePages) > 0) {
+		echo '
+		<label for="#inputUnpublished">All Pages</label>
+		<select name="unpublished" id="inputUnpublished" class="form-control kl_copy_page">
+			<option>Choose a page to copy</option>';
+		foreach ($coursePages as $page) {
+			if($page->published){
+				$publishedCount++;
+			} else {
+				$unpublishedCount++;
+			}
+			$pageTitle = $page->title;
+			$pageURLName = $page->url;
+			$url = $page->html_url;
+			echo '<option value="' . $pageURLName . '">' . $pageTitle . '</option>';
 		}
-	}
-	if($secondaryTemplate == true && $primaryTemplate == true){
-		// $secondaryButton = '<a href="#" class="btn btn-mini kl_import_secondary_template kl_margin_bottom" data-tooltip="top" title="Import template page contents"><i class="fa fa-clipboard"></i> Secondary</a>';
-		// $primaryButton = '<a href="#" class="btn btn-mini kl_import_primary_template kl_margin_bottom" data-tooltip="top" title="Import template page contents"><i class="fa fa-clipboard"></i> Primary</a>';
-		echo '<div class="btn-group">'.$primaryButton.$secondaryButton.'</div>';
+		echo '</select>';
 	} else {
-		echo $primaryButton.$secondaryButton;
+		echo 'No course pages yet';
+	}
+
+
+	if (count($publishedCount) > 0) {
+		echo '
+		<label for="#inputPublished">Published Pages</label>
+		<select name="Published" id="inputPublished" class="form-control kl_copy_page">
+			<option>Choose a page to copy</option>';
+		foreach ($coursePages as $page) {
+			if($page->published) {
+				$pageTitle = $page->title;
+				$pageURLName = $page->url;
+				$url = $page->html_url;
+				echo '<option value="' . $pageURLName . '">' . $pageTitle . '</option>';
+			}
+		}
+		echo '</select>';
+	}
+
+	if (count($unpublishedCount) > 0) {
+		echo '
+		<label for="#inputUnpublished">Unpublished Pages</label>
+		<select name="unpublished" id="inputUnpublished" class="form-control kl_copy_page">
+			<option>Choose a page to copy</option>';
+		foreach ($coursePages as $page) {
+			if(!$page->published) {
+				$pageTitle = $page->title;
+				$pageURLName = $page->url;
+				$url = $page->html_url;
+				echo '<option value="' . $pageURLName . '">' . $pageTitle . '</option>';
+			}
+		}
+		echo '</select>';
 	}
 ?>
