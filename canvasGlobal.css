@@ -1,24 +1,12 @@
-/************************************************************/
-/**************                                **************/
-/**************       KENNETHWARE STYLING      **************/
-/**************                                **************/
-/************************************************************/
+/**********************************************************************/
+/**************          KENNETHWARE STYLING             **************/
+/**********************************************************************/
 
   @import url(https://fonts.googleapis.com/css?family=PT+Sans);
 
-  /* Allow tools accordion to expand */
-  #wrapper-container {overflow: visible !important; }
-  /* Display settings for TinyMCE path navigator */
-  .defaultSkin tr.kl_mce_path_wrapper {background-color: #EFEFEF; border: 1px solid #CCC; border-top: none;}
-  .defaultSkin .kl_mce_path_wrapper .mceStatusbar div {padding: 5px; font-size: 14px;}
-  .defaultSkin .kl_mce_path_wrapper a:link, 
-  .defaultSkin .kl_mce_path_wrapper a:visited, 
-  .defaultSkin .kl_mce_path_wrapper a:active {cursor: pointer;}
-  .defaultSkin .kl_mce_path_wrapper a:hover {color: #08c;}
-
-  /*************************************/
-  /* ICONS                             */
-  /*************************************/
+/**********************************************************************/
+/**************       GENERAL STYLES                     **************/
+/**********************************************************************/
 
   /* Allow icon class for headers and li */
   h2[class*=icon-]:before, h2[class^=icon-]:before, 
@@ -53,7 +41,8 @@
   h4[class*=fa-], h4[class^=fa-] {font-size: 17.5px; }
   h5[class*=fa-], h5[class^=fa-] {font-size: 14px; }
     
-  /* Account for font problems */
+  /* Account for icon font problems */
+  /* Canvas Icons */
   #kl_banner_right[class*=icon-]:before, 
   #kl_banner_right[class^=icon-]:before,
   h2[class*=icon-]:before, h2[class^=icon-]:before,
@@ -62,6 +51,7 @@
   h5[class*=icon-]:before, h5[class^=icon-]:before,
   span[class*=icon-]:before, span[class^=icon-]:before {font-family: 'canvas-icons'; display: inline-block; vertical-align: middle; position: relative; top: -3px; text-rendering: optimizeLegibility; text-transform: none !important; font-weight: normal !important; font-style: normal !important; margin-right: 5px; }
 
+  /* Font Awesome Icons */
   #kl_banner_right[class*=fa-]:before, 
   #kl_banner_right[class^=fa-]:before,
   h2[class*=fa-]:before, h2[class^=fa-]:before,
@@ -86,222 +76,32 @@
   h5[class*=fa-]:before, h5[class^=fa-]:before,
   li[class*=fa-]:before, li[class^=fa-]:before {font-family: FontAwesome !important; }
 
-  /*********************************/
-  /* Default Navigation Styling    */
-  /*********************************/
+  /* Modules Grid */
+  #kl_modules .kl_modules_active_start, 
+  #kl_modules .kl_modules_active_stop { margin: 3px; font-size: 10px;}
+  #kl_modules .kl_modules_active_start {color: green;}
+  #kl_modules .kl_modules_active_stop {color: red;}
+  #kl_modules .locked_title { color: #A0A0A0;}
 
-  #kl_wrapper #kl_navigation {width: 100%; height: 44px; background-color: #0F2439; color: #fff; overflow: hidden; margin: 7px 0 10px 0; }
-  #kl_wrapper #kl_navigation ul {display: table; table-layout: fixed; width: 95%; margin-left: 10px; }
-  #kl_wrapper #kl_navigation li {display: table-cell; font-size: 1.2em; font-weight: normal; list-style-type: none; height: 100%; padding: 12px 22px 12px 5px; }
-  #kl_wrapper #kl_navigation li {background: url(images/divider.png) no-repeat 100% top; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  #kl_wrapper #kl_navigation li:last-child {background:none; }
-  #kl_wrapper #kl_navigation li a,
-  #kl_wrapper #kl_navigation li a:hover,
-  #kl_wrapper #kl_navigation li a:focus,
-  #kl_wrapper #kl_navigation li a:visited { color: #fff; }
-  #kl_wrapper #kl_navigation a[class*=icon-]:before,
-  #kl_wrapper #kl_navigation a[class^=icon-]:before,
-  #kl_wrapper #kl_navigation a[class*=fa-]:before,
-  #kl_wrapper #kl_navigation a[class^=fa-]:before {width: 30px; display:inline-block;}
-  #kl_wrapper #kl_navigation a[class*=fa-]:before,
-  #kl_wrapper #kl_navigation a[class^=fa-]:before {padding-right: 5px; }
-  #kl_wrapper #kl_navigation ul.font-icons a[class*=icon-]:before,
-  #kl_wrapper #kl_navigation ul.font-icons a[class^=icon-]:before,
-  #kl_wrapper #kl_navigation ul.font-icons a[class*=fa-]:before,
-  #kl_wrapper #kl_navigation ul.font-icons a[class^=fa-]:before {margin-right: 15px; }
+  /* Table Styles */
+  .kl_row_bg_success,
+  .kl_row_bg_error,
+  .kl_row_bg_warning,
+  .kl_row_bg_info { background-image: none; }
+  .kl_row_bg_success:hover,
+  .kl_row_bg_error:hover,
+  .kl_row_bg_warning:hover,
+  .kl_row_bg_info:hover { background-image: none; }
+  .kl_row_bg_success { background-color: #dff0d8; }
+  .kl_row_bg_error { background-color: #f2dede; }
+  .kl_row_bg_warning { background-color: #fcf8e3; }
+  .kl_row_bg_info { background-color: #d9edf7; }
 
-  /**************************************/
-  /* Flatten jQuery Tabs and Accordions */
-  /**************************************/
-
-  #kl_wrapper .ui-widget-header .ui-state-default,
-  #kl_wrapper .ui-state-default {background-image: none; background: #efefef;}
-  #kl_wrapper .ui-widget-header .ui-state-active {background-color: #fff; background: #fff; }
-  #kl_wrapper .ui-widget-content {border: 1px solid #dbdbdb; border-top:none; background: #fff; color: #222; font-size: 16px; }
-  #kl_wrapper h4.ui-accordion-header-active {background: #08c; }
-  #kl_wrapper .kl_custom_accordion.ui-accordion .ui-accordion-header {text-transform: capitalize; font-weight: normal; }
-  #kl_wrapper .ui-widget-header {border-bottom: 1px solid #dbdbdb; }
-
-  /*************************/
-  /* Expander Box          */
-  /*************************/
-  #kl_wrapper .kl_expand_box {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin: 10px 0;
-  }
-  #kl_wrapper .kl_expand_box h5.kl_expand_box_title {
-    background-color: #f5f5f5;
-    margin: 0;
-    padding: 10px;
-    line-height: 20px;
-    border-radius: 5px;
-    border: none;
-    letter-spacing: 0;
-  }
-  #kl_wrapper .kl_expand_box h5.kl_expand_box_title a:hover {
-    cursor: pointer;
-  }
-  #kl_wrapper .kl_expand_box.kl_expand_box_open h5.kl_expand_box_title {
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-    border-bottom: 1px solid #ddd;
-  }
-  #kl_wrapper .kl_expand_box div.kl_expand_box_content {
-    padding: 10px;
-    display: none;
-  }
-  .mceContentBody #kl_wrapper .kl_expand_box div.kl_expand_box_content {
-    display: block;
-  }
-
-  /*************************/
-  /* Module Grid Styles    */
-  /*************************/
- 
-  #kl_wrapper #kl_modules {width: 100%; margin: 20px 0 10px 0; padding: 12px 0; overflow: hidden; text-align: left; border-top: 2px solid #565656; border-bottom: 1px solid #b6babf; }
-  #kl_wrapper #kl_modules ul {column-count:2; -moz-column-count:2; /* Firefox */ -webkit-column-count:2; /* Safari and Chrome */ }
-  #kl_wrapper #kl_modules.kl_modules_columns_1 ul {column-count:1; -moz-column-count:1; /* Firefox */ -webkit-column-count:1; /* Safari and Chrome */ }
-  #kl_wrapper #kl_modules.kl_modules_columns_3 ul {column-count:3; -moz-column-count:3; /* Firefox */ -webkit-column-count:3; /* Safari and Chrome */ }
-  #kl_wrapper #kl_modules.kl_modules_columns_4 ul {column-count:4; -moz-column-count:4; /* Firefox */ -webkit-column-count:4; /* Safari and Chrome */ }
-  #kl_wrapper #kl_modules ul li {list-style-type: none; font-size: 1.2em; min-height: 30px; margin-bottom: 10px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
-  #kl_wrapper #kl_modules ul li,
-  #kl_wrapper #kl_modules ul li a, 
-  #kl_wrapper #kl_modules ul li a:hover,
-  #kl_wrapper #kl_modules ul li a:visited,
-  #kl_wrapper #kl_modules ul li a:focus,
-  #kl_wrapper #kl_modules ul li a:active {color: #565656; }
-  #kl_wrapper #kl_modules .kl_current {font-weight: bold; }
-  #kl_wrapper #kl_modules .kl_current:before {color: #00BD03;}
-  #kl_wrapper #kl_modules li[class*=icon-]:before,
-  #kl_wrapper #kl_modules li[class^=icon-]:before,
-  #kl_wrapper #kl_modules li[class*=fa-]:before,
-  #kl_wrapper #kl_modules li[class^=fa-]:before {margin: 2px 5px 5px; font-size: 1.3em; float:left;}
-  /* Tabbed Modules Grid */
-  #kl_wrapper #kl_modules .ui-tabs-panel { background: #F8F8F8; border-width: 1px 1px 1px 1px;}
-  #kl_wrapper #kl_modules.kl_modules_tabbed ul {column-count:1 !important; -moz-column-count:1 !important; /* Firefox */ -webkit-column-count:1 !important; /* Safari and Chrome */ }
-  #kl_wrapper .context_module ul.context_module_items li, 
-  #kl_wrapper #kl_modules .context_module ul.context_module_items li {list-style-type: none; font-size: 1.2em; min-height: 30px; margin-bottom: 0px;margin-top: 0px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
-  #kl_wrapper .context_module {border-top: none; border-bottom: none; background-color: #F8F8F8; min-width: 20px; margin-bottom: 0px; }
-  #kl_wrapper .context_module .item_name .title {font-size: 13px; }
-  #kl_wrapper .context_module .header {background-color: #F8F8F8; border-bottom: none; padding: 0; }
-  #kl_wrapper .context_module h2 .name {position: relative; left: 0; top: 0; }
-  #kl_wrapper .kl_modules_current_details .context_module {border: 1px solid #b6babf; border-radius: 3px;}
-  /* Tabbed Modules Pill Nav */
-  #kl_wrapper #kl_modules.kl_modules_tabbed ul.ui-tabs-nav li {list-style-type: none; font-size: 14px; min-height: 20px; border-radius: 5px; border-bottom: 1px solid #ccc !important;}
-  #kl_wrapper #kl_modules.kl_modules_tabbed .ui-tabs .ui-tabs-nav li:hover {background: #EBEBEB; border-radius: 5px;}
-  #kl_wrapper #kl_modules .ui-tabs-nav li[class*=icon-]:before,
-  #kl_wrapper #kl_modules .ui-tabs-nav li[class^=icon-]:before,
-  #kl_wrapper #kl_modules .ui-tabs-nav li[class*=fa-]:before,
-  #kl_wrapper #kl_modules .ui-tabs-nav li[class^=fa-]:before {margin: 7px -6px 5px 5px; font-size: 1.3em; float:left;}
-  #kl_wrapper #kl_modules .ui-tabs-nav li.ui-tabs-active[class*=icon-]:before,
-  #kl_wrapper #kl_modules .ui-tabs-nav li.ui-tabs-active[class^=icon-]:before,
-  #kl_wrapper #kl_modules .ui-tabs-nav li.ui-tabs-active[class*=fa-]:before,
-  #kl_wrapper #kl_modules .ui-tabs-nav li.ui-tabs-active[class^=fa-]:before {color: #fff;}
-  #kl_wrapper #kl_modules .ui-tabs-active {background: #0F2439; border-radius: 5px;}
-  #kl_wrapper #kl_modules ul li.ui-tabs-active a { color: #fff; text-shadow: none;}
-  #kl_wrapper #kl_modules .ui-widget-header .ui-state-active, 
-  #kl_wrapper #kl_modules .ui-state-active {text-shadow: none; margin-top: -1px;}
-  #kl_wrapper #kl_modules .ui-state-default, 
-  #kl_wrapper #kl_modules .ui-widget-header .ui-state-default {background-image: none;}
-  #kl_wrapper #kl_modules .ui-widget-header {border-bottom: none;}
-  @media screen and (max-width: 1168px) {
-    #kl_wrapper #kl_modules.kl_modules_columns_3 ul {column-count:2; -moz-column-count:2; /* Firefox */ -webkit-column-count:2; /* Safari and Chrome */ }
-    #kl_wrapper #kl_modules.kl_modules_columns_4 ul {column-count:3; -moz-column-count:3; /* Firefox */ -webkit-column-count:3; /* Safari and Chrome */ }
-  }
-
-  /*************************/
-  /* Tools Interface       */
-  /*************************/
-  
-  .show-revisions {z-index: 1000;} /* Fix content showing over revisions panel */
-  #kl_theme_dropdown {background: #2A587F; color: #fff; padding: 10px; margin: 0; box-shadow: inset 0px 0px 52px #1C4569; overflow: hidden;}
-  #kl_theme_dropdown ul {list-style: none; margin: 0;}
-  #kl_theme_dropdown ul li {float: left;}
-  #kl_theme_dropdown a {height: 62px; display:inline-block; margin: 5px;}
-  #kl_theme_dropdown a.removeCookies {height: 41px; width: 41px; background: #fff; border: 1px solid; border-radius: 3px; text-align: center; line-height: 15px; padding: 10px;}
-  #kl_theme_dropdown a.removeCookies i {font-size: 18px; color: rgb(213, 38, 38);}
-  #kl_theme_dropdown img {height: 60px; width: auto; border: 1px solid #C2C2C2; border-radius: 3px;}
-  .kl_tools_tab {font-size: 12px; }
-  #kl_tools{ padding: 10px 5px 5px !important; }
-  #kl_tools .kl_bordered_section, 
-  #kl_icon_box .kl_bordered_section, 
-  #kl_tables_dialog .kl_bordered_section  { border: 1px solid #AAAAAA; padding: 5px; border-radius: 5px; }
-  #kl_tools .btn.active, 
-  #kl_icon_box .btn.active, 
-  #kl_blooms_box .btn.active, 
-  #kl_idea_box .btn.active, 
-  #kl_syllabus_policy_notice .btn.active, 
-  #kl_tables_dialog .btn.active { background: #3a87ad; color: #fff; text-shadow: none; }
-  #kl_tools h3 { text-transform: capitalize; }
-  #kl_tools h4, 
-  #kl_import_content_box h4, 
-  #kl_tables_dialog h4, 
-  #kl_commenting_box h4,
-  #kl_learning_path_box h4 { border-bottom: 2px solid #555555; margin-top: 20px; font-size: 14px; font-weight: bold; color: #555555; clear: both; }
-  #kl_tools h4:first-child, 
-  #kl_existing_content_box h4:first-child { margin-top: 0; }
-  #kl_tools .kl_no_margin { margin: 0; }
-  #kl_tools p { margin: 2px 0 0 0; }
-  #kl_tools .kl_instructions_wrapper, 
-  #kl_icon_box .kl_instructions_wrapper, 
-  #kl_blooms_box .kl_instructions_wrapper  {margin: 10px -10px 0 -10px; }
-  #kl_tools .kl_instructions, 
-  #kl_icon_box .kl_instructions, 
-  #kl_blooms_box .kl_instructions  {background: #E7F4FF; border-top: 1px solid #D5D5D5; clear: both; font-size: 13px; font-style: italic; padding: 10px; }
-  #kl_tools .kl_instructions .text-success, 
-  #kl_icon_box .kl_instructions .text-success, 
-  #kl_blooms_box .kl_instructions .text-success {text-transform: uppercase; } 
-  #kl_tools .kl_instructions dl {margin: 0; }
-  .kl_margin_bottom, 
-  #kl_icon_box .kl_margin_bottom {margin-bottom: 10px; }
-  .kl_margin_bottom_small {margin-bottom: 5px; }
-  .kl_margin_top, 
-  #kl_icon_box .kl_margin_top {margin-top: 10px; }
-  .kl_margin_top_small {margin-top: 5px; }
-  #kl_tools .kl_indent {margin-left: 20px; }
-  #kl_tools .kl_custom_span_highlight { margin-left: 0; }
-  #kl_tools .kl_remove:before, 
-  #kl_content_icon_box .kl_remove:before, 
-  #kl_content_icon_box .kl_remove i, 
-  #kl_tools .kl_remove i { color: #b94a48; }
-  #kl_tools .kl_remove:hover, 
-  #kl_content_icon_box .kl_remove:hover { color: #C20602; }
-  .kl_option_half_wrap { width: 180px; margin-bottom: 10px;}
-  .kl_option_half_wrap .btn { width: 50%;}
-  .kl_option_third_wrap { width: 162px; margin-bottom: 10px;}
-  .kl_option_third_wrap .btn { width: 33%;}
-  #kl_tools .btn-group-label .btn-group, 
-  #kl_tables_dialog .btn-group-label .btn-group { margin-top: 0; }
-  #kl_tools .btn-group-label span, 
-  #kl_blooms_box .btn-group-label span, 
-  #kl_tables_dialog .btn-group-label span, 
-  #kl_icon_box .btn-group-label span { font-weight: bold; font-size: 11px; text-transform: uppercase; }
-  #kl_tools .kl_remove_empty {margin: 5px 0;}
-  #kl_tools .table th, 
-  #kl_tools .table td, 
-  #kl_tools .table label {font-size: 12px;}
-  #kl_tools .kl_success {background: #417e42; box-shadow: 0 1px 1px rgba(0,0,0,0.25); color: #ffffff; font-weight: bold; margin-bottom: 10px; padding: 5px; text-align: center; }
-  .kl_border_top_rounded {border-top-right-radius: 5px; border-top-left-radius: 5px;}
-  .kl_border_bottom_rounded {border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;}
-  #kl_tools span.kl_current_node_title {text-transform: lowercase; color: #0099E0; font-style: italic; font-size: 12px;}
-  #kl_tools hr {border: 1px solid #ccc; border-width: 1px 0 0; margin: 5px 0; }
-  /* Shrink Inputs with appended buttons in tools wrapper */
-  #kl_tools .input-append input[type="text"] {font-size: 12px; height: 14px; padding: 4px; }
-  #kl_tools .input-append .add-on {font-size: 12px; height: 14px; line-height: 14px; padding: 4px;}
-  #kl_tools .input-append .add-on i[class*=icon-]:before, 
-  #kl_tools .input-append .add-on i[class^=icon-]:before,
-  #kl_tools .input-append .add-on i[class*=fa-]:before, 
-  #kl_tools .input-append .add-on i[class^=fa-]:before{font-size: 14px; line-height: 15px; }
-  /* Tools Accordion */
-  #kl_tools .kl_custom_accordion.ui-accordion .ui-accordion-header{ padding-left: 15px; }
-  #kl_tools .kl_custom_accordion.ui-accordion .ui-accordion-header .ui-icon{ left: 5px; }
-  #kl_tools .kl_custom_accordion h3 { margin-top: 0 !important; }
-  #kl_tools .ui-accordion .ui-accordion-content { padding: 10px 10px 0 10px !important; clear: both; top: -2px; }
-  #kl_tools .ui-accordion .ui-accordion-header{ padding: 0 0 0 15px; height: 20px; margin: 1px 0; border-radius: 3px; text-shadow: none;}
-  #kl_tools .ui-accordion .ui-accordion-header .ui-icon{ left: 0; }
-  #kl_tools .ui-accordion .kl_tools_help { margin-top: -2px; line-height: 10px; height: 10px; }
-  #kl_tools .ui-accordion .form-inline{ margin: 0 0 10px; }
+  /* Tablesorter - sortable tables */
+  .table { max-width: 99%; }
+  table.tablesorter thead tr .header { background-image: url(images/bg.gif); background-repeat: no-repeat; background-position: center right; cursor: pointer; }
+  table.tablesorter thead tr .headerSortUp { background-image: url(images/asc.gif); }
+  table.tablesorter thead tr .headerSortDown { background-image: url(images/desc.gif); }
 
   /* Accordions in content */
   #kl_wrapper .kl_custom_accordion.ui-accordion .ui-accordion-header{ padding: 5px 0 5px 15px; margin: 2px 0 2px; font-weight: bold; }
@@ -310,126 +110,6 @@
   #kl_wrapper .custom-tabs { margin-top: 20px;}
   #kl_wrapper .ui-accordion .ui-accordion-content { padding: 10px; clear: both; top: -2px; margin-bottom: 0;}
   #kl_wrapper .ui-accordion .ui-accordion-header .ui-icon{ left: 0; }
-
-  /* Themes Panel */
-  #kl_tools .kl_active_theme:before { font-family: 'canvas-icons'; display: inline-block; vertical-align: middle; position: relative; text-rendering: optimizeLegibility; text-transform: none !important; font-weight: normal !important; font-style: normal !important; top: -1px; font-size: 16px; }
-  #kl_tools .kl_active_theme  { border: 1px solid #00BD03 !important; }
-  #kl_tools .kl_active_theme:before { content: "\f112"; color: #00BD03; text-shadow: 1px 1px 2px #000000; left: 22px; width: 0; top: 13px; font-size: 22px; }
-  #kl_tools .kl_fp_themes .kl_active_theme:before { font-size: 40px; text-shadow: 2px 2px 2px #000000; left: 10px; width: 0; top: 5px; }
-  #kl_tools .kl_fp_themes { text-align: center; overflow: hidden; }
-  #kl_tools .kl_fp_themes img { width: 100px; }
-  #kl_tools .kl_fp_themes li { float: left; margin: 5px 0; height: 43px;}
-  #kl_tools .kl_wiki_themes li, 
-  #kl_tools .kl_fp_themes li{ float: left; padding: 2px; background-color: #fff; border: 1px solid #ccc; border: 1px solid rgba(0, 0, 0, 0.2); -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); margin: 2px; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; cursor: pointer; }
-  #kl_tools .kl_fp_themes li a {line-height: 40px; display: block;}
-  #kl_tools .kl_fp_themes li img {max-width: 64px; max-height: 38px;}
-
-  #kl_tools .kl_element_color_pickers, 
-  #kl_tools .kl_theme_color_pickers {display:none;}
-  #kl_tools .kl_element_color_pickers th, 
-  #kl_tools .kl_theme_color_pickers th {text-align: center;}
-  #kl_tools .kl_element_color_pickers td, 
-  #kl_tools .kl_theme_color_pickers td {text-align: right;}
-  #kl_tools .kl_element_color_pickers .kl_picker_width, 
-  #kl_tools .kl_theme_color_pickers .kl_picker_width {width: 40px;}
-
-  /* Sections Panel */
-  #kl_tools #kl_add_section, 
-  #kl_tools #kl_add_acc_panel, 
-  #kl_tools #kl_add_tab_panel { padding: 4px 9px; }
-  #kl_tools #kl_new_section_name, 
-  #kl_new_acc_panel, 
-  #kl_new_tab_panel, 
-  #kl_new_primary_section_name,
-  .kl_syllabus_section_title_field{ width: 175px; }
-  #kl_tools .kl_sections, 
-  #kl_tools .kl_other { float: left; }
-  #kl_tools .kl_sections { width: 200px; }
-  #kl_tools .kl_sections_list li, 
-  #kl_tools .kl_sections_li li, 
-  #kl_tools .kl_qc_sections li, 
-  #kl_tools #kl_accordion_panels li, 
-  #kl_tools #kl_tab_panels li, 
-  .kl_template_sections_list li { background-color: #f2f2f2; border: 1px solid #ccc; cursor: move; overflow: hidden;}
-  #kl_tools .kl_sections_list li:first-child, 
-  #kl_tools .kl_sections_li li:first-child, 
-  #kl_tools .kl_qc_sections li:first-child, 
-  #kl_tools #kl_accordion_panels li:first-child, 
-  #kl_tools #kl_tab_panels li:first-child,
-  .kl_template_sections_list li:first-child { border-top-left-radius: 5px; border-top-right-radius: 5px; }
-  #kl_tools .kl_sections_list li:last-child, 
-  #kl_tools .kl_sections_li li:last-child, 
-  #kl_tools .kl_qc_sections li:last-child, 
-  #kl_tools #kl_accordion_panels li:last-child, 
-  #kl_tools #kl_tab_panels li:last-child,
-  .kl_template_sections_list li:last-child { border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; }
-  #kl_tools .kl_sections_list li span, 
-  #kl_tools .kl_sections_li li span, 
-  #kl_tools .kl_qc_sections li span, 
-  #kl_tools #kl_accordion_panels li span, 
-  #kl_tools #kl_tab_panels li span, 
-  .kl_template_sections_list li span,
-  .kl_sections_li li span,
-  .kl_qc_sections li span {float: left; margin-right: 3px; }
-  .kl_template_sections_list li label,
-  .kl_sections_li li label,
-  .kl_qc_sections li label {margin-bottom: 0;}
-  #kl_tools .kl_sections_list label, 
-  #kl_tools .kl_sections_li label{ cursor: pointer; }
-  #kl_tools .kl_sections_li .kl_identify_section,
-  .kl_template_sections_list .kl_identify_section, 
-  #kl_tools .kl_sections_li .kl_syllabus_identify_subsection { float: right; width: 20px; height: 20px; overflow: hidden; cursor: pointer; }
-  #kl_tools .kl_sections_list .kl_section_title, 
-  #kl_tools .kl_sections_li .kl_section_title, 
-  #kl_tools .kl_sections_li .kl_syllabus_section_title, 
-  .kl_template_sections_list .kl_section_title { text-transform: capitalize; text-overflow: ellipsis; overflow: hidden; max-width: 160px; white-space: nowrap; }
-  #kl_tools #kl_sections_buttons .btn { margin: 0 5px 5px 0; }
-  #kl_sections_box li.kl_li_heading {font-weight: bold; background: #fff; border: none; margin-top:3px; text-transform: uppercase; font-size: 12px;}
-
-  /* Tabs and Accordions Panel */
-  #kl_tools #kl_accordion_panels .kl_section_title,
-  #kl_tools #kl_tab_panels .kl_section_title { text-transform: capitalize; text-overflow: ellipsis; overflow: hidden; max-width: 160px; white-space: nowrap; margin-left: 3px; }
-  #kl_tools #kl_accordion_panels .kl_acc_mark_current,
-  #kl_tools #kl_tab_panels .kl_tab_mark_current {float: left;}
-
-  /* Template Sections Panel */
-  #kl_tools #kl_sections_box, 
-  #kl_tools #kl_existing_content_box { display:none; }
-  .kl_template_sections_list li { cursor: default;}
-  .kl_template_sections_list label { cursor: pointer;}
-  .kl_template_sections_list input,
-  .kl_sections_li input { margin-right: 5px; float: left;}
-  .kl_remove_sections_wrapper { margin: 15px 0; border: dashed 2px #db4f4a; background: rgba(255, 0, 0, 0.11); padding: 10px; text-align: center;}
-  #kl_existing_pages { max-height: 240px; overflow: scroll;}
-  #kl_existing_pages .kl_existing_page_links {list-style-type: none;}
-  #kl_existing_pages .kl_existing_page_links li i {margin-right: 5px;}
-
-  /* Borders and Spacing Panel */
-  #kl_tools .btn-mini.icon-end:before { font-size: 10.5px; margin: 0 -2px -2px 0; }
-  #kl_tools .kl_floated_inputs select {width: inherit; padding: 3px; height: 24px; margin-bottom: 0;}
-  #kl_tools .kl_border_spacing_section input {font-size: 14px; height: 18px; padding: 2px; width: 40px; margin-bottom: 0;}
-  #kl_tools .kl_floated_inputs .sp-replacer.sp-light.spectrum_trigger {padding: 2px; border: 1px solid #ccc; margin-bottom: 0; border-radius: 3px; }
-  #kl_tools .kl_floated_inputs .btn-mini {margin-bottom: 10px; }
-  /* Buttons Panel */
-  #kl_tools .kl_btn_examples .kl_custom_button_style { width: 90px; margin-top: 5px; }
-
-  /* Highlights | Alerts | Emphasis Panel */
-  #kl_tools .kl_alert_section .alert, 
-  #kl_tools .kl_alert_section .well { padding: 5px; font-size: 12px; margin: 5px 0; }
-  #kl_tools .kl_add_well_class { color: #000; }
-  #kl_tools .kl_emphasis_section dt{ width: 45px; font-size: 12px; }
-  #kl_tools .kl_emphasis_section dd{ margin-left: 50px; font-size: 12px; }
-
-  /* Progress Bar Panel */
-  #kl_progress_bar_section_controls { font-size: 12px;}
-  #kl_progress_bar_section_controls th, 
-  #kl_progress_bar_section_controls td { text-align: center; }
-  #kl_progress_bar_section_controls input { margin-bottom: 0; font-size: 12px; padding: 0 4px; text-align: center;}
-  .kl_progress_bar_width { width: 35px; }
-  .kl_progress_bar_value { float: left; }
-  #kl_progress_bar { position: relative; margin-bottom: 10px; }
-  #kl_progress_bar .kl_progress_bar_wrapper { border-radius: 5px; }
-
 
   /* Quick Check Styling */
   .kl_quick_check { background: #f2f3f4; overflow: hidden; margin: 10px 0; padding: 20px; border-top: 1px dotted #aaaaaa; border-bottom: 1px dotted #aaaaaa;}
@@ -466,145 +146,12 @@
   .kl_tab_mark_current:hover i,
   .kl_acc_mark_current:hover i { color: #9C9C9C; text-shadow: 0 0 2px #00BD03;}
 
-  /* Tables Panel */
-  .kl_row_bg_success,
-  .kl_row_bg_error,
-  .kl_row_bg_warning,
-  .kl_row_bg_info { background-image: none; }
-  .kl_row_bg_success:hover,
-  .kl_row_bg_error:hover,
-  .kl_row_bg_warning:hover,
-  .kl_row_bg_info:hover { background-image: none; }
-  .kl_row_bg_success { background-color: #dff0d8; }
-  .kl_row_bg_error { background-color: #f2dede; }
-  .kl_row_bg_warning { background-color: #fcf8e3; }
-  .kl_row_bg_info { background-color: #d9edf7; }
-  .kl_table_new input,
-  .kl_input_small, 
-  #kl_tables_dialog .kl_table_new input { width: 25px; }
-  input.kl_input_small {text-align: center; }
-
-  /* Tablesorter - sortable tables */
-  .table { max-width: 99%; }
-  table.tablesorter thead tr .header { background-image: url(images/bg.gif); background-repeat: no-repeat; background-position: center right; cursor: pointer; }
-  table.tablesorter thead tr .headerSortUp { background-image: url(images/asc.gif); }
-  table.tablesorter thead tr .headerSortDown { background-image: url(images/desc.gif); }
-
-
-  /* btn-group (adapted from Bootstrap) */
-  .btn-group { position: relative; display: inline-block; *display: inline; *margin-left: .3em; font-size: 0; white-space: nowrap; vertical-align: middle; *zoom: 1; margin: 0 2px 0 0; }
-  .btn-group:first-child { *margin-left: 0; }
-  .btn-toolbar { margin-top: 10px; margin-bottom: 10px; font-size: 0; }
-  .btn-toolbar > .btn + .btn,
-  .btn-toolbar > .btn-group + .btn,
-  .btn-toolbar > .btn + .btn-group { margin-left: 5px; }
-  .btn-group > .btn { position: relative; -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; }
-  .btn-group > .btn + .btn { margin-left: -1px; }
-  .btn-group > .btn,
-  .btn-group > .dropdown-menu,
-  .btn-group > .popover { font-size: 14px; }
-  .btn-group > .btn-mini { font-size: 10.5px; }
-  .btn-group > .btn-small { font-size: 11.9px; }
-  .btn-group > .btn-large { font-size: 17.5px; }
-  .btn-group > .btn:first-child { margin-left: 0; -webkit-border-bottom-left-radius: 4px; border-bottom-left-radius: 4px; -webkit-border-top-left-radius: 4px; border-top-left-radius: 4px; -moz-border-radius-bottomleft: 4px; -moz-border-radius-topleft: 4px; }
-  .btn-group > .btn:last-child,
-  .btn-group > .dropdown-toggle { -webkit-border-top-right-radius: 4px; border-top-right-radius: 4px; -webkit-border-bottom-right-radius: 4px; border-bottom-right-radius: 4px; -moz-border-radius-topright: 4px; -moz-border-radius-bottomright: 4px; }
-  .btn-group > .btn.large:first-child { margin-left: 0; -webkit-border-bottom-left-radius: 6px; border-bottom-left-radius: 6px; -webkit-border-top-left-radius: 6px; border-top-left-radius: 6px; -moz-border-radius-bottomleft: 6px; -moz-border-radius-topleft: 6px; }
-  .btn-group > .btn.large:last-child,
-  .btn-group > .large.dropdown-toggle { -webkit-border-top-right-radius: 6px; border-top-right-radius: 6px; -webkit-border-bottom-right-radius: 6px; border-bottom-right-radius: 6px; -moz-border-radius-topright: 6px; -moz-border-radius-bottomright: 6px; }
-  .btn-group > .btn:hover,
-  .btn-group > .btn:focus,
-  .btn-group > .btn:active,
-  .btn-group > .btn.active { z-index: 2; }
-
-  /* For Icons */
-  #kl_icon_box .btn-group { margin-left: 0; }
-  #kl_icon_box .btn-group:first-child { margin-bottom: -2px; }
-  #kl_icon_box .btn-group:last-child { margin-top: 5px; margin-bottom: 10px; }
-  #kl_icon_box #kl_icons .kl_icon_change { margin: 3px 4px; display: inline-block; cursor: pointer; }
-  #kl_icon_box #kl_icons .kl_fa_icon { margin: 3px 5px; }
-  #kl_icon_box .fa{ width: 14px; font-size: 18px; display: inline-block; }
-  #kl_icon_box .kl_icon_category { width: 45px; }
-
-  /* Syllabus Tool */
-  #kl_syllabus_policy_notice { background: #f2f3f4; overflow: hidden; margin: 10px 0; padding: 5px 10px; border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;}
-  #kl_syllabus_policy_notice .btn-group { margin-right: 10px;}
-
-  /* Policies Styling */
-  #kl_university_policies h3 {color: #0F2439; font-family: "PT Sans",Helvetica,Arial,sans-serif; font-weight: bold; border-bottom: 1px solid #E0E0E0; line-height: 25px; }
-
-  #kl_blooms_box #kl_blooms { margin: 10px 0; overflow: auto; }
-  #kl_blooms_box .kl_blooms { display: block; float: left; width: 103px; margin: 0 1px 1px 0; }
-  #kl_blooms_box .kl_blooms:hover { background: #3F9BC9; }
-  #kl_blooms_box #kl_blooms_controls { margin-top: 10px; }
-  #kl_blooms_box #kl_blooms_controls .btn { width: 61px; text-align: left; }
-  #kl_blooms_box #kl_blooms_controls .btn-group{ margin: 0; }
-
-  #kl_idea_box #kl_idea_controls { margin: 0; }
-  #kl_idea_box .kl_idea_objective { height: 20px; overflow: hidden; background-color: #3a87ad; color: #fff; border-radius: 5px; padding: 2px 5px; margin: 3px 0; cursor: pointer; text-decoration: none; display: block; }
-  #kl_idea_box .kl_idea_objective:hover,
-  #kl_idea_box .kl_idea_objective:focus { text-decoration: none; background: #3F9BC9; }
-  #kl_idea_box .kl_idea_expand { margin: 5px 0; color: #0088cc !important; border: 1px solid #AAA; background: #fff !important; }
-  #kl_idea_box .kl_idea_expand:hover { text-decoration: underline; background: #fff !important; }
-  #kl_idea_box .kl_idea_expand { height: auto; }
-  #kl_idea_box #kl_idea_controls a { color: #fff; }
-  #kl_tools .global_buttons { margin-top: 10px; }
-  #kl_tools #information_SyllabusSectionsButtons .disabled { color: #A2A2A2; }
-  #kl_tools .tableNew input, 
-  #kl_tables_dialog .tableNew input { width: 25px; }
-
-  /* Modules Grid */
-  #kl_tools #kl_modules_list_controls li { cursor: default !important; } 
-  #kl_tools #kl_modules_list_controls li .kl_modules_choose_dates_trigger,
-  #kl_tools #kl_modules_list_controls li .kl_modules_list_mark_current { float: left; }
-  #kl_tools #kl_modules_list_controls .kl_modules_choose_dates { padding: 3px; }
-  #kl_tools #kl_modules_list_controls i { padding: 0 2px; }
-  #kl_tools #kl_modules_list_controls .input-small { width: 75px; }
-  #kl_tools #kl_modules_list_controls .ui-datepicker-month { height: 17px; }
-  #kl_modules .kl_modules_active_start, 
-  #kl_modules .kl_modules_active_stop { margin: 3px; font-size: 10px;}
-  #kl_modules .kl_modules_active_start {color: green;}
-  #kl_modules .kl_modules_active_stop {color: red;}
-  .ui-dialog {z-index: 100;}
-  #kl_modules .locked_title { color: #A0A0A0;}
-  .kl_social_media_input { width: 180px; }
-
-  #kl_wrapper #kl_banner { margin-bottom: 20px;}
-
-  /***** Accessibility Check *****/
-  .kl_accessibility_color_check { filter: grayscale(100%); -webkit-filter: grayscale(100%); -moz-filter: grayscale(100%); -ms-filter: grayscale(100%); -o-filter: grayscale(100%); filter: url(desaturate.svg#grayscale); filter: gray; }
-
-  /***** Spectrum Colorpicker customization ****/
-  .sp-replacer.spectrum_trigger {
-    padding: 0px;
-    border: none;
-    background: #fff;
-    color: #333;
-  }
-  .spectrum_trigger .sp-preview {
-    position: relative;
-    width: 15px;
-    height: 15px;
-  }
-  .spectrum_trigger .sp-dd {
-    padding: 2px 0;
-    height: 14px;
-    line-height: 14px;
-    float: left;
-    font-size: 10px;
-  }
-  .sp-container.spectrum_picker {
-    border: solid 1px #9E9E9E;
-    box-shadow: 2px 2px 2px #A2A2A2;
-    border-radius: 5px;
-  }
-
-  /***** Other *****/
+  /* Misc */
   #kl_wrapper {position: relative;} /* allow positioning of sub elements */
+  #kl_wrapper #kl_banner { margin-bottom: 20px;}
   #kl_wrapper .kl_image_full_width {width: 100%; height: auto; }
+  .show-revisions {z-index: 1000;} /* Fix content showing over revisions panel */
 
-/**********************************************************************/
-/**************       END BASE KENNETHWARE STYLING       **************/
 /**********************************************************************/
 /**************       BEGIN KENNETHWARE THEMES           **************/
 /**********************************************************************/
@@ -613,6 +160,19 @@
   /*** KEY: FP = Front Page   ***/
   /***      CP = Content Page ***/
   /******************************/
+
+  /*******************************************************************/
+  /********* NAVIGATION BASICS             ***************************/
+  #kl_wrapper #kl_navigation a[class*=icon-]:before,
+  #kl_wrapper #kl_navigation a[class^=icon-]:before,
+  #kl_wrapper #kl_navigation a[class*=fa-]:before,
+  #kl_wrapper #kl_navigation a[class^=fa-]:before {width: 30px; display:inline-block;}
+  #kl_wrapper #kl_navigation a[class*=fa-]:before,
+  #kl_wrapper #kl_navigation a[class^=fa-]:before {padding-right: 5px; }
+  #kl_wrapper #kl_navigation ul.font-icons a[class*=icon-]:before,
+  #kl_wrapper #kl_navigation ul.font-icons a[class^=icon-]:before,
+  #kl_wrapper #kl_navigation ul.font-icons a[class*=fa-]:before,
+  #kl_wrapper #kl_navigation ul.font-icons a[class^=fa-]:before {margin-right: 15px; }
 
   /*********************************************************************/
   /******* FP: HORIZONTAL NAV THEME (Updated for img) ******************/
@@ -625,6 +185,15 @@
   #kl_wrapper.kl_fp_horizontal_nav_2 #kl_banner #kl_banner_left .kl_mod_num {width: 100%; padding: 3px 0 7px; display: block; font-size: 17px; line-height: 26px; text-align: center;}
   #kl_wrapper.kl_fp_horizontal_nav_2 #kl_banner #kl_banner_right {display: block; padding: 7px 10px 3px; line-height: 26px; letter-spacing: 0.3px; font-size: 25px; max-height: 62px; overflow: hidden; text-overflow: ellipsis;}
   #kl_wrapper.kl_fp_horizontal_nav_2 #kl_banner #kl_banner_right .kl_subtitle { display: block; font-size: medium; line-height: 20px; margin-top: 5px;}
+  #kl_wrapper.kl_fp_horizontal_nav_2 #kl_navigation {width: 100%; height: 44px; background-color: #0F2439; color: #fff; overflow: hidden; margin: 7px 0 10px 0; }
+  #kl_wrapper.kl_fp_horizontal_nav_2 #kl_navigation ul {display: table; table-layout: fixed; width: 95%; margin-left: 10px; }
+  #kl_wrapper.kl_fp_horizontal_nav_2 #kl_navigation li {display: table-cell; font-size: 1.2em; font-weight: normal; list-style-type: none; height: 100%; padding: 12px 22px 12px 5px; }
+  #kl_wrapper.kl_fp_horizontal_nav_2 #kl_navigation li {background: url(images/divider.png) no-repeat 100% top; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #kl_wrapper.kl_fp_horizontal_nav_2 #kl_navigation li:last-child {background:none; }
+  #kl_wrapper.kl_fp_horizontal_nav_2 #kl_navigation li a,
+  #kl_wrapper.kl_fp_horizontal_nav_2 #kl_navigation li a:hover,
+  #kl_wrapper.kl_fp_horizontal_nav_2 #kl_navigation li a:focus,
+  #kl_wrapper.kl_fp_horizontal_nav_2 #kl_navigation li a:visited { color: #fff; }
 
   /*********************************************************************/
   /******* FP: PANEL NAV THEME (Updated for img) ***********************/
@@ -751,6 +320,7 @@
   #kl_wrapper.kl_fp_circles_1x1 #kl_banner #kl_banner_left .kl_mod_text {border-top-left-radius: 55px; border-top-right-radius: 55px; display: block; padding-top:25px; text-align: center; width: 100%; }
   #kl_wrapper.kl_fp_circles_1x1 #kl_banner #kl_banner_left .kl_mod_num {border-bottom-left-radius: 55px; border-bottom-right-radius: 55px; display: block; padding-bottom:25px; text-align: center; width: 100%; }
   #kl_wrapper.kl_fp_circles_1x1 #kl_banner #kl_banner_right {background-color: #C2C2C2; border-radius: 25px; color: #000; display: inline-block; margin-left: auto; margin-right: auto; padding: 2px 20px; position: relative; top: 210px; z-index: 1; }
+  #kl_wrapper.kl_fp_circles_1x1 #kl_banner #kl_banner_right span.kl_subtitle {background: #fff; border-radius: 25px; display: inline-block; font-size: 18px; margin: 2px 0px 2px 10px; padding: 0px 10px; text-transform: uppercase; }
   #kl_wrapper.kl_fp_circles_1x1 #kl_banner_image {height: 320px; margin: 0 auto; position: relative; width: 320px; }
   #kl_wrapper.kl_fp_circles_1x1 #kl_banner_image img{border: none; border-radius: 160px; }
   #kl_wrapper.kl_fp_circles_1x1 #kl_navigation {background-color: transparent; display: table; margin: -300px auto 0; overflow: hidden; position: relative; width: 660px; height: 360px; }
@@ -804,9 +374,18 @@
   #kl_wrapper.kl_fp_flat_sections #kl_navigation,
   #kl_wrapper.kl_flat_sections #kl_navigation {width: 100%; background-color: #1e5799; margin: 0 0 20px; color: #fff; height: 48px; overflow: hidden; padding: 0;}
   #kl_wrapper.kl_fp_flat_sections #kl_navigation ul,
-  #kl_wrapper.kl_flat_sections #kl_navigation ul {margin-bottom: 0;}
+  #kl_wrapper.kl_flat_sections #kl_navigation ul {margin-bottom: 0;display: table; table-layout: fixed; width: 95%; margin-left: 10px;}
   #kl_wrapper.kl_fp_flat_sections #kl_navigation li,
-  #kl_wrapper.kl_flat_sections #kl_navigation li {padding: 7px 5px; background: none;}
+  #kl_wrapper.kl_flat_sections #kl_navigation li {display: table-cell; font-size: 1.2em; font-weight: normal; list-style-type: none; height: 100%; padding: 12px 22px 12px 5px;padding: 7px 5px; background: none;}
+  #kl_wrapper.kl_flat_sections #kl_navigation li a,
+  #kl_wrapper.kl_flat_sections #kl_navigation li a:hover,
+  #kl_wrapper.kl_flat_sections #kl_navigation li a:focus,
+  #kl_wrapper.kl_flat_sections #kl_navigation li a:visited,
+  #kl_wrapper.kl_fp_flat_sections #kl_navigation li a,
+  #kl_wrapper.kl_fp_flat_sections #kl_navigation li a:hover,
+  #kl_wrapper.kl_fp_flat_sections #kl_navigation li a:focus,
+  #kl_wrapper.kl_fp_flat_sections #kl_navigation li a:visited { color: #fff; }
+
   #kl_wrapper.kl_fp_flat_sections #kl_navigation a[class*=icon-]:before,
   #kl_wrapper.kl_fp_flat_sections #kl_navigation a[class^=icon-]:before,
   #kl_wrapper.kl_fp_flat_sections #kl_navigation a[class*=fa-]:before,
@@ -1101,6 +680,16 @@
   #kl_wrapper.kl_generic #kl_banner #kl_banner_left .kl_mod_num{ margin-left: 5px; }
   #kl_wrapper.kl_generic #kl_banner_right .kl_subtitle { font-size: medium; display: block; line-height: 15px;}
 
+  #kl_wrapper.kl_generic #kl_navigation {width: 100%; height: 44px; background-color: #0F2439; color: #fff; overflow: hidden; margin: 7px 0 10px 0; }
+  #kl_wrapper.kl_generic #kl_navigation ul {display: table; table-layout: fixed; width: 95%; margin-left: 10px; }
+  #kl_wrapper.kl_generic #kl_navigation li {display: table-cell; font-size: 1.2em; font-weight: normal; list-style-type: none; height: 100%; padding: 12px 22px 12px 5px; }
+  #kl_wrapper.kl_generic #kl_navigation li {background: url(images/divider.png) no-repeat 100% top; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #kl_wrapper.kl_generic #kl_navigation li:last-child {background:none; }
+  #kl_wrapper.kl_generic #kl_navigation li a,
+  #kl_wrapper.kl_generic #kl_navigation li a:hover,
+  #kl_wrapper.kl_generic #kl_navigation li a:focus,
+  #kl_wrapper.kl_generic #kl_navigation li a:visited { color: #fff; }
+
   /*********************************************************************/
   /***** BASIC COLOR THEME  ********************************************/
 
@@ -1142,6 +731,12 @@
   #kl_wrapper.kl_fp_colored_headings,
   #kl_wrapper.kl_colored_headings {background-color: #efefef; }
   #kl_wrapper.kl_colored_headings.kl_show_title #kl_banner {margin-top: 25px; }
+  #kl_wrapper.kl_fp_colored_headings #kl_navigation,
+  #kl_wrapper.kl_colored_headings #kl_navigation {width: 100%; height: 44px; background-color: #0F2439; color: #fff; overflow: hidden; margin: 7px 0 10px 0; }
+  #kl_wrapper.kl_fp_colored_headings #kl_navigation ul,
+  #kl_wrapper.kl_colored_headings #kl_navigation ul {display: table; table-layout: fixed; width: 95%; margin-left: 10px; }
+  #kl_wrapper.kl_fp_colored_headings #kl_navigation li,
+  #kl_wrapper.kl_colored_headings #kl_navigation li {display: table-cell; font-size: 1.2em; font-weight: normal; list-style-type: none; height: 100%; padding: 12px 22px 12px 5px; }
 
 
   #kl_wrapper.kl_fp_colored_headings #kl_banner_image,
@@ -1164,6 +759,14 @@
   #kl_wrapper.kl_colored_headings #kl_navigation ul {margin-bottom: 0; }
   #kl_wrapper.kl_fp_colored_headings #kl_navigation li,
   #kl_wrapper.kl_colored_headings #kl_navigation li {background: none; padding: 7px 5px; }
+  #kl_wrapper.kl_colored_headings #kl_navigation li a,
+  #kl_wrapper.kl_colored_headings #kl_navigation li a:hover,
+  #kl_wrapper.kl_colored_headings #kl_navigation li a:focus,
+  #kl_wrapper.kl_colored_headings #kl_navigation li a:visited,
+  #kl_wrapper.kl_fp_colored_headings #kl_navigation li a,
+  #kl_wrapper.kl_fp_colored_headings #kl_navigation li a:hover,
+  #kl_wrapper.kl_fp_colored_headings #kl_navigation li a:focus,
+  #kl_wrapper.kl_fp_colored_headings #kl_navigation li a:visited { color: #fff; }
   #kl_wrapper.kl_fp_colored_headings #kl_navigation a[class*=icon-]:before,
   #kl_wrapper.kl_fp_colored_headings #kl_navigation a[class^=icon-]:before,
   #kl_wrapper.kl_fp_colored_headings #kl_navigation a[class*=fa-]:before,
@@ -1281,7 +884,7 @@
   #kl_wrapper.kl_basic_bar h3 { text-transform: uppercase; border-bottom: 1px solid #C7C7C7; height: 40px; margin: 30px 0 25px; }
 
 /**********************************************************************/
-/**************                                    ********************/
-/**************    END KENNETHWARE THEMES / CODE   ********************/
-/**************                                    ********************/
+/**************        END KENNETHWARE THEMES            **************/
+/**********************************************************************/
+/**************        END KENNETHWARE STYLING           **************/
 /**********************************************************************/
