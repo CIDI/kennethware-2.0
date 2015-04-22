@@ -5894,6 +5894,8 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
                 $('.kl_add_tools').unbind("click").click(function (e) {
                     e.preventDefault();
                     klEditorExistenceCheck(toolsToLoad);
+                    $('head').append($('<link/>', { rel: 'stylesheet', href: klToolsPath + 'css/tools_interface.css', type: 'text/css' }));
+
                     $(this).html('<i class="fa fa-spin fa-spinner"></i> Loading Tools');
                 });
             }
