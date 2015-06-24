@@ -6,6 +6,19 @@
 	session_start();
 	require_once __DIR__ . '/../config.php';
 
+	// Check if safari
+	// Check if not chrome, because chrome outputs Safari*
+	// Check if no cookie/session is set
+	if (strpos($_SERVER["HTTP_USER_AGENT"], "Safari")
+	    && !strpos($_SERVER["HTTP_USER_AGENT"], "Chrome")) {
+	    if (count($_COOKIE) === 0) {
+	     echo '<script>
+	     top.location = "' . $_SESSION['template_wizard_url'] . '/set_session.php";
+	     </script>';
+	     exit(); // need to be there in order not to load the rest of the page
+	    }
+	}
+
 	//Check to see if the lti handshake passes
 	$context = new BLTI($lti_secret, false, false);
 	if ($context->valid) {
