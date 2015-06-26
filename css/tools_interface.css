@@ -8,13 +8,6 @@
   /* Tools Interface       */
   /*************************/
   
-  #kl_theme_dropdown {background: #2A587F; color: #fff; padding: 10px; margin: 0; box-shadow: inset 0px 0px 52px #1C4569; overflow: hidden;}
-  #kl_theme_dropdown ul {list-style: none; margin: 0;}
-  #kl_theme_dropdown ul li {float: left;}
-  #kl_theme_dropdown a {height: 62px; display:inline-block; margin: 5px;}
-  #kl_theme_dropdown a.removeCookies {height: 41px; width: 41px; background: #fff; border: 1px solid; border-radius: 3px; text-align: center; line-height: 15px; padding: 10px;}
-  #kl_theme_dropdown a.removeCookies i {font-size: 18px; color: rgb(213, 38, 38);}
-  #kl_theme_dropdown img {height: 60px; width: auto; border: 1px solid #C2C2C2; border-radius: 3px;}
   .kl_tools_tab {font-size: 12px; }
   #kl_tools{ padding: 10px 5px 5px !important; }
   #kl_tools .kl_bordered_section, 
@@ -186,7 +179,7 @@
   .kl_template_sections_list input,
   .kl_sections_li input { margin-right: 5px; float: left;}
   .kl_remove_sections_wrapper { margin: 15px 0; border: dashed 2px #db4f4a; background: rgba(255, 0, 0, 0.11); padding: 10px; text-align: center;}
-  #kl_existing_pages { max-height: 240px; overflow: scroll;}
+  #kl_existing_pages { height: 325px; overflow: scroll;}
   #kl_existing_pages .kl_existing_page_links {list-style-type: none;}
   #kl_existing_pages .kl_existing_page_links li i {margin-right: 5px;}
 
