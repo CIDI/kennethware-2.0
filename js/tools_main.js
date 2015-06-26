@@ -5720,8 +5720,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         });
     }
     function klListPages() {
-        console.log('-----------');
-            $.getJSON("https://" + location.host + "/api/v1/courses/" + coursenum + "/pages", function (data) {
+            $.getJSON("https://" + location.host + "/api/v1/courses/" + coursenum + "/pages?per_page=50", function (data) {
         try {
                 var items = [],
                     published = [],
