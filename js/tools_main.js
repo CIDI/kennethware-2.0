@@ -5875,7 +5875,6 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         $('.kl_add_tools').remove();
 
         setTimeout(function () {
-            klBindAPIImportsTriggers();
             // Load additional content from canvasGlobal.js if needed
             klAfterToolLaunch();
         }, 300);
