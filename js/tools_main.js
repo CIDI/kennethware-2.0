@@ -1273,7 +1273,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
     function klGetTabPanels() {
         $('#kl_tab_panels').html('');
         if ($(iframeID).contents().find('.kl_tabbed_section').length > 0) {
-            $(iframeID).contents().find('.kl_tabbed_section h4').each(function (i) {
+            $(iframeID).contents().find('.kl_tabbed_section > h4').each(function (i) {
                 var identifyCurrent, panelTitle, sortableImage;
                 if ($(this).hasClass('kl_current_tab')) {
                     $(this).attr('class', 'kl_tab_' + i + ' kl_current_tab');
@@ -1292,7 +1292,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
                     '    <span class="screenreader-only">Delete Tab Panel</span>' +
                     '</a></li>');
             });
-            $(iframeID).contents().find('.kl_tabbed_section div').each(function (i) {
+            $(iframeID).contents().find('.kl_tabbed_section > div').each(function (i) {
                 if ($(this).hasClass('kl_current_tab')) {
                     $(this).attr('class', 'kl_tab_content kl_tab_' + i + ' kl_current_tab');
                 } else {
@@ -1553,6 +1553,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         // Clean up extra spaces and add to parent
         newStyle = newStyle.trim();
         tinyMCE.DOM.setAttrib(parentList, 'style', newStyle);
+        $(parentList).removeAttr('data-mce-style');
     }
 
     ////// On Ready/Click functions  //////
@@ -5875,7 +5876,6 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         $('.kl_add_tools').remove();
 
         setTimeout(function () {
-            klBindAPIImportsTriggers();
             // Load additional content from canvasGlobal.js if needed
             klAfterToolLaunch();
         }, 300);
