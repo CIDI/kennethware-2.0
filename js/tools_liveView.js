@@ -157,9 +157,9 @@ if ($('.kl_tabbed_section').length > 0) {
     // turn h4s into li's to create navigation section
     // Make sure the tab h3 titles are wrapped in <a href="#">
 
-    if ($(".kl_tabbed_section h4").length > 0) {
+    if ($(".kl_tabbed_section > h4").length > 0) {
         $(".kl_tabbed_section").prepend('<ul class="kl_temp_tab_list" />');
-        $(".kl_tabbed_section h4").each(function () {
+        $(".kl_tabbed_section > h4").each(function () {
             'use strict';
             var myTitle = $(this).html(),
                 myClass = $(this).attr('class'),
@@ -249,7 +249,7 @@ if ($('.kl_expand_box').length > 0) {
     $('.kl_expand_box_toggler').unbind('click').click(function () {
         'use strict';
         var connectedExpandBox = $(this).attr('aria-controls');
-        console.log(connectedExpandBox);
+        // console.log(connectedExpandBox);
         $('#' + connectedExpandBox).slideToggle('fast');
         $(this).parents('.kl_expand_box').toggleClass('kl_expand_box_open');
     });
@@ -258,7 +258,7 @@ if ($('.kl_expand_box').length > 0) {
 if ($('.tablesorter').length > 0) {
     $.getScript(klToolsPath + "/js/jquery.tablesorter.min.js", function () {
         'use strict';
-        console.log('tablesorter loaded');
+        // console.log('tablesorter loaded');
     });
     setTimeout(function () {
         'use strict';
@@ -328,7 +328,7 @@ if (($("#kl_institutional_policies").length > 0 || $("#kl_wrapper").length > 0) 
             $(value).parent('div').contents().find("h4").each(function (index, secondValue) {
                 var subtitle = $(secondValue).text(),
                     subAnchorName = subtitle.replace("&", "");
-                    console.log('-' + subtitle);
+                    // console.log('-' + subtitle);
                 subAnchorName = subAnchorName.replace(/ /g, "_");
                 $(secondValue).prepend('<a name="kl_' + subAnchorName + '"></a>');
                 $('#kl_' + anchorName + '_sub').append('<li class="kl_' + subAnchorName + 'Link"><a href="#kl_' + subAnchorName + '">' + subtitle + '</a></li>');
@@ -345,7 +345,7 @@ if (($("#kl_institutional_policies").length > 0 || $("#kl_wrapper").length > 0) 
         'use strict';
         var subtitle = $(secondValue).text(),
             subAnchorName = subtitle.replace("&", "");
-            console.log('-' + subtitle);
+            // console.log('-' + subtitle);
         subAnchorName = subAnchorName.replace(/ /g, "_");
         $(secondValue).prepend('<a name="kl_' + subAnchorName + '"></a>');
         $('#kl_institutional_policies_sub').append('<li class="kl_' + subAnchorName + 'Link"><a href="#kl_' + subAnchorName + '">' + subtitle + '</a></li>');
