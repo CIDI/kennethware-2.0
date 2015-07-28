@@ -1553,6 +1553,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         // Clean up extra spaces and add to parent
         newStyle = newStyle.trim();
         tinyMCE.DOM.setAttrib(parentList, 'style', newStyle);
+        $(parentList).removeAttr('data-mce-style');
     }
 
     ////// On Ready/Click functions  //////
