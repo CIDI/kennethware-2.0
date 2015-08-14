@@ -51,12 +51,4 @@
 		array(16,9)
 	);
 
-	/***************************/
-	/* TOOLS API CONFIG  */
-	/***************************/
-
-	// These variables for the Content Tools to make API calls
-	$canvasDomain = 'https://<your domain>.instructure.com';
-	// This OAuth token needs to make GET API calls for any course in your institution
-	$apiToken = "###";
 ?>
