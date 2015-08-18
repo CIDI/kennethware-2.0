@@ -199,6 +199,13 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
                 clearTimeout(timeoutID);
             });
         });
+        // Add toggle button to top of tools wrapper
+        if ($('.kl_tools_hide').length === 0) {
+            $('#kl_tools_wrapper').prepend('<button class="kl_tools_hide btn btn-mini">Hide Design Tools <i class="icon-arrow-open-right"></i></button>');
+            $('.kl_tools_hide').unbind('click').click(function () {
+                $('#kl_tools_wrapper').toggle('slide');
+            });
+        }
     }
     // and is the first item on the page. Also replaces old css code
     function klCustomCSSCheck() {
@@ -343,6 +350,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
                     $(iframeID).contents().find(targetElement).css('color', textColor);
                 }
                 $(iframeID).contents().find(targetElement).removeAttr('data-mce-style');
+                clearDataMCEStyle();
             }
         });
     }
@@ -5776,19 +5784,9 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
 
             // Create tabs for Canvas Tools and USU Tools
         if ($('#kl_tools_wrapper').length === 0) {
-            // Wrap existing Canvas Page Tools
-            if ($('#editor_tabs').length > 0) {
-                $('#editor_tabs').wrap('<div id="kl_tools_wrapper" class="tabs" />').wrap('<div id="canvas_tools" />');
-            }
-
-            $('#kl_tools_wrapper').append('<div id="kl_tools" />').prepend(tabNavigation);
-            $('#kl_tools_wrapper').tabs({active: 1});
+            $('#application').append('<div id="kl_tools_wrapper"><div id="kl_tools"></div></div>');
         }
         $('#kl_tools').html(visualBlocksButtons + customAccordionDiv + klCleanUpButtons);
-        $('#toolsTrigger').click(function (e) {
-            e.preventDefault();
-            $('a:contains("HTML Editor")').get(0).scrollIntoView();
-        });
         klBindHover();
     }
     // Create an accordion in right panel after tools are added
@@ -5873,7 +5871,8 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         // Load JavaScript file that will clean up old format
         klCleanUp();
         klBindHover();
-        $('.kl_add_tools').remove();
+        $('.kl_add_tools').html('<i class="fa fa-rocket" style="font-size: 18px;"></i> Toggle Design Tools').addClass('btn-mini');
+        $('.kl_add_tools i').css('font-size', '');
 
         setTimeout(function () {
             // Load additional content from canvasGlobal.js if needed
@@ -5895,7 +5894,8 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         klDelayedLoad();
         klCleanUp();
         klBindHover();
-        $('.kl_add_tools').remove();
+        $('.kl_add_tools').html('<i class="fa fa-rocket" style="font-size: 18px;"></i> Toggle Design Tools').addClass('btn-mini');
+        $('.kl_add_tools i').css('font-size', '');
     }
     // Check for TinyMCE editor and Load Tools
     function klEditorExistenceCheck(toolsToLoad) {
@@ -5937,10 +5937,15 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
                 }
                 $('.kl_add_tools').unbind("click").click(function (e) {
                     e.preventDefault();
-                    klEditorExistenceCheck(toolsToLoad);
-                    $('head').append($('<link/>', { rel: 'stylesheet', href: klToolsPath + 'css/tools_interface.css', type: 'text/css' }));
+                    var timestamp =  +(new Date());
+                    if ($('#kl_tools').length === 0) {
+                        klEditorExistenceCheck(toolsToLoad);
+                        $('head').append($('<link/>', { rel: 'stylesheet', href: klToolsPath + 'css/tools_interface.css?' + timestamp, type: 'text/css' }));
+                        $(this).html('<i class="fa fa-spin fa-spinner"></i> Loading Tools');
+                    } else {
+                        $('#kl_tools_wrapper').toggle('slide');
+                    }
 
-                    $(this).html('<i class="fa fa-spin fa-spinner"></i> Loading Tools');
                 });
             }
         }
