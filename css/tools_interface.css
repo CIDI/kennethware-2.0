@@ -9,7 +9,9 @@
   /*************************/
   
   .kl_tools_tab {font-size: 12px; }
+  #kl_tools_wrapper {width: 265px; position: fixed; height: 100%; overflow-y: scroll; top: 0; right: 0; box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.29); background: #fff; z-index: 100;}
   #kl_tools{ padding: 10px 5px 5px !important; }
+  #kl_tools_wrapper .kl_tools_hide {width: 100%; text-align: right; }
   #kl_tools .kl_bordered_section, 
   #kl_icon_box .kl_bordered_section, 
   #kl_tables_dialog .kl_bordered_section  { border: 1px solid #AAAAAA; padding: 5px; border-radius: 5px; }
@@ -298,5 +300,5 @@
   .sp-replacer.spectrum_trigger {padding: 0px; border: none; background: #fff; color: #333; }
   .spectrum_trigger .sp-preview {position: relative; width: 15px; height: 15px; }
   .spectrum_trigger .sp-dd {padding: 2px 0; height: 14px; line-height: 14px; float: left; font-size: 10px; }
-  .sp-container.spectrum_picker {border: solid 1px #9E9E9E; box-shadow: 2px 2px 2px #A2A2A2; border-radius: 5px; }
+  .sp-container.spectrum_picker {border: solid 1px #9E9E9E; box-shadow: 2px 2px 2px #A2A2A2; border-radius: 5px; min-width: 185px;}
 
