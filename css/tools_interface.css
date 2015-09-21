@@ -292,7 +292,8 @@
   /* Other */
   .ui-dialog {z-index: 100;}
   .kl_social_media_input { width: 180px; }
-
+  .kl_node_list {margin-bottom: 3px; }
+  .kl_node_list .btn-mini {text-transform: lowercase;}
   /***** Accessibility Check *****/
   .kl_accessibility_color_check { filter: grayscale(100%); -webkit-filter: grayscale(100%); -moz-filter: grayscale(100%); -ms-filter: grayscale(100%); -o-filter: grayscale(100%); filter: url(desaturate.svg#grayscale); filter: gray; }
 

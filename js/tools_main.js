@@ -25,6 +25,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
 
     var toolsToLoad,
         sectionsPanelDefault = false,
+        activeElement = tinymce.activeEditor.selection.getNode(),
         // assignmentsPage = false,
         // discussionsPage = false,
         // Basic shell to add into template
@@ -73,6 +74,57 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
 //  These functions are used throughout the various tools  //
 /////////////////////////////////////////////////////////////
 
+    // Recreate the functionality of the HTML Element Path
+    function nodebutton(buttonClass) {
+        $(buttonClass).unbind('click').click(function () {
+            $(iframeID).contents().find('.kl_section_hover').removeClass('kl_section_hover');
+            $('.kl_node.active').removeClass('active');
+            $(buttonClass).addClass('active');
+            klCurrentSpacing('margin');
+            klCurrentSpacing('padding');
+            klCurrentBorder();
+            klInitializeElementColorPicker('#kl_selected_element_text_color', 'color');
+            klInitializeElementColorPicker('#kl_selected_element_bg_color', 'background-color');
+            klInitializeElementColorPicker('#kl_selected_element_border_color', 'border-color');
+        });
+        $(buttonClass).unbind('mouseover').mouseover(function () {
+            var el = $(buttonClass),
+            connectedElement = $(this).data('targetElement'),
+            timeoutID = setTimeout(function () {
+                $(iframeID).contents().find(connectedElement).addClass('kl_section_hover');
+            }, 500);
+            el.mouseout(function () {
+                connectedElement = $(this).data('targetElement');
+                $(iframeID).contents().find(connectedElement).removeClass('kl_section_hover');
+                clearTimeout(timeoutID);
+            });
+            el.focusout(function () {
+                connectedElement = $(this).data('targetElement');
+                $(iframeID).contents().find(connectedElement).removeClass('kl_section_hover');
+                clearTimeout(timeoutID);
+            });
+        });
+        $(buttonClass).unbind('focus').focus(function () {
+            var el = $(buttonClass),
+            connectedElement = $(this).data('targetElement'),
+            timeoutID = setTimeout(function () {
+                $(iframeID).contents().find(connectedElement).addClass('kl_section_hover');
+            }, 500);
+        });
+    }
+    function updateNodeList() {
+        var currentNode = tinyMCE.activeEditor.selection.getNode();
+        $('.kl_node_list').empty();
+        $('.kl_node_list').append('<button class="btn btn-mini kl_current_node kl_node active" data-identifier="kl_current_node">' + $(currentNode).prop('tagName') + '</button>');
+        $('.kl_current_node').data('targetElement', $(currentNode));
+        nodebutton('.kl_current_node');
+        $(currentNode).parentsUntil('body').each(function (index) {
+            $('.kl_node_list').append('<button class=" btn btn-mini kl_node_' + index + ' kl_node" data-identifier="kl_node_' + index + '">' + $(this).prop('tagName') + '</button>');
+            $('.kl_node_' + index).data('targetElement', $(this));
+            nodebutton('.kl_node_' + index);
+        });
+    }
+
     // Draft state adds an h2 with the page title, give user choice to include this otherwise we will get rid of it
     function klShowPageTitle() {
         if ($('input#title').length > 0 && $('.kl_show_title').length === 0) {
@@ -97,20 +149,21 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
     // Styles and code to be applied to TinyMCE editor
     function klAddStyletoIframe() {
         if (!$(iframeID).contents().find('body').hasClass('kl_has_style')) {
-            var $head = $(iframeID).contents().find('head'),
-                timestamp =  +(new Date());
-            $head.append($('<link/>', { rel: 'stylesheet', href: klToolsVariables.vendor_legacy_normal_contrast, type: 'text/css' }));
-            $head.append($('<link/>', { rel: 'stylesheet', href: klToolsVariables.common_legacy_normal_contrast, type: 'text/css' }));
-            $head.append($('<link/>', { rel: 'stylesheet', href: klGlobalCSSFile + '?' + timestamp, type: 'text/css' }));
-            $head.append($('<link/>', { rel: 'stylesheet', href: klToolsPath + 'css/canvasMCEEditor.css?' + timestamp, type: 'text/css' }));
-            $head.append($("<link/>", { rel: "stylesheet", href: klFontAwesomePath, type: 'text/css'}));
-            if ($(iframeID).contents().find('#kl_custom_css').length > 0) {
-                $head.append($('<link/>', { rel: 'stylesheet', href: '/courses/' + coursenum + '/file_contents/course%20files/global/css/style.css?' + timestamp, type: 'text/css' }));
+            try {
+                var $head = $(iframeID).contents().find('head'),
+                    timestamp = +(new Date());
+                $('link[rel="stylesheet"]').each(function () {
+                    $(this).clone().appendTo($head);
+                });
+                $head.append($('<link/>', { rel: 'stylesheet', href: klToolsPath + 'css/canvasMCEEditor.css?' + timestamp, id: 'editorCSSSheet' }));
+                $head.append($("<link/>", { rel: "stylesheet", href: klFontAwesomePath, id: 'fontAwesomeCSSSheet'}));
+                if ($(iframeID).contents().find('#kl_custom_css').length > 0) {
+                    $head.append($('<link/>', { rel: 'stylesheet', href: '/courses/' + coursenum + '/file_contents/course%20files/global/css/style.css?' + timestamp, id: 'customCSSSheet' }));
+                }
+                $(iframeID).contents().find('body').css('background-image', 'none').addClass('kl_has_style').removeAttr('data-mce-style');
+            } catch (err) {
+                $('#kl_tools').append('<div class="alert alert-error"><strong>klAddStyletoIframe:</strong> ' + err + '</div>');
             }
-            $(iframeID).contents().find('body').css('background-image', 'none').addClass('kl_has_style');
-            // if ($(iframeID).contents().find('.kl_fp_panel_nav, .kl_fp_horizontal_nav').length > 0) {
-            //     $(iframeID).contents().find('head').append('<style>#kl_banner_image {background: url(/courses/' + coursenum + '/file_contents/course%20files/global/css/images/homePageBanner.jpg) no-repeat center center; }</style>');
-            // }
         }
     }
     function klBannerImageCheck() {
@@ -282,9 +335,6 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         });        
         // Adjust node title when the node changes
         $('.kl_current_node_title').html('&lt;' + tinymce.activeEditor.selection.getNode().nodeName + '&gt;');
-        tinyMCE.activeEditor.on('NodeChange', function () {
-            $('.kl_current_node_title').html('&lt;' + tinymce.activeEditor.selection.getNode().nodeName + '&gt;');
-        });
     }
     // Clear out the blank span added when the template wrapper is first created
     function klRemoveTempContent() {
@@ -351,13 +401,26 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
                 }
                 $(iframeID).contents().find(targetElement).removeAttr('data-mce-style');
                 clearDataMCEStyle();
+            },
+            change: function (tinycolor) {
+                $(inputName).val(tinycolor);
+                chosenColor = $(inputName).val();
+                $(iframeID).contents().find(targetElement).css(attribute, chosenColor);
+                if (attribute === 'background-color') {
+                    bgHex = chosenColor.replace('#', '');
+                    textColor = getContrastYIQ(bgHex);
+                    $(iframeID).contents().find(targetElement).css('color', textColor);
+                }
+                $(iframeID).contents().find(targetElement).removeAttr('data-mce-style');
+                clearDataMCEStyle();
             }
         });
     }
     ////// Supporting functions  //////
     function klInitializeElementColorPicker(inputName, attribute) {
         var chosenColor = '',
-            startingColor = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), attribute, true),
+            $targetElement = $('.kl_node.active').data('targetElement'),
+            startingColor = $targetElement.css(attribute),
             bgHex,
             textColor;
         $(inputName).spectrum({
@@ -377,12 +440,25 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
                 $(inputName).val(tinycolor);
                 chosenColor = $(inputName).val();
                 // $(iframeID).contents().find(targetElement).css(attribute, chosenColor);
-                tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), attribute, chosenColor);
+                $targetElement.css(attribute, chosenColor);
                 if (attribute === 'background-color') {
                     bgHex = chosenColor.replace('#', '');
                     textColor = getContrastYIQ(bgHex);
                     // $(iframeID).contents().find(targetElement).css('color', textColor);
-                    tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'color', textColor);
+                    $targetElement.css('color', textColor);
+                }
+                clearDataMCEStyle();
+            },
+            change: function (tinycolor) {
+                $(inputName).val(tinycolor);
+                chosenColor = $(inputName).val();
+                // $(iframeID).contents().find(targetElement).css(attribute, chosenColor);
+                $targetElement.css(attribute, chosenColor);
+                if (attribute === 'background-color') {
+                    bgHex = chosenColor.replace('#', '');
+                    textColor = getContrastYIQ(bgHex);
+                    // $(iframeID).contents().find(targetElement).css('color', textColor);
+                    $targetElement.css('color', textColor);
                 }
                 clearDataMCEStyle();
             }
@@ -1727,36 +1803,40 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
 
     ////// Supporting functions  //////
     function klRemoveBorders(parentElement) {
-        tinyMCE.DOM.removeClass(parentElement, 'border');
-        tinyMCE.DOM.removeClass(parentElement, 'border-trbl');
-        tinyMCE.DOM.removeClass(parentElement, 'border-rbl');
-        tinyMCE.DOM.removeClass(parentElement, 'border-tbl');
-        tinyMCE.DOM.removeClass(parentElement, 'border-tl');
-        tinyMCE.DOM.removeClass(parentElement, 'border-b');
-        tinyMCE.DOM.removeClass(parentElement, 'border-t');
+        var $targetElement = $('.kl_node.active').data('targetElement');
+        $targetElement.removeClass('border');
+        $targetElement.removeClass('border-trbl');
+        $targetElement.removeClass('border-rbl');
+        $targetElement.removeClass('border-tbl');
+        $targetElement.removeClass('border-tl');
+        $targetElement.removeClass('border-b');
+        $targetElement.removeClass('border-t');
     }
     function klRemoveBorderRadius(parentElement) {
-        tinyMCE.DOM.removeClass(parentElement, 'border-round');
-        tinyMCE.DOM.removeClass(parentElement, 'border-round-b');
-        tinyMCE.DOM.removeClass(parentElement, 'border-round-t');
-        tinyMCE.DOM.removeClass(parentElement, 'border-round-tl');
+        var $targetElement = $('.kl_node.active').data('targetElement');
+        $targetElement.removeClass('border-round');
+        $targetElement.removeClass('border-round-b');
+        $targetElement.removeClass('border-round-t');
+        $targetElement.removeClass('border-round-tl');
     }
     function klRemovePadding(parentElement) {
-        tinyMCE.DOM.removeClass(parentElement, 'pad-box-mega');
-        tinyMCE.DOM.removeClass(parentElement, 'pad-box');
-        tinyMCE.DOM.removeClass(parentElement, 'pad-box-mini');
-        tinyMCE.DOM.removeClass(parentElement, 'pad-box-micro');
+        var $targetElement = $('.kl_node.active').data('targetElement');
+        $targetElement.removeClass('pad-box-mega');
+        $targetElement.removeClass('pad-box');
+        $targetElement.removeClass('pad-box-mini');
+        $targetElement.removeClass('pad-box-micro');
     }
     function klChangeBorderStyle(style, direction) {
-        var kl_spacing_val;
+        var kl_spacing_val,
+            $targetElement = $('.kl_node.active').data('targetElement');
         if (direction === 'all') {
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-top-style', '');
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-right-style', '');
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-bottom-style', '');
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-left-style', '');
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-style', style);
+            $targetElement.css('border-top-style', '');
+            $targetElement.css('border-right-style', '');
+            $targetElement.css('border-bottom-style', '');
+            $targetElement.css('border-left-style', '');
+            $targetElement.css('border-style', style);
         } else {
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-' + direction + '-style', style);
+            $targetElement.css('border-' + direction + '-style', style);
         }
         clearDataMCEStyle();
     }
@@ -1765,16 +1845,19 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-style', kl_border_style);
     }
     function klChangeSpacing(type, direction) {
-        var kl_spacing_val = $('#kl_' + type + '_input_' + direction).val();
+        var kl_spacing_val = $('#kl_' + type + '_input_' + direction).val(),
+            $targetElement = $('.kl_node.active').data('targetElement');
         if ($('#kl_' + type + '_input_' + direction).val() !== '') {
             kl_spacing_val = kl_spacing_val + 'px';
         } else if ($('#kl_' + type + '_input_all').val() !== '') {
             kl_spacing_val = $('#kl_' + type + '_input_all').val() + 'px';
         }
         if (type === 'border') {
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type + '-' + direction + '-width', kl_spacing_val);
+            $targetElement.css(type + '-' + direction + '-width', kl_spacing_val);
+            // tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type + '-' + direction + '-width', kl_spacing_val);
         } else {
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type + '-' + direction, kl_spacing_val);
+            $targetElement.css(type + '-' + direction, kl_spacing_val);
+            // tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type + '-' + direction, kl_spacing_val);
         }
         clearDataMCEStyle();
     }
@@ -1793,10 +1876,15 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         $('#kl_' + type + '_input_left').attr('placeholder', '#').val('');
     }
     function klCurrentSpacing(type) {
-        var kl_spacing_top = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), type + '-top', true),
-            kl_spacing_right = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), type + '-right', true),
-            kl_spacing_bottom = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), type + '-bottom', true),
-            kl_spacing_left = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), type + '-left', true),
+        var $targetElement = $('.kl_node.active').data('targetElement'),
+            kl_spacing_top = $targetElement.css(type + '-top'),
+            kl_spacing_right = $targetElement.css(type + '-right'),
+            kl_spacing_bottom = $targetElement.css(type + '-bottom'),
+            kl_spacing_left = $targetElement.css(type + '-left'),
+            // kl_spacing_top = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), type + '-top', true),
+            // kl_spacing_right = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), type + '-right', true),
+            // kl_spacing_bottom = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), type + '-bottom', true),
+            // kl_spacing_left = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), type + '-left', true),
             kl_spacing_display_top = kl_spacing_top.replace('px', ''),
             kl_spacing_display_right = kl_spacing_right.replace('px', ''),
             kl_spacing_display_bottom = kl_spacing_bottom.replace('px', ''),
@@ -1808,19 +1896,29 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         $('#kl_' + type + '_input_right').attr('placeholder', kl_spacing_display_right).val('');
     }
     function klCurrentBorder() {
-        var kl_border_top = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-top-width', true),
-            kl_border_right = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-right-width', true),
-            kl_border_bottom = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-bottom-width', true),
-            kl_border_left = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-left-width', true),
+        var $targetElement = $('.kl_node.active').data('targetElement'),
+            kl_border_top = $targetElement.css('border-top-width'),
+            kl_border_right = $targetElement.css('border-right-width'),
+            kl_border_bottom = $targetElement.css('border-bottom-width'),
+            kl_border_left = $targetElement.css('border-left-width'),
+            // kl_border_top = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-top-width', true),
+            // kl_border_right = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-right-width', true),
+            // kl_border_bottom = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-bottom-width', true),
+            // kl_border_left = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-left-width', true),
             kl_border_display_top = kl_border_top.replace('px', ''),
             kl_border_display_right = kl_border_right.replace('px', ''),
             kl_border_display_bottom = kl_border_bottom.replace('px', ''),
             kl_border_display_left = kl_border_left.replace('px', ''),
-            kl_border_style = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-style', true),
-            kl_border_style_top = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-top-style', true),
-            kl_border_style_right = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-right-style', true),
-            kl_border_style_bottom = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-bottom-style', true),
-            kl_border_style_left = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-left-style', true);
+            kl_border_style = $targetElement.css('border-style'),
+            kl_border_style_top = $targetElement.css('border-top-style'),
+            kl_border_style_right = $targetElement.css('border-right-style'),
+            kl_border_style_bottom = $targetElement.css('border-bottom-style'),
+            kl_border_style_left = $targetElement.css('border-left-style');
+            // kl_border_style = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-style', true),
+            // kl_border_style_top = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-top-style', true),
+            // kl_border_style_right = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-right-style', true),
+            // kl_border_style_bottom = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-bottom-style', true),
+            // kl_border_style_left = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-left-style', true);
         // $('#kl_' + type + '_input_all').attr('placeholder', '#').val('');
         $('#kl_border_input_top').attr('placeholder', kl_border_display_top).val('');
         $('#kl_border_input_bottom').attr('placeholder', kl_border_display_bottom).val('');
@@ -1838,23 +1936,28 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         klInitializeElementColorPicker('#kl_border_color_left', 'border-left-color');
     }
     function klSetBorderValue(direction) {
-        var kl_border_val = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-' + direction + '-width', true),
+        var $targetElement = $('.kl_node.active').data('targetElement'),
+            kl_border_val = $targetElement.css('border-' + direction + '-width'),
+        // var kl_border_val = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), 'border-' + direction + '-width', true),
             kl_border_display_val = kl_border_val.replace('px', '');
         $('#kl_border_input_' + direction).val(kl_border_display_val);
         clearDataMCEStyle();
     }
     function klSetSpacingValue(type, direction) {
-        var kl_spacing_val = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), type + '-' + direction, true),
+        var $targetElement = $('.kl_node.active').data('targetElement'),
+            kl_spacing_val = $targetElement.css(type + '-' + direction),
+        // var kl_spacing_val = tinyMCE.DOM.getStyle(tinyMCE.activeEditor.selection.getNode(), type + '-' + direction, true),
             kl_spacing_display_val = kl_spacing_val.replace('px', '');
         $('#kl_' + type + '_input_' + direction).val(kl_spacing_display_val);
         clearDataMCEStyle();
     }
     function klDefaultSpacing(type) {
-        tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type, '');
-        tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type + '-top', '');
-        tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type + '-bottom', '');
-        tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type + '-left', '');
-        tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), type + '-right', '');
+        var $targetElement = $('.kl_node.active').data('targetElement');
+        $targetElement.css(type, '');
+        $targetElement.css(type + '-top', '');
+        $targetElement.css(type + '-bottom', '');
+        $targetElement.css(type + '-left', '');
+        $targetElement.css(type + '-right', '');
         clearDataMCEStyle();
     }
 
@@ -1866,7 +1969,8 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             e.preventDefault();
             myClass = $(this).attr('rel');
             elementType = $('.kl_border_apply a.active').attr('rel');
-            parentElement = tinyMCE.activeEditor.dom.getParent(tinyMCE.activeEditor.selection.getNode(), elementType);
+            parentElement = $('.kl_node.active').data('targetElement');
+            // parentElement = tinyMCE.activeEditor.dom.getParent(tinyMCE.activeEditor.selection.getNode(), elementType);
             klRemoveBorderRadius(parentElement);
             tinyMCE.DOM.addClass(parentElement, myClass);
         });
@@ -1905,25 +2009,27 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         });
         $('#kl_borders_default').unbind("click").click(function (e) {
             e.preventDefault();
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-style', '');
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-top-style', '');
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-right-style', '');
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-bottom-style', '');
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-left-style', '');
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-width', '');
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-top-width', '');
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-right-width', '');
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-bottom-width', '');
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-left-width', '');
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-color', '');
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-top-color', '');
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-right-color', '');
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-bottom-color', '');
-            tinyMCE.DOM.setStyle(tinyMCE.activeEditor.selection.getNode(), 'border-left-color', '');
+            var $targetElement = $('.kl_node.active').data('targetElement');
+            $targetElement.css('border-style', '');
+            $targetElement.css('border-top-style', '');
+            $targetElement.css('border-right-style', '');
+            $targetElement.css('border-bottom-style', '');
+            $targetElement.css('border-left-style', '');
+            $targetElement.css('border-width', '');
+            $targetElement.css('border-top-width', '');
+            $targetElement.css('border-right-width', '');
+            $targetElement.css('border-bottom-width', '');
+            $targetElement.css('border-left-width', '');
+            $targetElement.css('border-color', '');
+            $targetElement.css('border-top-color', '');
+            $targetElement.css('border-right-color', '');
+            $targetElement.css('border-bottom-color', '');
+            $targetElement.css('border-left-color', '');
             clearDataMCEStyle();
             klCurrentBorder();
             $('#kl_border_input_all').val('');
         });
+        updateNodeList();
         klInitializeElementColorPicker('#kl_border_color_all', 'border-color');
         klInitializeElementColorPicker('#kl_border_color_top', 'border-top-color');
         klInitializeElementColorPicker('#kl_border_color_right', 'border-right-color');
@@ -1940,6 +2046,9 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         $('.kl_margins').each(function () {
             var direction = $(this).attr('rel');
             $('#kl_margin_input_' + direction).keyup(function () {
+                klChangeSpacing('margin', direction);
+            });
+            $('#kl_margin_input_' + direction).change(function () {
                 klChangeSpacing('margin', direction);
             });
             $('#kl_margin_input_' + direction).focus(function () {
@@ -1962,6 +2071,9 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             $('#kl_padding_input_' + direction).keyup(function () {
                 klChangeSpacing('padding', direction);
             });
+            $('#kl_padding_input_' + direction).change(function () {
+                klChangeSpacing('padding', direction);
+            });
             $('#kl_padding_input_' + direction).focus(function () {
                 klSetSpacingValue('padding', direction);
             });
@@ -1978,15 +2090,6 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             $(this).addClass('active');
             $('.kl_border_spacing_section').hide();
             $('#' + connectedElement).show();
-        });
-        // Identify when TinyMCE node changes
-        tinyMCE.activeEditor.on('NodeChange', function () {
-            klCurrentSpacing('margin');
-            klCurrentSpacing('padding');
-            klCurrentBorder();
-            $('#kl_border_input_all').val('');
-            $('#kl_margin_input_all').val('');
-            $('#kl_padding_input_all').val('');
         });
     }
 
@@ -2013,6 +2116,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             '    </a>' +
             '</h3>' +
             '<div class="kl_borders_spacing">' +
+            '   <strong>Apply To:</strong> <div class="kl_node_list btn-group"></div>' +
             '   <div class="btn-group kl_borders_spacing_tabs kl_margin_bottom">' +
             '        <a href="#" class="btn btn-small active" rel="kl_borders">Borders</a>' +
             '        <a href="#" class="btn btn-small" rel="kl_padding">Padding</a>' +
@@ -2020,7 +2124,6 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             '   </div>' +
             '   <div class="kl_margin_top">' +
             '       <div id="kl_borders" class="kl_border_spacing_section">' +
-            '           <h4>Selected <span class="kl_current_node_title"></span> Borders:</h4>' +
             '           <div class="kl_floated_inputs">' +
             '              <label for="kl_border_input_all" class="screenreader-only">All Borders Width</label>' +
             '              <input id="kl_border_input_all" class="kl_borders_all kl_input_small" type="number" placeholder="#">' +
@@ -2108,7 +2211,6 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             '           </div>' +
             '       </div>' +
             '       <div id="kl_padding" class="kl_border_spacing_section" style="display:none;">' +
-            '           <h4>Selected <span class="kl_current_node_title"></span> Padding:</h4>' +
             '           <div class="btn-group-label kl_margin_top">' +
             '               <input id="kl_padding_input_all" class="kl_padding_all kl_input_small" type="number" placeholder="#">' +
             '               <label for="kl_padding_input_all">All Padding</label><hr>' +
@@ -2124,7 +2226,6 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             '           <button id="kl_padding_default" class="btn btn-mini">Reset Padding to Default</button>' +
             '       </div>' +
             '       <div id="kl_margins" class="kl_border_spacing_section" style="display:none;">' +
-            '           <h4>Selected <span class="kl_current_node_title"></span> Margins:</h4>' +
             '           <div class="btn-group-label kl_margin_top">' +
             '               <input id="kl_margin_input_all" class="kl_margins_all kl_input_small" type="number" placeholder="#">' +
             '               <label for="kl_margin_input_all">All Margins</label><hr>' +
@@ -2144,7 +2245,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             '       <div class="kl_instructions">' +
             '           <ul>' +
             '               <li>Place your <span class="text-success"><strong>cursor</strong></span> within the element you want to edit</li>' +
-            '               <li>Use the breadcrumb below the editor to select a parent element</li>' +
+            '               <li>Use the "Apply To" buttons above to select a parent element. (Hovering over a button will highlight that element in the editor).</li>' +
             '               <li class="fa fa-info-circle">For best results, change &ldquo;EDITOR VIEW&rdquo; to &ldquo;Preview&rdquo;</li>' +
             '          </ul>' +
             '       </div>' +
@@ -2250,20 +2351,18 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
 
     ////// On Ready/Click functions  //////
     function klColorsReady() {
+        updateNodeList();
         klInitializeElementColorPicker('#kl_selected_element_text_color', 'color');
         klInitializeElementColorPicker('#kl_selected_element_bg_color', 'background-color');
         klInitializeElementColorPicker('#kl_selected_element_border_color', 'border-color');
         $('.kl_remove_color').click(function (e) {
             e.preventDefault();
-            tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'background-color', '');
-            tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'color', '');
-            tinyMCE.DOM.setStyle(tinymce.activeEditor.selection.getNode(), 'border-color', '');
-            clearDataMCEStyle();
-        });
-        tinyMCE.activeEditor.on('NodeChange', function () {
-            klInitializeElementColorPicker('#kl_selected_element_text_color', 'color');
-            klInitializeElementColorPicker('#kl_selected_element_bg_color', 'background-color');
-            klInitializeElementColorPicker('#kl_selected_element_border_color', 'border-color');
+            var $targetElement = $('.kl_node.active').data('targetElement');
+            $targetElement.css({
+                'background-color': '',
+                'color': '',
+                'border-color': ''
+            }).removeAttr('data-mce-style');
         });
     }
 
@@ -2286,7 +2385,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             '</h3>' +
             '<div id="kl_custom_buttons">' +
             '   <div class="btn-group-label kl_btn_examples kl_margin_bottom">' +
-            '       <span>Selected <span class="kl_current_node_title"></span> Colors:</span><br>' +
+            '       <strong>Apply To:</strong> <div class="kl_node_list btn-group"></div>' +
             '       <table class="table table-striped table-condensed">' +
             '       <thead><tr><th>Aspect</th><th>Color</th></tr></thead>' +
             '           <tbody>' +
@@ -2311,7 +2410,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             '       <div class="kl_instructions">' +
             '           <ul>' +
             '               <li>Place the cursor in the element you want to change.</li>' +
-            '               <li>Use the breadcrumb below the editor to select a parent element.</li>' +
+            '               <li>Use the "Apply To" buttons above to select a parent element.. (Hovering over a button will highlight that element in the editor).</li>' +
             '           </ul>' +
             '       </div>' +
             '   </div>' +
@@ -5878,6 +5977,20 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             // Load additional content from canvasGlobal.js if needed
             klAfterToolLaunch();
         }, 300);
+        // Node Change functions
+        tinyMCE.activeEditor.on('NodeChange', function () {
+            if (activeElement !== tinymce.activeEditor.selection.getNode()) {
+                activeElement = tinyMCE.activeEditor.selection.getNode();
+                updateNodeList();
+                klCurrentSpacing('margin');
+                klCurrentSpacing('padding');
+                klCurrentBorder();
+                $('.kl_current_node_title').html('&lt;' + tinymce.activeEditor.selection.getNode().nodeName + '&gt;');
+                klInitializeElementColorPicker('#kl_selected_element_text_color', 'color');
+                klInitializeElementColorPicker('#kl_selected_element_bg_color', 'background-color');
+                klInitializeElementColorPicker('#kl_selected_element_border_color', 'border-color');
+            }
+        });
     }
     // Setup Syllabus Tools
     function setupSyllabusTools() {
