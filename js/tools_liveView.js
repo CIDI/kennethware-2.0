@@ -33,6 +33,7 @@ function kl_gatherModuleDetails() {
                 $('#context_module_item_' + id + ' .due_date_display').html($.dateString(info.due_date));
             }
         });
+        $('.for-nvda').remove();
     });
 }
 // Gather data on student module progress
@@ -116,7 +117,8 @@ currentTheme = $('#kl_wrapper').attr('class');
 if ($('.kl_show_title').length === 0 && $.inArray(currentTheme, klToolsVariables.klShowPageTitleTemplates) === -1) {
     if ($('#kl_banner h2').length > 0 && $('#course_home_content').length === 0) {
         $('h1.page-title').addClass('screenreader-only');
-        $('#kl_wrapper').css('margin-top', '-25px');
+        // $('#kl_wrapper').css('margin-top', '-25px');
+        $('#kl_wrapper').parent().css('padding-top', '0');
     }
 }
 // Full width images
@@ -141,7 +143,7 @@ if ($('.kl_custom_accordion').length > 0) {
         activeHeader: "ui-icon-triangle-1-s"
     };
     if ($('.kl_current_acc').length > 0) {
-        activePanel = parseFloat($(".kl_acc_panel_heading.kl_current_acc").attr('class').replace('kl_panel_', '').replace(' kl_current_acc', ''));
+        activePanel = parseFloat($(".kl_acc_panel_heading.kl_current_acc").attr('class').replace('kl_panel_', '').replace('kl_current_acc', '').replace('kl_acc_panel_heading', '').replace(' ', ''));
     } else {
         activePanel = 0;
     }
