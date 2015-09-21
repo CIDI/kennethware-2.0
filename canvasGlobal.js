@@ -29,10 +29,6 @@ var iframeID,
     klToolsVariablesFile = klToolsPath + 'js/tools_variables.js',
     // Path to additional_customization file
     klToolsAdditionalCustomizationFile = klToolsPath + 'js/additional_customization.js',
-    // To utilize the features that pull from the Canvas api you will need the hosted php files put their path here
-    klApiToolsPath = klToolsPath + 'api/',
-    // Path to institutional css file
-    klGlobalCSSFile = 'https://<path to css>/canvasGlobal.css',
     klFontAwesomePath = '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css',
     coursenum;
 

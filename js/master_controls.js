@@ -1,5 +1,5 @@
 /*jslint browser: true, sloppy: false, eqeq: false, vars: false, maxerr: 50, indent: 4, plusplus: true */
-/*global $, jQuery, alert, console, klToolsVariables, coursenum, klAdditionalAfterContentLoaded, klChangeVariables,
+/*global $, jQuery, alert, console, klToolsVariables, coursenum, klAdditionalAfterContentLoaded, 
   klAfterToolDependenciesLoaded, tinyMCE, iframeID, ENV */
 
 // If any of these elements exist, we will watch for page content in them to load
