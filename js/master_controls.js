@@ -103,45 +103,50 @@ function klTriggerToolsCheck() {
     var klLoadTools = false,
         userID = ENV.current_user_id;
     console.log('klTriggerToolsCheck()');
-    // Only proceed if this passes the limits on the tools
-    if (klToolsVariables.klLimitByRole === false && klToolsVariables.klLimitByUser === false) {
-        klLoadTools = true;
-    } else if (klToolsVariables.klLimitByRole === true && klToolsVariables.klLimitByUser === false) {
-        $.each(klToolsVariables.klRoleArray, function (index, val) {
-            if ($.inArray(val, ENV.current_user_roles) === -1) {
-                klLoadTools = true;
-                // return false;
-            }
-        });
-    } else if (klToolsVariables.klLimitByRole === false && klToolsVariables.klLimitByUser === true) {
-        console.log(userID);
-        // If the user's Canvas ID is in the klToolsVariables.klUserArray
-        if ($.inArray(userID, klToolsVariables.klUserArray) !== -1) {
+    try {
+        // Only proceed if this passes the limits on the tools
+        if (klToolsVariables.klLimitByRole === false && klToolsVariables.klLimitByUser === false) {
             klLoadTools = true;
-        }
-    } else if (klToolsVariables.klLimitByRole === true && klToolsVariables.klLimitByUser === true) {
-        $.each(klToolsVariables.klRoleArray, function (index, val) {
-            if ($.inArray(val, ENV.current_user_roles) === -1 && $.inArray(userID, klToolsVariables.klUserArray) !== -1) {
+        } else if (klToolsVariables.klLimitByRole === true && klToolsVariables.klLimitByUser === false) {
+            $.each(klToolsVariables.klRoleArray, function (index, val) {
+                if ($.inArray(val, ENV.current_user_roles) !== -1) {
+                    klLoadTools = true;
+                    // return false;
+                }
+            });
+        } else if (klToolsVariables.klLimitByRole === false && klToolsVariables.klLimitByUser === true) {
+            console.log(userID);
+            // If the user's Canvas ID is in the klToolsVariables.klUserArray
+            if ($.inArray(userID, klToolsVariables.klUserArray) !== -1) {
                 klLoadTools = true;
-                // return false;
             }
-        });
-    }
-    if (klLoadTools) {
-        // First condition is for syllabus
-        if ($('.kl_add_tools').length > 0) {
-            $('.kl_add_tools').show();
-        // If it is not the syllabus check for editor
-        } else if ($('iframe').contents().find('#tinymce').length > 0) {
-            // console.log(tinyMCE.activeEditor.id);
-            iframeID = '#' + tinyMCE.activeEditor.id + '_ifr';
-            klLoadToolsDependencies();
-        } else {
-            // console.log('Check Again');
-            setTimeout(function () {
-                klTriggerToolsCheck();
-            }, 500);
+        } else if (klToolsVariables.klLimitByRole === true && klToolsVariables.klLimitByUser === true) {
+            $.each(klToolsVariables.klRoleArray, function (index, val) {
+                if ($.inArray(val, ENV.current_user_roles) !== -1 && $.inArray(userID, klToolsVariables.klUserArray) !== -1) {
+                    klLoadTools = true;
+                    // return false;
+                }
+            });
         }
+        console.log("Load Tools: " + klLoadTools);
+        if (klLoadTools) {
+            // First condition is for syllabus
+            if ($('.kl_add_tools').length > 0) {
+                $('.kl_add_tools').show();
+            // If it is not the syllabus check for editor
+            } else if ($('iframe').contents().find('#tinymce').length > 0) {
+                // console.log(tinyMCE.activeEditor.id);
+                iframeID = '#' + tinyMCE.activeEditor.id + '_ifr';
+                klLoadToolsDependencies();
+            } else {
+                // console.log('Check Again');
+                setTimeout(function () {
+                    klTriggerToolsCheck();
+                }, 500);
+            }
+        }
+    } catch (err) {
+        console.log(err);
     }
 }
 
