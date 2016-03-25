@@ -412,18 +412,25 @@
 			if(imagejpeg($dst_r, $output_filename, $jpeg_quality)){
 				$uploadFile = uploadFrontPageBanner($courseID, $imageName);
 				echo '<div>
-						<h3 class="alert alert-success text-center">Image Uploaded!</h3>
+						<h3 class="alert alert-success text-center">Image Sent to Canvas!</h3>
+						<div class="hide">' . $uploadData->status_url . '</div>
 						<div class="container-fluid">
 							<div class="row-fluid">
 								<div class="col-md-8 thumbnail">
-									<img src="'.$output_filename.'">
+									<img src="'.$output_filename.'" class="downloadable">
 								</div>
 								<div class="col-md-4">
 									<p class="well">The image &ldquo;'.$imageName.'&rdquo; has been uploaded to the &ldquo;images&rdquo; folder in the course files.</p>
 								</div>
 							</div>
 						</div>
-					</div>';
+					</div>
+					<script>
+						$("img.downloadable").each(function(){
+						  var $this = $(this);
+						  $this.wrap(\'<a href="\' + $this.attr(\'src\') + \'" download />\')
+						});
+					</script>';
 				unlink("images/".$courseID.".jpg");
 			} else {
 				echo 'Error uploading image';
