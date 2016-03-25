@@ -5881,7 +5881,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             '</ul>',
             customAccordionDiv = '<div id="kl_tools_accordion" class="kl_margin_bottom" />';
 
-            // Create tabs for Canvas Tools and USU Tools
+        // Create tabs for Canvas Tools and USU Tools
         if ($('#kl_tools_wrapper').length === 0) {
             $('#application').append('<div id="kl_tools_wrapper"><div id="kl_tools"></div></div>');
         }
