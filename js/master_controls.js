@@ -138,6 +138,9 @@ function klTriggerToolsCheck() {
                 // console.log(tinyMCE.activeEditor.id);
                 iframeID = '#' + tinyMCE.activeEditor.id + '_ifr';
                 klLoadToolsDependencies();
+            } else if ($('iframe[title^="Rich"]').contents().find('#tinyrce').length > 0) {
+                iframeID = '#' + window.tinyrce.activeEditor.id + '_ifr';
+                klLoadToolsDependencies();
             } else {
                 // console.log('Check Again');
                 setTimeout(function () {

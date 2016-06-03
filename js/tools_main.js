@@ -22,10 +22,14 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
 /////////////////////////////////////
 //    VARIABLES                    //
 /////////////////////////////////////
-
+    // Accomodate New RCE method Canvas will be implementing
+    if (tinyMCE === undefined || tinyMCE.activeEditor === undefined || tinyMCE.activeEditor === null) {
+        tinyMCE = window.tinyrce;
+        tinyMCE.activeEditor = window.tinyrce.activeEditor;
+    }
     var toolsToLoad,
         sectionsPanelDefault = false,
-        activeElement = tinymce.activeEditor.selection.getNode(),
+        activeElement = tinyMCE.activeEditor.selection.getNode(),
         // assignmentsPage = false,
         // discussionsPage = false,
         // Basic shell to add into template
@@ -286,14 +290,14 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
 
     // Toggle element outlines in MCE editor
     function klSetDisplay() {
-        $(iframeID).contents().find('#tinymce').addClass('mceContentBody');
+        $(iframeID).contents().find('body').addClass('mceContentBody');
         $(iframeID).contents().find('.kl_mce_visual_blocks').removeClass('kl_mce_visual_blocks');
         $(iframeID).contents().find('.kl_mce_visual_sections').removeClass('kl_mce_visual_sections');
         if ($('.kl_mce_editor_view .active').length === 0) {
             $('.kl_mce_preview').addClass('active');
         }
         $('.kl_mce_editor_view .active').each(function () {
-            $(iframeID).contents().find('#tinymce').addClass($(this).attr('rel'));
+            $(iframeID).contents().find('body').addClass($(this).attr('rel'));
         });
         $('a:contains("HTML Editor")').get(0).scrollIntoView();
     }
@@ -326,7 +330,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             e.preventDefault();
             tinyMCE.DOM.addClass(tinyMCE.activeEditor.selection.getNode(), "kl_unwrap_me");
             $(iframeID).contents().find('.kl_unwrap_me').contents().unwrap();
-            $('.kl_current_node_title').html('&lt;' + tinymce.activeEditor.selection.getNode().nodeName + '&gt;');
+            $('.kl_current_node_title').html('&lt;' + tinyMCE.activeEditor.selection.getNode().nodeName + '&gt;');
         });
         $('.kl_delete_node').unbind("click").click(function (e) {
             e.preventDefault();
@@ -334,7 +338,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             $(iframeID).contents().find('.kl_delete_me').remove();
         });        
         // Adjust node title when the node changes
-        $('.kl_current_node_title').html('&lt;' + tinymce.activeEditor.selection.getNode().nodeName + '&gt;');
+        $('.kl_current_node_title').html('&lt;' + tinyMCE.activeEditor.selection.getNode().nodeName + '&gt;');
     }
     // Clear out the blank span added when the template wrapper is first created
     function klRemoveTempContent() {
@@ -368,7 +372,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             $('#' + currentTheme).addClass('kl_active_theme');
         } else {
             // Add base html if template doesn't exist
-            $(iframeID).contents().find('#tinymce').prepend(templateShell);
+            $(iframeID).contents().find('body').prepend(templateShell);
         }
     }
     // Initiate Color Pickers
@@ -491,7 +495,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
 
     function clearDataMCEStyle() {
         // This attribute saves styling and overwrites when saving page
-        tinyMCE.DOM.setAttrib(tinymce.activeEditor.selection.getNode(), 'data-mce-style', '');
+        tinyMCE.DOM.setAttrib(tinyMCE.activeEditor.selection.getNode(), 'data-mce-style', '');
     }
 
 /////////////////////////////////////////////////////////////
@@ -3844,7 +3848,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         $('.kl_table_mce_command').unbind("click").click(function (e) {
             e.preventDefault();
             var myCommand = $(this).attr('rel');
-            tinymce.activeEditor.execCommand(myCommand);
+            tinyMCE.activeEditor.execCommand(myCommand);
         });
         // Insert a table using the custom tool
         $('.kl_table_insert').unbind("click").click(function (e) {
@@ -5881,7 +5885,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
             '</ul>',
             customAccordionDiv = '<div id="kl_tools_accordion" class="kl_margin_bottom" />';
 
-            // Create tabs for Canvas Tools and USU Tools
+        // Create tabs for Canvas Tools and USU Tools
         if ($('#kl_tools_wrapper').length === 0) {
             $('#application').append('<div id="kl_tools_wrapper"><div id="kl_tools"></div></div>');
         }
@@ -5979,13 +5983,13 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         }, 300);
         // Node Change functions
         tinyMCE.activeEditor.on('NodeChange', function () {
-            if (activeElement !== tinymce.activeEditor.selection.getNode()) {
+            if (activeElement !== tinyMCE.activeEditor.selection.getNode()) {
                 activeElement = tinyMCE.activeEditor.selection.getNode();
                 updateNodeList();
                 klCurrentSpacing('margin');
                 klCurrentSpacing('padding');
                 klCurrentBorder();
-                $('.kl_current_node_title').html('&lt;' + tinymce.activeEditor.selection.getNode().nodeName + '&gt;');
+                $('.kl_current_node_title').html('&lt;' + tinyMCE.activeEditor.selection.getNode().nodeName + '&gt;');
                 klInitializeElementColorPicker('#kl_selected_element_text_color', 'color');
                 klInitializeElementColorPicker('#kl_selected_element_bg_color', 'background-color');
                 klInitializeElementColorPicker('#kl_selected_element_border_color', 'border-color');
@@ -6013,7 +6017,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
     // Check for TinyMCE editor and Load Tools
     function klEditorExistenceCheck(toolsToLoad) {
         var editorExists = false;
-        if ($(iframeID).contents().find('#tinymce').length > 0) {
+        if ($(iframeID).contents().find('#tinymce').length > 0 || $(iframeID).contents().find('#tinyrce').length > 0) {
             editorExists = true;
         }
         if (editorExists === true) {
