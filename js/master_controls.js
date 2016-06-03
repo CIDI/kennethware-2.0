@@ -135,6 +135,7 @@ function klTriggerToolsCheck() {
                 $('.kl_add_tools').show();
             // If it is not the syllabus check for editor
             } else if ($('iframe[title^="Rich"]').contents().find('#tinymce').length > 0) {
+                // console.log(tinyMCE.activeEditor.id);
                 iframeID = '#' + tinyMCE.activeEditor.id + '_ifr';
                 klLoadToolsDependencies();
             } else if ($('iframe[title^="Rich"]').contents().find('#tinyrce').length > 0) {
