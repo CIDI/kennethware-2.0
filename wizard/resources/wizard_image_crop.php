@@ -411,6 +411,7 @@
 			/*Save Renamed image*/
 			if(imagejpeg($dst_r, $output_filename, $jpeg_quality)){
 				$uploadFile = uploadFrontPageBanner($courseID, $imageName);
+				$uploadData = json_decode($uploadFile);
 				echo '<div>
 						<h3 class="alert alert-success text-center">Image Sent to Canvas!</h3>
 						<div class="hide">' . $uploadData->status_url . '</div>
