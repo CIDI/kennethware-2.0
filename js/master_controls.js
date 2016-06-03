@@ -134,10 +134,10 @@ function klTriggerToolsCheck() {
             if ($('.kl_add_tools').length > 0) {
                 $('.kl_add_tools').show();
             // If it is not the syllabus check for editor
-            } else if ($('iframe').contents().find('#tinymce').length > 0) {
+            } else if ($('iframe[title^="Rich"]').contents().find('#tinymce').length > 0) {
                 iframeID = '#' + tinyMCE.activeEditor.id + '_ifr';
                 klLoadToolsDependencies();
-            } else if ($('iframe').contents().find('#tinyrce').length > 0) {
+            } else if ($('iframe[title^="Rich"]').contents().find('#tinyrce').length > 0) {
                 iframeID = '#' + window.tinyrce.activeEditor.id + '_ifr';
                 klLoadToolsDependencies();
             } else {
