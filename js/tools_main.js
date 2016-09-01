@@ -6042,7 +6042,7 @@ klToolsArrays, vendor_legacy_normal_contrast, klAfterToolLaunch, klAdditionalAcc
         if ($('#editor_tabs').length > 0) {
             // Add button to trigger tools
             if ($('#kl_tools_accordion').length === 0) {
-                $('#right-side').prepend('<a href="#" class="btn btn-primary kl_add_tools"><i class="fa fa-rocket" style="font-size: 18px;"></i> Launch Design Tools</a>');
+                $('body').prepend('<a href="#" class="btn btn-primary kl_add_tools" style="position: absolute; top: 5px; right: 10px;"><i class="fa fa-rocket" style="font-size: 18px;"></i> Launch Design Tools</a>');
                 // Decide which tools to load
                 toolsToLoad = 'wiki';
                 if (document.URL.indexOf('/syllabus') > -1) {
