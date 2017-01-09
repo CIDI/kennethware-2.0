@@ -13,7 +13,7 @@
   h3[class*=icon-]:before, h3[class^=icon-]:before, 
   h4[class*=icon-]:before, h4[class^=icon-]:before, 
   h5[class*=icon-]:before, h5[class^=icon-]:before, 
-  li[class*=icon-]:before, li[class^=icon-]:before { font-family: 'canvas-icons'; display: inline-block; vertical-align: middle; text-rendering: optimizeLegibility; /*font-size: 16px;*/ text-transform: none !important; font-weight: normal !important; font-style: normal !important; margin-right: 5px; }
+  li[class*=icon-]:before, li[class^=icon-]:before { font-family: 'InstructureIcons-Solid'; display: inline-block; vertical-align: middle; text-rendering: optimizeLegibility; /*font-size: 16px;*/ text-transform: none !important; font-weight: normal !important; font-style: normal !important; margin-right: 5px; }
   li[class*=icon-]:before, li[class^=icon-]:before, 
   li[class*=fa-]:before, li[class^=fa-]:before { margin-left: -20px; margin-right: 6px; }
   h2[class*=fa-]:before, h2[class^=fa-]:before, 
@@ -49,7 +49,7 @@
   h3[class*=icon-]:before, h3[class^=icon-]:before,
   h4[class*=icon-]:before, h4[class^=icon-]:before,
   h5[class*=icon-]:before, h5[class^=icon-]:before,
-  span[class*=icon-]:before, span[class^=icon-]:before {font-family: 'canvas-icons'; display: inline-block; vertical-align: middle; position: relative; top: -3px; text-rendering: optimizeLegibility; text-transform: none !important; font-weight: normal !important; font-style: normal !important; margin-right: 5px; }
+  span[class*=icon-]:before, span[class^=icon-]:before {font-family: 'InstructureIcons-Solid'; display: inline-block; vertical-align: middle; position: relative; top: -3px; text-rendering: optimizeLegibility; text-transform: none !important; font-weight: normal !important; font-style: normal !important; margin-right: 5px; }
 
   /* Font Awesome Icons */
   #kl_banner_right[class*=fa-]:before, 
