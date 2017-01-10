@@ -711,10 +711,9 @@
   #kl_wrapper.kl_apple.kl_show_title #kl_banner { position:relative; margin-top: 10px;}
   #kl_wrapper.kl_apple #kl_banner { position:relative; margin: 10px -20px 50px;}
   #kl_wrapper.kl_apple #kl_banner h2 {line-height: 35px; border-radius: 5px; background: #0F2439;  color: #fff; padding: 5px 10px 5px 2px; }
-  #kl_wrapper.kl_apple #kl_banner #kl_banner_left{ float: left; height: 40px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; }
-  #kl_wrapper.kl_apple #kl_banner #kl_banner_left .kl_mod_text { display: none; }
-  #kl_wrapper.kl_apple #kl_banner #kl_banner_left .kl_mod_num { display: block; height: 24px; color: #0F2439; font-size: 16px; font-weight: bold; padding: 8px 18px; margin-top: 9px; text-align: center; position: relative; top: -46px; line-height: 20px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; }
-  #kl_wrapper.kl_apple #kl_banner #kl_banner_left:before { font-family: 'canvas-icons'; display: inline-block; vertical-align: middle; position: relative; text-rendering: optimizeLegibility; text-transform: none !important; font-weight: normal !important; font-style: normal !important; top: 0px;  left: 8px; color:#fff; font-size: 32px; content: "\f12b"; }
+  #kl_wrapper.kl_apple #kl_banner #kl_banner_left{float: left; height: 35px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; background-image: url(https://designtools.ciditools.com/css/images/white_apple.png); background-repeat: no-repeat; background-position: center; background-size: contain;}
+  #kl_wrapper.kl_apple #kl_banner #kl_banner_left .kl_mod_text {display: none; }
+  #kl_wrapper.kl_apple #kl_banner #kl_banner_left .kl_mod_num {display: block; height: 24px; color: #0F2439; font-size: 16px; font-weight: bold; padding: 8px 12px; width: 30px; text-align: center; position: relative; line-height: 20px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; }
   #kl_wrapper.kl_apple #kl_banner #kl_banner_right { padding: 0px 10px; border-top-right-radius: 5px; }
   #kl_wrapper.kl_apple #kl_banner_right .kl_subtitle { font-size: medium; position: absolute; bottom: -30px; right: 0; color: #575757; }
   #kl_wrapper.kl_apple h3 { margin: 40px -15px 20px; border: 1px solid #BDBDBD; padding: 0 10px; border-radius: 5px; }
